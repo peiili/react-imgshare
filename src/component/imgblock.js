@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Row, Col, Carousel } from 'antd'
 import moment from 'moment'
 import Zmage from 'react-zmage'
-import { HeartTwoTone } from '@ant-design/icons'
 import './../css/imgblock.css'
 import { carouselList } from './../api/index.js'
 class ImgBlock extends Component {
@@ -42,7 +41,7 @@ class ImgBlock extends Component {
                   objectFit: 'cover'
                 }}
                 alt={item.describe}
-                src={'http://www.dlsjf.top/' + item.name}
+                src={'https://www.dlsjf.top/' + item.name}
               ></img>
             </div>
           ))}
@@ -69,7 +68,7 @@ class ImgBlock extends Component {
                     // 翻页（左右）
                     flip: true
                   }}
-                  src={'http://www.dlsjf.top/' + item.name}
+                  src={'https://www.dlsjf.top/' + item.name}
                 ></Zmage>
                 <div className="apron">
                   <div className="descText">
