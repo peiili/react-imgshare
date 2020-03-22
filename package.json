@@ -6,12 +6,20 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "antd": "^4.0.3",
+    "babel-plugin-import": "^1.13.0",
+    "customize-cra": "^0.9.1",
+    "moment": "^2.24.0",
     "react": "^16.13.0",
+    "react-app-rewired": "^2.1.5",
     "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0"
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.0",
+    "react-zmage": "^0.8.5-beta.31"
   },
+  "proxy": "http://localhost:5166",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-app-rewired start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

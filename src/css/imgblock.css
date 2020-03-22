@@ -1,0 +1,35 @@
+.imgblock {
+  position: relative;
+}
+
+.imgWidth {
+  width: 100%;
+}
+
+.apron {
+  /* position: absolute; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  bottom: 0;
+  height: 70px;
+  width: 100%;
+  background-color: #ffffff;
+  padding-right: 10px;
+}
+
+.descText {
+  padding: 4px;
+  font-size: 12px;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+}
+
+.apron .info {
+  padding: 4px;
+  font-size: 12px;
+}
