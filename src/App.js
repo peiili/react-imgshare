@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ImgBlock from './component/imgblock'
+import Footer from './component/Footer'
 import './App.css'
 import { Avatar } from 'antd'
 
@@ -15,7 +16,7 @@ class App extends Component {
       <div className="App">
         <Menu className="menuStyle" mode="horizontal" theme="dark">
           {/* <div style={{ width: '80%', margin: '0 auto' }}>
-          </div> */}
+                          </div> */}
           <Menu.Item>PEIILI</Menu.Item>
           <SubMenu title="壁纸">
             <Menu.Item>Bing</Menu.Item>
@@ -31,8 +32,9 @@ class App extends Component {
           </Menu.Item>
         </Menu>
         <div style={{ margin: '20px auto' }}>
-          <ImgBlock></ImgBlock>
+          <ImgBlock> </ImgBlock>
         </div>
+        <Footer></Footer>
       </div>
     )
   }
