@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Row, Col, Carousel } from 'antd'
+import { Row, Col, Carousel, Button } from 'antd'
 import moment from 'moment'
 import Zmage from 'react-zmage'
 import './../css/imgblock.css'
+import { VerticalAlignBottomOutlined } from '@ant-design/icons'
 import { carouselList } from './../api/index.js'
 class ImgBlock extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class ImgBlock extends Component {
     }
     this.getCarouselList()
     this.getCarouselListAll()
+    console.log()
   }
   getCarouselList() {
     carouselList(5).then(res => {
@@ -35,21 +37,21 @@ class ImgBlock extends Component {
           {this.state.poolData.map(item => (
             <div key={item.id}>
               <img
-                style={{
-                  width: '100%',
-                  height: '300px',
-                  objectFit: 'cover'
-                }}
+                className="imgStyle"
                 alt={item.describe}
                 src={'https://www.dlsjf.top/' + item.name}
               ></img>
             </div>
           ))}
         </Carousel>
-        <div onClick={this.getCarouselListAll}>换一批</div>
+        <Button onClick={this.getCarouselListAll} type="primary">
+          换一批
+        </Button>
+        <span>&nbsp;本站图片均来自必应</span>
+        <hr />
         <Row gutter={[16, 20]}>
           {this.state.pageList.map(item => (
-            <Col span={6} key={item.id}>
+            <Col span={window.screen.width > 500 ? 6 : 12} key={item.id}>
               <div className="imgblock">
                 {/* <img
                   className="imgWidth"
@@ -79,12 +81,13 @@ class ImgBlock extends Component {
                       {' '}
                       {moment(item.create_date).format('YYYY-MM-DD')}{' '}
                       <a
-                        target={'_blank'}
                         style={{ float: 'right' }}
+                        // eslint-disable-next-line react/jsx-no-target-blank
+                        target="_blank"
                         href={'http://www.dlsjf.top/' + item.name}
                         download={item.describe}
                       >
-                        下载
+                        <VerticalAlignBottomOutlined />
                       </a>
                     </div>
                   </div>

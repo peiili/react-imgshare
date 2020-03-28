@@ -16,7 +16,7 @@ class App extends Component {
         <Menu className="menuStyle" mode="horizontal" theme="dark">
           {/* <div style={{ width: '80%', margin: '0 auto' }}>
           </div> */}
-          <Menu.Item>首页</Menu.Item>
+          <Menu.Item>PEIILI</Menu.Item>
           <SubMenu title="壁纸">
             <Menu.Item>Bing</Menu.Item>
           </SubMenu>
