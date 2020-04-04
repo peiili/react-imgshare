@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import ImgBlock from './component/imgblock'
-import Footer from './component/Footer'
-import './App.css'
-import { Avatar } from 'antd'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import { Menu } from 'antd'
-const { SubMenu } = Menu
+import Login from './pages/Login'
+import Home from './pages/Home'
+
+import './App.css'
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -14,27 +14,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Menu className="menuStyle" mode="horizontal" theme="dark">
-          {/* <div style={{ width: '80%', margin: '0 auto' }}>
-                          </div> */}
-          <Menu.Item>PEIILI</Menu.Item>
-          <SubMenu title="壁纸">
-            <Menu.Item>Bing</Menu.Item>
-          </SubMenu>
-          <Menu.Item>
-            <Avatar
-              style={{
-                color: '#f56a00',
-                backgroundColor: '#fde3cf'
-              }}
-              src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"
-            ></Avatar>
-          </Menu.Item>
-        </Menu>
         <div style={{ margin: '20px auto' }}>
-          <ImgBlock> </ImgBlock>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Home}></Route>
+              <Route path="/Home" component={Home}></Route>
+              <Route path="/Login" component={Login}></Route>
+            </Switch>
+          </Router>
         </div>
-        <Footer></Footer>
       </div>
     )
   }

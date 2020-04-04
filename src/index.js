@@ -7,6 +7,7 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 // import PostList from './component/PostList.js'
 
+// ReactDOM.render(<PostList />, document.getElementById('root'))
 ReactDOM.render(<App />, document.getElementById('root'))
 // ReactDOM.render(
 //   <BrowserRouter>

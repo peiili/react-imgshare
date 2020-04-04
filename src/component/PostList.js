@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PostItem from './PostItem'
 import Foo from './Foo'
-import Life from './life'
+import Modal from './Modal'
 import Form from './Form'
 import './../css/PostItem.css'
 // const data = [
@@ -15,11 +15,14 @@ class PostList extends Component {
     this.state = {
       post: [],
       age: 10,
-      ages: 10
+      ages: 10,
+      children: '',
     }
     this.handadd = this.handadd.bind(this)
     this.timer = null //定时器
     this.handleVote = this.handleVote.bind(this)
+    this.handSave = this.handSave.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
   componentDidMount() {
     // 用计时器模拟从后台获取数据
@@ -31,23 +34,30 @@ class PostList extends Component {
             title: '大家一起来讨论React吧',
             author: '张三',
             date: '2017-05-06',
-            vote: 0
+            vote: 0,
           },
           {
             id: 2,
             title: '讨论个六啊',
             author: '李四',
             date: '2017-05-06',
-            vote: 0
+            vote: 0,
           },
           {
             id: 3,
             title: '和Vue相比怎么样',
             author: '张六',
             date: '2017-05-06',
-            vote: 0
-          }
-        ]
+            vote: 0,
+          },
+          {
+            id: 4,
+            title: '都是傻逼',
+            author: '李四',
+            date: '2017-05-06',
+            vote: 0,
+          },
+        ],
       })
     }, 1000)
   }
@@ -56,21 +66,32 @@ class PostList extends Component {
       clearTimeout(this.timer)
     }
   }
+  handleClose() {}
+  handSave(post) {
+    console.log(post)
+    const posts = this.state.post.map((item) => {
+      const newItem = item.id === post.id ? post : item
+      return newItem
+    })
+    this.setState({
+      post: posts,
+    })
+  }
   handleVote(id) {
     console.log(this)
-    const post = this.state.post.map(item => {
+    const post = this.state.post.map((item) => {
       const newItem = item.id === id ? { ...item, vote: ++item.vote } : item
       return newItem
     })
     // 使用新的posts对象设置state
     this.setState({
-      post
+      post,
     })
   }
   handadd() {
     console.log(this)
     this.setState({
-      age: this.state.age + 1
+      age: this.state.age + 1,
     })
   }
   handadds(item, event) {
@@ -78,7 +99,7 @@ class PostList extends Component {
     console.log(event)
     // console.log(this)
     this.setState({
-      ages: this.state.ages + 1
+      ages: this.state.ages + 1,
     })
   }
   // 使用es7 语法
@@ -87,12 +108,13 @@ class PostList extends Component {
     console.log(event)
     // console.log(this)
     this.setState({
-      ages: this.state.ages + 1
+      ages: this.state.ages + 1,
     })
   }
   render() {
     return (
       <div>
+        <Modal inClose={this.handleclose} />
         <div>
           <Form />
         </div>
@@ -108,6 +130,7 @@ class PostList extends Component {
               key={item.id}
               post={item}
               onVote={this.handleVote}
+              onSave={this.handSave}
             ></PostItem>
           ))}
         </ul>
@@ -119,13 +142,6 @@ class PostList extends Component {
         >
           又长一岁
         </button>
-        <Life name="张三" age={this.state.age} />
-        <button onClick={this.handadd}>又长一岁</button>
-        <Life name="张三" age={this.state.age} />
-        <button onClick={this.handadds.bind(this, '12')}>又长一岁</button>
-        <Life name="张三" age={this.state.age} />
-        <button onClick={this.handaddsz}>又长一岁</button>
-        <Life name="张三" age={this.state.age} />
       </div>
     )
   }
