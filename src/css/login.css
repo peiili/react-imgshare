@@ -46,6 +46,12 @@ button {
   padding: 50px 30px 0;
 }
 
+.noborder {
+  /* border: none; */
+  width: 60%;
+  margin-top: 10px;
+}
+
 .sub-cont {
   overflow: hidden;
   position: absolute;

@@ -4,7 +4,7 @@ import moment from 'moment'
 import Zmage from 'react-zmage'
 import './../css/imgblock.css'
 import { VerticalAlignBottomOutlined } from '@ant-design/icons'
-import { carouselList } from '../api/index.js'
+import { carouselList } from '@/api/index.js'
 class ImgBlock extends Component {
   constructor(props) {
     super(props)

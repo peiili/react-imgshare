@@ -17,7 +17,7 @@
     "react-scripts": "3.4.0",
     "react-zmage": "^0.8.5-beta.31"
   },
-  "proxy": "https://47.105.113.47",
+  "proxy": "http://127.0.0.1:5166",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",

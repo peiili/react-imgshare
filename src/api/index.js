@@ -3,3 +3,7 @@ import HttpUtils from './http.js'
 export function carouselList(data) {
   return HttpUtils.get(`/api/bing/randomBingList?limit=${data}`)
 }
+
+export function login(data) {
+  return HttpUtils.post(`/api/user/login`, data)
+}
