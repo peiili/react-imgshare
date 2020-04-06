@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Login from './pages/Login'
 import Home from './pages/Home'
+import Admin from './pages/Admin'
 
 import './App.css'
 
@@ -14,15 +15,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div style={{ margin: '20px auto' }}>
-          <Router>
-            <Switch>
-              <Route exact path="/" component={Home}></Route>
-              <Route path="/Home" component={Home}></Route>
-              <Route path="/Login" component={Login}></Route>
-            </Switch>
-          </Router>
-        </div>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home}></Route>
+            <Route path="/Home" component={Home}></Route>
+            <Route path="/Login" component={Login}></Route>
+            <Route path="/Admin" component={Admin}></Route>
+          </Switch>
+        </Router>
       </div>
     )
   }

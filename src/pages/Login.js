@@ -41,7 +41,7 @@ class login extends Component {
     LoginApi(loginSchema)
       .then((res) => {
         if (res.success) {
-          this.props.history.replace('/')
+          this.props.history.replace('/Admin')
         } else {
           message.error(res.message)
         }
