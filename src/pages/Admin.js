@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import MenuVertical from '@/component/MenuVertical.js'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import { Layout, Breadcrumb } from 'antd'
 import '@/css/admin.css'
 import Upload from '@/component/Upload.js'
 import PostList from '@/component/PostList'
+import Active from '@/component/Active'
 const { Header, Content, Footer, Sider } = Layout
 class Admin extends Component {
   constructor(props) {
@@ -51,6 +52,11 @@ class Admin extends Component {
                   exact
                   path={`${match.url}/User`}
                   component={PostList}
+                ></Route>
+                <Route
+                  exact
+                  path={`${match.url}/Active`}
+                  component={Active}
                 ></Route>
               </div>
             </Content>

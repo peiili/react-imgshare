@@ -3,14 +3,11 @@ import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
 
 import {
-  DesktopOutlined,
-  PieChartOutlined,
+  UnorderedListOutlined,
   UploadOutlined,
-  FileOutlined,
-  TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons'
-const { SubMenu } = Menu
+// const { SubMenu } = Menu
 function MenuCom(props) {
   return (
     <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
@@ -24,6 +21,12 @@ function MenuCom(props) {
         <Link to="/Admin/User">
           <UserOutlined />
           <span>个人页</span>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <Link to="/Admin/Active">
+          <UnorderedListOutlined />
+          <span>活动列表</span>
         </Link>
       </Menu.Item>
       {/* <Menu.Item key="2">
