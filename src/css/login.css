@@ -222,20 +222,20 @@ h2 {
   text-align: center;
 }
 
-label {
+#login label {
   display: block;
   width: 260px;
   margin: 25px auto 0;
   text-align: center;
 }
 
-label span {
+#login label span {
   font-size: 12px;
   color: #909399;
   text-transform: uppercase;
 }
 
-input {
+#login input {
   display: block;
   width: 100%;
   margin-top: 5px;
@@ -245,51 +245,51 @@ input {
   text-align: center;
 }
 
-.forgot-pass {
+#login .forgot-pass {
   margin-top: 15px;
   text-align: center;
   font-size: 12px;
   color: #cfcfcf;
 }
 
-.forgot-pass a {
+#login .forgot-pass a {
   color: #cfcfcf;
 }
 
-.submit {
+#login .submit {
   margin: 40px auto 20px;
   background: #d4af7a;
   text-transform: uppercase;
 }
 
-.fb-btn {
+#login .fb-btn {
   margin: 0 auto;
   border: 2px solid #d3dae9;
   color: #8fa1c7;
 }
 
-.fb-btn span {
+#login .fb-btn span {
   font-weight: bold;
   color: #455a81;
 }
 
-.sign-in {
+#login .sign-in {
   transition-timing-function: ease-out;
 }
 
-.dowebok.s--signup .sign-in {
+#login .dowebok.s--signup .sign-in {
   transition-timing-function: ease-in-out;
   transition-duration: 0.6s;
   -webkit-transform: translate3d(640px, 0, 0);
   transform: translate3d(640px, 0, 0);
 }
 
-.sign-up {
+#login .sign-up {
   -webkit-transform: translate3d(-900px, 0, 0);
   transform: translate3d(-900px, 0, 0);
 }
 
-.dowebok.s--signup .sign-up {
+#login .dowebok.s--signup .sign-up {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }

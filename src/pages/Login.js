@@ -57,7 +57,7 @@ class login extends Component {
 
   render() {
     return (
-      <div>
+      <div id="login">
         <div className={this.state.regisitor ? 'dowebok s--signup' : 'dowebok'}>
           <div className="form sign-in">
             <h2>欢迎回来</h2>

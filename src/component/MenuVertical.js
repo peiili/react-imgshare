@@ -10,26 +10,34 @@ import {
 // const { SubMenu } = Menu
 function MenuCom(props) {
   return (
-    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-      <Menu.Item key="1">
-        <Link to="/Admin/Upload">
-          <UploadOutlined />
-          <span>文件上传</span>
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="2">
-        <Link to="/Admin/User">
-          <UserOutlined />
-          <span>个人页</span>
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="3">
-        <Link to="/Admin/Active">
-          <UnorderedListOutlined />
-          <span>活动列表</span>
-        </Link>
-      </Menu.Item>
-      {/* <Menu.Item key="2">
+    <div id="MenuVertical">
+      <div className="logo">
+        <img
+          src="http://statich5.dlsjf.top/tmp/logo.png"
+          alt=""
+          style={{ width: '40px' }}
+        ></img>
+      </div>
+      <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+        <Menu.Item key="1">
+          <Link to="/Admin/Upload">
+            <UploadOutlined />
+            <span>文件上传</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <Link to="/Admin/User">
+            <UserOutlined />
+            <span>个人页</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <Link to="/Admin/Active">
+            <UnorderedListOutlined />
+            <span>活动列表</span>
+          </Link>
+        </Menu.Item>
+        {/* <Menu.Item key="2">
         <DesktopOutlined />
         <span>Option 2</span>
       </Menu.Item>
@@ -61,7 +69,8 @@ function MenuCom(props) {
       <Menu.Item key="9">
         <FileOutlined />
       </Menu.Item> */}
-    </Menu>
+      </Menu>
+    </div>
   )
 }
 

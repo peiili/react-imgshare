@@ -7,6 +7,7 @@ import '@/css/admin.css'
 import Upload from '@/component/Upload.js'
 import PostList from '@/component/PostList'
 import Active from '@/component/Active'
+import ActiveEdit from '@/component/ActiveEdit'
 const { Header, Content, Footer, Sider } = Layout
 class Admin extends Component {
   constructor(props) {
@@ -57,6 +58,11 @@ class Admin extends Component {
                   exact
                   path={`${match.url}/Active`}
                   component={Active}
+                ></Route>
+                <Route
+                  exact
+                  path={`${match.url}/ActiveEdit`}
+                  component={ActiveEdit}
                 ></Route>
               </div>
             </Content>

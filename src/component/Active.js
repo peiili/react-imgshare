@@ -20,7 +20,7 @@ class Active extends Component {
     this.handleAdd = this.handleAdd.bind(this)
   }
   handleAdd() {
-    console.log('123123')
+    this.props.history.push('/Admin/ActiveEdit')
   }
   Check(data) {
     console.log(data)
