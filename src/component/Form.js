@@ -8,25 +8,25 @@ class Form extends Component {
       selectValue: '选项3',
       react: false,
       redux: false,
-      mobx: false
+      mobx: false,
     }
     // this.handleChange = this.handleChange.bind(this)
     // this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleChange = event => {
+  handleChange = (event) => {
     const target = event.target
     console.log(target.checked)
     this.setState({
-      [target.name]: target.checked
+      [target.name]: target.checked,
     })
     // this.setState({ [target.name]: target.value })
   }
-  handleSelectChange = event => {
+  handleSelectChange = (event) => {
     const target = event.target
     console.log(target.value)
     this.setState({ selectValue: target.value })
   }
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     console.log('login successfully')
     console.log(this.state.name)
     event.preventDefault()

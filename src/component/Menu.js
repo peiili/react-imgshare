@@ -15,9 +15,9 @@ function MenuCom(props) {
           <Link to="/Home/Bing">Bing</Link>
         </Menu.Item>
       </SubMenu>
-      {/* <Menu.Item>
-        <Link to="/Home/test">测试</Link>
-      </Menu.Item> */}
+      <Menu.Item>
+        <Link to="/Home/FullView">全景</Link>
+      </Menu.Item>
       <Menu.Item>
         <Link to="/Login">LOGIN</Link>
       </Menu.Item>
