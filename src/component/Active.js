@@ -72,7 +72,7 @@ class Active extends Component {
         >
           添加活动
         </Button>
-        <Table dataSource={dataSource} columns={columns} />;
+        <Table dataSource={dataSource} columns={columns} />
       </div>
     )
   }

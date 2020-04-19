@@ -1,14 +1,18 @@
 import React from 'react'
 import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
-
 import {
   UnorderedListOutlined,
   UploadOutlined,
+  PictureOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 // const { SubMenu } = Menu
 function MenuCom(props) {
+  // console.log(props.currentSelect)
+  function selectItem(arr) {
+    props.currentSelect(arr.key)
+  }
   return (
     <div id="MenuVertical">
       <div className="logo">
@@ -18,23 +22,34 @@ function MenuCom(props) {
           style={{ width: '40px' }}
         ></img>
       </div>
-      <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-        <Menu.Item key="1">
+      <Menu
+        theme="dark"
+        defaultSelectedKeys={['文件上传']}
+        mode="inline"
+        onSelect={selectItem}
+      >
+        <Menu.Item key="文件上传">
           <Link to="/Admin/Upload">
             <UploadOutlined />
             <span>文件上传</span>
           </Link>
         </Menu.Item>
-        <Menu.Item key="2">
+        <Menu.Item key="个人页">
           <Link to="/Admin/User">
             <UserOutlined />
             <span>个人页</span>
           </Link>
         </Menu.Item>
-        <Menu.Item key="3">
+        <Menu.Item key="活动列表">
           <Link to="/Admin/Active">
             <UnorderedListOutlined />
             <span>活动列表</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="全景管理">
+          <Link to="/Admin/FullViewAdmin">
+            <PictureOutlined />
+            <span>全景管理</span>
           </Link>
         </Menu.Item>
         {/* <Menu.Item key="2">
@@ -73,5 +88,4 @@ function MenuCom(props) {
     </div>
   )
 }
-
 export default MenuCom

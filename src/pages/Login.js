@@ -92,9 +92,9 @@ class login extends Component {
                   className="noborder"
                 />
               </Form.Item>
-              <Form.Item name="remember" valuePropName="checked">
+              {/* <Form.Item name="remember" valuePropName="checked">
                 <Checkbox>Remember me</Checkbox>
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item>
                 <Button
                   style={{

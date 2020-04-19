@@ -7,17 +7,24 @@ import '@/css/admin.css'
 import Upload from '@/component/Upload.js'
 import PostList from '@/component/PostList'
 import Active from '@/component/Active'
-import ActiveEdit from '@/component/ActiveEdit'
+import ActiveEdit from '@/pages/admin/ActiveEdit'
 const { Header, Content, Footer, Sider } = Layout
 class Admin extends Component {
   constructor(props) {
     super(props)
     this.state = {
       collapsed: false,
+      currentPage: '',
     }
     this.onCollapse = (collapsed) => {
       console.log(collapsed)
       this.setState({ collapsed })
+    }
+    this.changeBread = (key) => {
+      console.log(key)
+      this.setState({
+        currentPage: key,
+      })
     }
   }
   render() {
@@ -31,14 +38,14 @@ class Admin extends Component {
             onCollapse={this.onCollapse}
           >
             <div className="logo" />
-            <MenuVertical></MenuVertical>
+            <MenuVertical currentSelect={this.changeBread}></MenuVertical>
           </Sider>
           <Layout className="site-layout">
             <Header className="site-layout-background" style={{ padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>User</Breadcrumb.Item>
-                <Breadcrumb.Item>Bill</Breadcrumb.Item>
+                <Breadcrumb.Item>{this.state.currentPage}</Breadcrumb.Item>
               </Breadcrumb>
               <div
                 className="site-layout-background"

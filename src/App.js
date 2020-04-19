@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import Login from './pages/Login'
 import Home from '@/Layouts/Home'
-import Admin from './pages/Admin'
+import Admin from '@/Layouts/Admin'
 
 import './App.css'
 
