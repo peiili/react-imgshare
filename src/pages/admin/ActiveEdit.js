@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 
 import { Form, Input, Button, Row, Col, DatePicker } from 'antd'
+import { createActiveEdit } from '@/api/index'
+import moment from 'moment'
 import { Editor } from '@tinymce/tinymce-react'
-const { RangePicker } = DatePicker
+// const { RangePicker } = DatePicker
 const layout = {
   labelCol: { span: 2 },
   wrapperCol: { span: 22 },
@@ -15,7 +17,6 @@ class ActiveEdit extends Component {
     }
   }
   handleEditorChange = (content, editor) => {
-    console.log('Content was updated:', content)
     this.setState({
       editorValue: content,
     })
@@ -25,13 +26,16 @@ class ActiveEdit extends Component {
       console.log('Success:', values)
       let body = {
         title: values.title,
-        desc: values.desc,
-        openDate: `${values.openDate[0].format(
-          'YYYY-MM-DD HH:mm:ss'
-        )}-${values.openDate[1].format('YYYY-MM-DD HH:mm:ss')}`,
+        desc: values.description,
+        type: 2,
+        address: values.address,
+        openDate: moment(values.openDate).format('YYYY-MM-DD HH:mm'),
         content: this.state.editorValue,
       }
-      console.log('body:' + JSON.stringify(body))
+      // console.log('body:' + JSON.stringify(body))
+      createActiveEdit(body).then((res) => {
+        console.log(res)
+      })
     }
 
     return (
@@ -51,6 +55,13 @@ class ActiveEdit extends Component {
           >
             <Input.TextArea />
           </Form.Item>
+          <Form.Item
+            name="address"
+            label="地点"
+            rules={[{ required: true, message: '地点' }]}
+          >
+            <Input />
+          </Form.Item>
           <Row>
             <Col>
               <Form.Item
@@ -58,7 +69,7 @@ class ActiveEdit extends Component {
                 label="开始时间"
                 rules={[{ required: true, message: '请填写开始时间' }]}
               >
-                <RangePicker
+                <DatePicker
                   showTime={{ format: 'HH:mm' }}
                   format="YYYY-MM-DD HH:mm"
                 />

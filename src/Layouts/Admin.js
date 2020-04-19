@@ -6,7 +6,7 @@ import { Layout, Breadcrumb } from 'antd'
 import '@/css/admin.css'
 import Upload from '@/component/Upload.js'
 import PostList from '@/component/PostList'
-import Active from '@/component/Active'
+import Active from '@/pages/admin/Active'
 import ActiveEdit from '@/pages/admin/ActiveEdit'
 const { Header, Content, Footer, Sider } = Layout
 class Admin extends Component {
