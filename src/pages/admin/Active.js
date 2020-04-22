@@ -55,10 +55,10 @@ class Active extends Component {
         key: 'action',
         render: (text, record) => (
           <span>
-            <a onClick={this.Check(record)} style={{ marginRight: 16 }}>
+            <Button onClick={this.Check(record)} style={{ marginRight: 16 }}>
               查看
-            </a>
-            <a>编辑</a>
+            </Button>
+            <Button>编辑</Button>
           </span>
         ),
       },

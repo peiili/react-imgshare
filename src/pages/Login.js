@@ -3,7 +3,7 @@ import '../css/login.css'
 import { login as LoginApi } from '@/api/index'
 import { Link } from 'react-router-dom'
 
-import { Form, Input, Button, Checkbox, message } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 
 class login extends Component {
   constructor(props) {
