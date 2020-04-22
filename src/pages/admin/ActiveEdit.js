@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Form, Input, Button, Row, Col, DatePicker } from 'antd'
+import { Form, Input, Button, Row, Col, DatePicker, message } from 'antd'
 import { createActiveEdit } from '@/api/index'
 import moment from 'moment'
 import { Editor } from '@tinymce/tinymce-react'
@@ -23,7 +23,6 @@ class ActiveEdit extends Component {
   }
   render() {
     const onFinish = (values) => {
-      console.log('Success:', values)
       let body = {
         title: values.title,
         desc: values.description,
@@ -35,6 +34,9 @@ class ActiveEdit extends Component {
       // console.log('body:' + JSON.stringify(body))
       createActiveEdit(body).then((res) => {
         console.log(res)
+        if (res.success) {
+          message.info('发布成功')
+        }
       })
     }
 
