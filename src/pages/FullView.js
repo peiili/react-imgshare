@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Slider } from 'antd'
+import Zmage from 'react-zmage'
 // import moduleCss from '@/css/FullView.css'
 import img_1 from '@/assets/img/1.jpg'
 import img_2 from '@/assets/img/2.jpg'
@@ -26,9 +27,10 @@ class FullView extends Component {
     this.onMouseMoveFoo = this.onMouseMoveFoo.bind(this)
   }
   onMouseMoveFoo(event) {
-    let x = event.clientX
+    let x = event.touches[0].clientX
+    // console.log(x)
     j++
-    if (j === 10) {
+    if (j === 5) {
       if (arr.length > 2) {
         arr.shift()
         arr.push(x)
@@ -61,7 +63,7 @@ class FullView extends Component {
       } else {
         arr.push(x)
       }
-      console.log(arr)
+      // console.log(arr)
       j = 0
       // console.log(x)
     }
@@ -78,16 +80,16 @@ class FullView extends Component {
           onAfterChange={onAfterChange}
         />
         {/* {this.state.value} */}
-        <div onMouseMove={this.onMouseMoveFoo} className="testBlock">
+        <div onTouchMove={this.onMouseMoveFoo} className="testBlock">
           <div style={{ width: '200px', height: '200px' }}>
-            <img
+            <Zmage
               style={{
                 width: '100%',
                 display: this.state.value === 1 ? 'block' : 'none',
               }}
               alt=""
               src={img_1}
-            />
+            ></Zmage>
             <img
               style={{
                 width: '100%',

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
+import logo from '@/assets/img/logo.png'
 import {
   UnorderedListOutlined,
   UploadOutlined,
@@ -8,6 +9,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 // const { SubMenu } = Menu
+
 function MenuCom(props) {
   // console.log(props.currentSelect)
   function selectItem(arr) {
@@ -16,11 +18,7 @@ function MenuCom(props) {
   return (
     <div id="MenuVertical">
       <div className="logo">
-        <img
-          src="http://statich5.dlsjf.top/tmp/logo.png"
-          alt=""
-          style={{ width: '40px' }}
-        ></img>
+        <img src={logo} alt="" style={{ width: '40px' }}></img>
       </div>
       <Menu
         theme="dark"

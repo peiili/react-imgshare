@@ -101,6 +101,7 @@ class login extends Component {
                     background: '#d4af7a',
                     border: 'none',
                     color: '#fff',
+                    width: '260px',
                   }}
                   shape="round"
                   htmlType="submit"
@@ -110,7 +111,15 @@ class login extends Component {
               </Form.Item>
               <Form.Item>
                 <Link to="/">
-                  <Button shape="round">返回</Button>
+                  <Button
+                    shape="round"
+                    style={{
+                      width: '260px',
+                    }}
+                  >
+                    {' '}
+                    返回
+                  </Button>
                 </Link>
               </Form.Item>
             </Form>
