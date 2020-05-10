@@ -7,7 +7,7 @@ import '@/css/admin.css'
 import Upload from '@/component/Upload.js'
 import PostList from '@/component/PostList'
 import Active from '@/pages/admin/Active'
-import ActiveEdit from '@/pages/admin/ActiveEdit'
+// import ActiveEdit from '@/pages/admin/ActiveEdit'
 const { Header, Content, Footer, Sider } = Layout
 class Admin extends Component {
   constructor(props) {
@@ -21,7 +21,6 @@ class Admin extends Component {
       this.setState({ collapsed })
     }
     this.changeBread = (key) => {
-      console.log(key)
       this.setState({
         currentPage: key,
       })
@@ -65,11 +64,6 @@ class Admin extends Component {
                   exact
                   path={`${match.url}/Active`}
                   component={Active}
-                ></Route>
-                <Route
-                  exact
-                  path={`${match.url}/ActiveEdit`}
-                  component={ActiveEdit}
                 ></Route>
               </div>
             </Content>

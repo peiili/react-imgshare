@@ -16,12 +16,13 @@ export function getActiveList(type) {
   return HttpUtils.get(`/api/active/activeTitleList?type=${type}`)
 }
 /**
- * activeEdit
+ * createActiveEdit
+ * @method createActiveEdit
  * @description 新增一条活动信息
  * @param {Object} params 新增数据类型
  * @param {String} params.title 文章标题
  * @param {String} params.desc
- * @param {Object} params.openDate 活动举办时间
+
  * @param {String} params.content 文章正文
  */
 export function createActiveEdit(params) {

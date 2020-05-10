@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Form, Input, Button, DatePicker } from 'antd'
 
-import { Form, Input, Button, Row, Col, DatePicker, message } from 'antd'
-import { createActiveEdit } from '@/api/index'
 import moment from 'moment'
 import { Editor } from '@tinymce/tinymce-react'
 // const { RangePicker } = DatePicker
@@ -9,6 +9,7 @@ const layout = {
   labelCol: { span: 2 },
   wrapperCol: { span: 22 },
 }
+
 class ActiveEdit extends Component {
   constructor(props) {
     super(props)
@@ -16,10 +17,14 @@ class ActiveEdit extends Component {
       editorValue: '',
     }
   }
+
   handleEditorChange = (content, editor) => {
     this.setState({
       editorValue: content,
     })
+  }
+  goBack = () => {
+    this.props.show()
   }
   render() {
     const onFinish = (values) => {
@@ -31,13 +36,7 @@ class ActiveEdit extends Component {
         openDate: moment(values.openDate).format('YYYY-MM-DD HH:mm'),
         content: this.state.editorValue,
       }
-      // console.log('body:' + JSON.stringify(body))
-      createActiveEdit(body).then((res) => {
-        console.log(res)
-        if (res.success) {
-          message.info('发布成功')
-        }
-      })
+      this.props.onEditSubmit(body)
     }
 
     return (
@@ -51,7 +50,7 @@ class ActiveEdit extends Component {
             <Input />
           </Form.Item>
           <Form.Item
-            name="desc"
+            name="description"
             label="简介"
             rules={[{ required: true, message: '请填写简介' }]}
           >
@@ -64,29 +63,18 @@ class ActiveEdit extends Component {
           >
             <Input />
           </Form.Item>
-          <Row>
-            <Col>
-              <Form.Item
-                name="openDate"
-                label="开始时间"
-                rules={[{ required: true, message: '请填写开始时间' }]}
-              >
-                <DatePicker
-                  showTime={{ format: 'HH:mm' }}
-                  format="YYYY-MM-DD HH:mm"
-                />
-              </Form.Item>
-            </Col>
-            {/* <Col>
-              <Form.Item
-                name="openDate"
-                rules={[{ required: true, message: '请填写标题' }]}
-              >
-                可报名
-                <Input />
-              </Form.Item>
-            </Col> */}
-          </Row>
+
+          <Form.Item
+            name="openDate"
+            label="开始时间"
+            rules={[{ required: true, message: '请填写开始时间' }]}
+          >
+            <DatePicker
+              showTime={{ format: 'HH:mm' }}
+              format="YYYY-MM-DD HH:mm"
+            />
+          </Form.Item>
+
           <Editor
             apiKey="ocrbpn7ia4kvstfxk6hvcjhscdoy0520g6smzdynczfz7ef0"
             initialValue=""
@@ -108,6 +96,7 @@ class ActiveEdit extends Component {
           />
           <div style={{ marginTop: '10px' }}>
             <Form.Item>
+              <Button onClick={this.goBack}>取消</Button>
               <Button type="primary" htmlType="submit">
                 提交
               </Button>
@@ -117,5 +106,10 @@ class ActiveEdit extends Component {
       </div>
     )
   }
+}
+ActiveEdit.propTypes = {
+  show: PropTypes.func.isRequired,
+  currentId: PropTypes.number,
+  onEditSubmit: PropTypes.func.isRequired,
 }
 export default ActiveEdit
