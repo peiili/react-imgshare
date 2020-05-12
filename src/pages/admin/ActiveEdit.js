@@ -11,13 +11,32 @@ const layout = {
 }
 
 class ActiveEdit extends Component {
+  formRef = React.createRef()
   constructor(props) {
     super(props)
     this.state = {
       editorValue: '',
+      title: '',
+      desc: '',
+      type: 2,
+      address: '',
+      openDate: '',
+      content: '',
     }
   }
-
+  componentDidMount() {
+    if (this.props.currentRow) console.log(this.props.currentRow.title)
+    this.formRef.current.setFieldsValue({
+      title: this.props.currentRow.title || '',
+      description: this.props.currentRow.description || '',
+      type: 2,
+      address: this.props.currentRow.address || '',
+      openDate: this.props.currentRow.openDate || '',
+      content: this.props.currentRow.content || '',
+    })
+    console.log(this.state.title)
+  }
+  componentWillUpdate() {}
   handleEditorChange = (content, editor) => {
     this.setState({
       editorValue: content,
@@ -38,10 +57,19 @@ class ActiveEdit extends Component {
       }
       this.props.onEditSubmit(body)
     }
-
+    // const [sss] = Form.useForm()
+    // this.sss.current.setFieldsValue({
+    //   title: 'Hi',
+    // })
     return (
       <div id="ActiveEdit">
-        <Form {...layout} name="nest-messages" onFinish={onFinish}>
+        <Form
+          {...layout}
+          ref={this.formRef}
+          name="nest-messages"
+          onFinish={onFinish}
+          initialValues={this.state}
+        >
           <Form.Item
             name="title"
             label="标题"
@@ -77,7 +105,7 @@ class ActiveEdit extends Component {
 
           <Editor
             apiKey="ocrbpn7ia4kvstfxk6hvcjhscdoy0520g6smzdynczfz7ef0"
-            initialValue=""
+            initialValue={this.state.content}
             init={{
               height: 500,
               menubar: true,
@@ -109,7 +137,7 @@ class ActiveEdit extends Component {
 }
 ActiveEdit.propTypes = {
   show: PropTypes.func.isRequired,
-  currentId: PropTypes.number,
+  currentRow: PropTypes.object,
   onEditSubmit: PropTypes.func.isRequired,
 }
 export default ActiveEdit

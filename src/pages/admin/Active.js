@@ -13,7 +13,7 @@ class Active extends Component {
     this.getActive()
     this.state = {
       // 当前行数据
-      currentId: '',
+      currentRow: {},
       showCreated: false,
       showEditActive: false,
       // 数据列表
@@ -22,6 +22,8 @@ class Active extends Component {
           title: '',
           created_date: '',
           key: '',
+          content: '',
+          openDate: '',
         },
       ],
     }
@@ -52,6 +54,8 @@ class Active extends Component {
   }
   onEditSubmit(data) {
     console.log(data)
+    this.getActive()
+    this.resetView()
     // 更新
     return
     createActiveEdit(data).then((res) => {
@@ -95,17 +99,14 @@ class Active extends Component {
     console.log(data)
   }
   onShowTable() {
-    console.log(this)
-    this.setState({
-      showCreated: false,
-    })
+    this.resetView()
   }
   onEdit(data) {
     console.log(data.id)
 
     this.setState({
-      showCreated: true,
-      currentId: data.id,
+      showEditActive: true,
+      currentRow: data,
     })
     // this.props.history.push({
     //   pathname: '/Admin/ActiveEdit',
@@ -181,7 +182,7 @@ class Active extends Component {
         {this.state.showEditActive && (
           <ActiveEdit
             show={this.onShowTable}
-            currentId={this.state.currentId}
+            currentRow={this.state.currentRow}
             onEditSubmit={this.onEditSubmit}
           ></ActiveEdit>
         )}
