@@ -50,6 +50,12 @@ function MenuCom(props) {
             <span>全景管理</span>
           </Link>
         </Menu.Item>
+        <Menu.Item key="Canvas">
+          <Link to="/Admin/CanvasView">
+            <PictureOutlined />
+            <span>Canvas</span>
+          </Link>
+        </Menu.Item>
         {/* <Menu.Item key="2">
         <DesktopOutlined />
         <span>Option 2</span>

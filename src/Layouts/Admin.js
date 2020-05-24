@@ -7,6 +7,7 @@ import '@/css/admin.css'
 import Upload from '@/component/Upload.js'
 import PostList from '@/component/PostList'
 import Active from '@/pages/admin/Active'
+import CanvasView from '@/pages/admin/CanvasView'
 // import ActiveEdit from '@/pages/admin/ActiveEdit'
 const { Header, Content, Footer, Sider } = Layout
 class Admin extends Component {
@@ -64,6 +65,11 @@ class Admin extends Component {
                   exact
                   path={`${match.url}/Active`}
                   component={Active}
+                ></Route>
+                <Route
+                  exact
+                  path={`${match.url}/CanvasView`}
+                  component={CanvasView}
                 ></Route>
               </div>
             </Content>

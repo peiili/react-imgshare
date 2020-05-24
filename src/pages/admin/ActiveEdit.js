@@ -32,9 +32,10 @@ class ActiveEdit extends Component {
       type: 2,
       address: this.props.currentRow.address || '',
       openDate: this.props.currentRow.openDate || '',
-      content: this.props.currentRow.content || '',
     })
-    console.log(this.state.title)
+    this.setState({
+      content: this.props.content,
+    })
   }
   componentWillUpdate() {}
   handleEditorChange = (content, editor) => {
@@ -55,6 +56,7 @@ class ActiveEdit extends Component {
         openDate: moment(values.openDate).format('YYYY-MM-DD HH:mm'),
         content: this.state.editorValue,
       }
+
       this.props.onEditSubmit(body)
     }
     // const [sss] = Form.useForm()
