@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Row, Col, Carousel, Button } from 'antd'
+import { Row, Col, Carousel, Button,Divider } from 'antd'
 import moment from 'moment'
-import Zmage from 'react-zmage'
 import './../css/imgblock.css'
+
 import { VerticalAlignBottomOutlined } from '@ant-design/icons'
 import { carouselList } from '@/api/index.js'
+
 class ImgBlock extends Component {
   constructor(props) {
     super(props)
@@ -14,6 +15,7 @@ class ImgBlock extends Component {
     }
     this.getCarouselList()
     this.getCarouselListAll()
+    
   }
   getCarouselList() {
     carouselList(5).then((res) => {
@@ -30,6 +32,7 @@ class ImgBlock extends Component {
     })
   }
   render() {
+    const { history } = this.props
     return (
       <div>
         <Carousel autoplay={true}>
@@ -43,34 +46,23 @@ class ImgBlock extends Component {
             </div>
           ))}
         </Carousel>
+        <div style={{margin:'20px 0'}}>
         <Button onClick={this.getCarouselListAll} type="primary">
           换一批
         </Button>
         <span>&nbsp;本站图片均来自必应</span>
-        <hr />
+        </div>
         <Row gutter={[16, 20]}>
           {this.state.pageList.map((item) => (
             <Col span={window.screen.width > 500 ? 6 : 12} key={item.id}>
-              <div className="imgblock">
-                {/* <img
+              <div className="imgblock" onClick={()=>{
+                  history.push(`/Home/imageDetail?data=${JSON.stringify(item)}`)
+              }}>
+                <img
                   className="imgWidth"
                   alt={item.describe}
-                  src={'http://www.dlsjf.top/' + item.name}
-                ></img> */}
-                <Zmage
-                  className="imgWidth"
-                  alt={item.describe}
-                  controller={{ download: true }}
-                  hotKey={{
-                    // 关闭（ESC）
-                    close: true,
-                    // 缩放（空格）
-                    zoom: true,
-                    // 翻页（左右）
-                    flip: true,
-                  }}
-                  src={'https://www.dlsjf.top/' + item.name}
-                ></Zmage>
+                  src={'http://www.dlsjf.top/' + item.name+'-123'}
+                 />
                 <div className="apron">
                   <div className="descText">
                     {item.describe.replace(/"/g, '')}

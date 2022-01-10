@@ -1,26 +1,27 @@
 import React from 'react'
 import { Menu, Avatar } from 'antd'
 import { Link } from 'react-router-dom'
-const { SubMenu } = Menu
+// const { SubMenu } = Menu
 function MenuCom(props) {
+
   return (
     <Menu className="menuStyle" mode="horizontal" theme="dark">
       {/* <div style={{ width: '80%', margin: '0 auto' }}>
               </div> */}
       <Menu.Item>
-        <Link to="/">PEIILI</Link>
+        <Link to="/">首页</Link>
       </Menu.Item>
-      <SubMenu title="壁纸">
+      {/* <SubMenu title="壁纸">
         <Menu.Item>
           <Link to="/Home/Bing">Bing</Link>
         </Menu.Item>
-      </SubMenu>
+      </SubMenu> */}
       <Menu.Item>
-        <Link to="/Home/FullView">全景</Link>
+        <Link to="/Home/Blog">博客</Link>
       </Menu.Item>
-      <Menu.Item>
+      {/* <Menu.Item>
         <Link to="/Login">LOGIN</Link>
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Item>
         <Avatar
           style={{
