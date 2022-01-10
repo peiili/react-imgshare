@@ -1,5 +1,6 @@
 .imgblock {
   position: relative;
+  cursor: pointer;
 }
 
 .imgWidth {
