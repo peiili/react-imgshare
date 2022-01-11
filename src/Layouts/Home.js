@@ -19,7 +19,7 @@ class Home extends Component {
         {/* nav导航组件 */}
         <MenuCom></MenuCom>
         {/* 内容 */}
-        <div style={{ marginTop: '10px' }}>
+        <div>
           <Route exact path="/" component={Imgblock}></Route>
           <Route path={`${match.url}/Bing`} component={Imgblock}></Route>
           <Route path={`${match.url}/Blog`} component={Blog}></Route>

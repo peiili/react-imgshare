@@ -25,7 +25,7 @@ class ImgBlock extends Component {
     })
   }
   getCarouselListAll = () => {
-    carouselList(20).then((res) => {
+    carouselList(12).then((res) => {
       this.setState({
         pageList: res.data,
       })
