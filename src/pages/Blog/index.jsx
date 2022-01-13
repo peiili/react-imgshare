@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Switch ,Link} from 'react-router-dom'
-import { Row, Col, Carousel, Button, List } from 'antd'
+import { Row, Col, Carousel, Divider, List } from 'antd'
 import { carouselList } from '@/api/index.js'
 import Article from './Article/index'
 import './index.css'
@@ -53,12 +53,16 @@ const Blog = (props) => {
                     </div>
                 ))}
             </Carousel>
-            <Router>
-                <Switch>
-                    <Route exact path={`${match.url}`} component={ItemList}></Route>
-                    <Route path={`${match.url}/article`} component={Article}></Route>
-                </Switch>
-            </Router>
+            <Row>
+                <Col span={window.screen.width > 500 ? 12 : 24} offset={window.screen.width > 500 ? 6 : 0}>
+                    <Router>
+                        <Switch>
+                            <Route exact path={`${match.url}`} component={ItemList}></Route>
+                            <Route path={`${match.url}/article`} component={Article}></Route>
+                        </Switch>
+                    </Router>
+                </Col>
+            </Row>
         </div >
     )
 }

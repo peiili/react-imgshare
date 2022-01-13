@@ -6,12 +6,18 @@ import 'easymde/dist/easymde.min.css'
 const Editor = (props) => {
     const { name, id } = props
     const formRef = useRef()
-    const [initialValues, setInitialValues] = useState({})
+    const [initialValues, setInitialValues] = useState({
+        title:'',
+        description:'',
+        content:''
+    })
     const layout = {
         labelCol: { span: 2 },
         wrapperCol: { span: 22 },
     }
     const onFinish = (values) => {
+        console.log(values);
+        console.log(initialValues);
         let body = {
             title: values.title,
             desc: values.description,
@@ -20,13 +26,19 @@ const Editor = (props) => {
         }
 
         props.submit(body)
-    }
+    } 
     const goBack = () => {
         props.goBack()
     }
     useEffect(() => {
         const easyMDE = new EasyMDE({element: document.getElementById('my-text-area')});
-        easyMDE.value('New input for **EasyMDE**');
+        // easyMDE.value('New input for **EasyMDE**');
+        easyMDE.codemirror.on("change", () => {
+            // console.log(easyMDE.value());
+            setInitialValues(Object.assign(initialValues,{
+                content:easyMDE.value()
+            }))
+        });
     }, [])
     return (
         <>  <div id="ActiveEdit">
@@ -47,14 +59,12 @@ const Editor = (props) => {
                 <Form.Item
                     name="description"
                     label="简介"
-                    rules={[{ required: true, message: '请填写简介' }]}
                 >
                     <Input.TextArea />
                 </Form.Item>
                 <Form.Item
-                    name="description"
-                    label="简介"
-                    rules={[{ required: true, message: '请填写简介' }]}
+                    name="content"
+                    label="正文"
                 >
                    <textarea id="my-text-area"></textarea>
                 </Form.Item>
