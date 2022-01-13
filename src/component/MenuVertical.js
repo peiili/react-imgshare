@@ -38,6 +38,12 @@ function MenuCom(props) {
             <span>个人页</span>
           </Link>
         </Menu.Item>
+        <Menu.Item key="Article">
+          <Link to="/Admin/Article">
+            <UnorderedListOutlined />
+            <span>文章</span>
+          </Link>
+        </Menu.Item>
         <Menu.Item key="活动列表">
           <Link to="/Admin/Active">
             <UnorderedListOutlined />
