@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Divider, PageHeader } from 'antd'
 import { marked } from 'marked'
+import { getBlogContent } from '@/api/articleApi'
+import querySearch from '@/assets/js/querySearch'
 const { Title, Text } = Typography;
 const Article = (props) => {
     const { location,history } = props
@@ -10,6 +12,17 @@ const Article = (props) => {
         content: ''
     })
     useEffect(() => {
+       const Obj =  querySearch(location.search.slice(1))
+        getBlogContent(Obj.id).then(res=>{
+            if(res.success){
+                const {title,description,content} = res.data[0]
+                setInitialValues({
+                    title,
+                    description,
+                    content,
+                })
+            }
+        })
         setInitialValues(Object.assign(initialValues, {
             title: '测试一下',
             description: '',
