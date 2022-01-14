@@ -1,29 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Route, Switch ,Link} from 'react-router-dom'
+import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import { Row, Col, Carousel, Divider, List } from 'antd'
+import moment from 'moment'
 import { carouselList } from '@/api/index.js'
+import { getBlogList } from '@/api/articleApi'
 import Article from './Article/index'
 import './index.css'
 const ItemList = (props) => {
-    const data = [
-        { id:'1',title: 'Racing car sprays burning fuel into crowd.', date: '2022-01-11' },
-        { id:'2',title: 'Japanese princess to wed commoner.', date: '2022-01-11' },
-        { id:'3',title: 'Australian walks 100km after outback crash.', date: '2022-01-11' },
-        { id:'4',title: 'Man charged over missing wedding girl.', date: '2022-01-11' },
-        { id:'5',title: 'Los Angeles battles huge wildfires.', date: '2022-01-11' },
-    ];
+    const [list,setList] = useState([])
+    useEffect(() => {
+        const params = {
+            type: '2',
+            fuzzy: '',
+            page: 1,
+            size: 10,
+        }
+        getBlogList(params).then(res => {
+            if (res.success) {
+                setList( res.data.map(e=>{
+                    return Object.assign(e,{
+                        date:moment(e.created_date).format('YYYY-MM-DD')
+                    })
+                }))
+            }
+        })
+    },[])
+    // const data = [
+    //     { id: '1', title: 'Racing car sprays burning fuel into crowd.', date: '2022-01-11' }
+    // ];
     return (
         <div className='list'>
             <List
                 header={<div><b>最新</b></div>}
-                dataSource={data}
+                dataSource={list}
                 split={true}
-                renderItem={item => <List.Item>
+                renderItem={item => <List.Item onClick={() => {
+                    props.history.push({ pathname: `/Home/Blog/article`, search: `id=${item.id}` })
+                }
+                }>
                     <List.Item.Meta
-                        title={<span onClick={()=>{
-                            props.history.push({ pathname:`/Home/Blog/article`, search:`id=${item.id}`})     
-                        }
-                        }>{item.title}</span>}
+                        title={<span>{item.title}</span>}
                     />
                     <div>{item.date}</div>
                 </List.Item>
