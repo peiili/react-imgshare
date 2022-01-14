@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Form, Input, Button } from 'antd'
 import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
+import { setBlogContent } from '@/api/articleApi'
 // const easyMDE = new EasyMDE();
 const Editor = (props) => {
     const { name, id } = props
@@ -16,16 +17,17 @@ const Editor = (props) => {
         wrapperCol: { span: 22 },
     }
     const onFinish = (values) => {
-        console.log(values);
-        console.log(initialValues);
         let body = {
             title: values.title,
-            desc: values.description,
-            type: 3,
-            content: values.editorValue,
+            description: values.description,
+            type: 2,
+            content: initialValues.content,
         }
-
-        props.submit(body)
+        setBlogContent(body).then(res=>{
+            if(res.success){
+                props.submit(body)
+            }
+        })
     } 
     const goBack = () => {
         props.goBack()

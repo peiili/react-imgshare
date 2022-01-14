@@ -20,3 +20,10 @@ export function getBlogList(params) {
 export function getBlogContent(id) {
   return HttpUtils.post(`/api/grabbag/getContent`,{id})
 }
+/**
+ * 写入文章
+ */
+ export function setBlogContent(params) {
+     const {title,content,description,type} = params
+    return HttpUtils.post(`/api/grabbag/addContent`,{title,content,description,type})
+  }
