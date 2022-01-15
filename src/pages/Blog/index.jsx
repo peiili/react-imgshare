@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom'
-import { Row, Col, Carousel, Divider, List } from 'antd'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import { Row, Col, Carousel, List } from 'antd'
 import moment from 'moment'
 import { carouselList } from '@/api/index.js'
 import { getBlogList } from '@/api/articleApi'

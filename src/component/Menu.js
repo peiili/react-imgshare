@@ -8,7 +8,7 @@ function MenuCom(props) {
     <Menu className="menuStyle" mode="horizontal" theme="dark">
       {/* <div style={{ width: '80%', margin: '0 auto' }}>
               </div> */}
-      <Menu.Item>
+      <Menu.Item key="1">
         <Link to="/">首页</Link>
       </Menu.Item>
       {/* <SubMenu title="壁纸">
@@ -16,7 +16,7 @@ function MenuCom(props) {
           <Link to="/Home/Bing">Bing</Link>
         </Menu.Item>
       </SubMenu> */}
-      <Menu.Item>
+      <Menu.Item key="2">
         <Link to="/Home/Blog">博客</Link>
       </Menu.Item>
       {/* <Menu.Item>

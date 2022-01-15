@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Row, Col } from 'antd'
 import './../css/imgblock.css'
 import { useLocation } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 const ImageDetail = () => {
   const search = useLocation().search.split('=')[1]
   const data = JSON.parse(decodeURIComponent(search))
-  const [item, setItem] = useState(data);
+  const item = data;
   return (
     <div>
       <div className="imgWidth">

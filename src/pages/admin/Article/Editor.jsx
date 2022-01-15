@@ -5,7 +5,6 @@ import 'easymde/dist/easymde.min.css'
 import { setBlogContent } from '@/api/articleApi'
 // const easyMDE = new EasyMDE();
 const Editor = (props) => {
-    const { name, id } = props
     const formRef = useRef()
     const [initialValues, setInitialValues] = useState({
         title:'',
@@ -28,7 +27,7 @@ const Editor = (props) => {
                 props.submit(body)
             }
         })
-    } 
+    }
     const goBack = () => {
         props.goBack()
     }
@@ -41,7 +40,7 @@ const Editor = (props) => {
                 content:easyMDE.value()
             }))
         });
-    }, [])
+    }, [initialValues])
     return (
         <>  <div id="ActiveEdit">
             <Form

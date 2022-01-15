@@ -3,7 +3,7 @@ import { Typography, Divider, PageHeader } from 'antd'
 import { marked } from 'marked'
 import { getBlogContent } from '@/api/articleApi'
 import querySearch from '@/assets/js/querySearch'
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const Article = (props) => {
     const { location,history } = props
     const [initialValues, setInitialValues] = useState({
@@ -19,16 +19,11 @@ const Article = (props) => {
                 setInitialValues({
                     title,
                     description,
-                    content,
+                    content: marked.parse(content),
                 })
             }
         })
-        setInitialValues(Object.assign(initialValues, {
-            title: '测试一下',
-            description: '',
-            content: marked.parse('# Marked in the browser\n\nRendered by **marked**.')
-        }))
-    }, [])
+    }, [initialValues, location.search])
     return (
         <>
             <PageHeader
