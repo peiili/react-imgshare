@@ -44,13 +44,13 @@ class Admin extends Component {
           <Layout className="site-layout">
             <Header className="site-layout-background" style={{ padding: 0 }} />
             <Content style={{ margin: '0 16px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
+              {/* <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>User</Breadcrumb.Item>
                 <Breadcrumb.Item>{this.state.currentPage}</Breadcrumb.Item>
-              </Breadcrumb>
+              </Breadcrumb> */}
               <div
                 className="site-layout-background"
-                style={{ padding: 24, minHeight: 360 }}
+                style={{ padding: 24, minHeight: 360,marginTop:'15px' }}
               >
                 <Route
                   exact

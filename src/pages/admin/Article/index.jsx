@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Button, Space } from 'antd'
 import moment from 'moment'
-import { getActiveList, createActiveEdit } from '@/api'
+import { getBlogList } from '@/api/articleApi'
 import Editor from './Editor'
 const Article = () => {
   const [dataList, setDataList] = useState([])
   const [show, setShow] = useState('list')
   const [currentId, setCurrentId] = useState('')
   const getActive = () => {
-    getActiveList(3).then((res) => {
+    const params = {
+      type: '2',
+      fuzzy: '',
+      page: 1,
+      size: 10,
+  }
+    getBlogList(params).then((res) => {
       if (res.success) {
         res.data.forEach((e) => {
           e.key = e.id
@@ -17,6 +23,9 @@ const Article = () => {
       }
     })
   }
+  // onDeleteActive().then(()=>{
+
+  // })
   const onShowCreated = () => {
     setShow('add')
   }
@@ -69,7 +78,14 @@ const Article = () => {
           >
             添加活动
           </Button>
-          <Table dataSource={dataList} columns={columns} />
+          <Table
+          dataSource={dataList}
+          columns={columns}
+          pagination={{
+            current:'1',
+            total:'50'
+          }}
+          size="small"/>
         </div>
       }
       {show === 'add' && <Editor name='add' goBack={() => {

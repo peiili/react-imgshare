@@ -32,7 +32,10 @@ const Article = (props) => {
                 title={initialValues.title}
             />
             <div style={{ margin: '20px' }}>
+              {
+                initialValues.description&&
                 <Text type="secondary">{initialValues.description}</Text>
+              }
                 <Divider plain></Divider>
                 <div dangerouslySetInnerHTML={{ __html: initialValues.content }}></div>
             </div>

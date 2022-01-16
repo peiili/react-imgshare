@@ -39,7 +39,7 @@ const ItemList = (props) => {
                 }
                 }>
                     <List.Item.Meta
-                        title={<span>{item.title}</span>}
+                        title={<span style={{cursor: 'pointer'}}>{item.title}</span>}
                     />
                     <div>{item.date}</div>
                 </List.Item>

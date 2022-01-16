@@ -14,7 +14,7 @@ export function getBlogList(params) {
 }
 /**
  * 获取文章详情
- * @method 
+ * @method
  * @param {String} id
  */
 export function getBlogContent(id) {
@@ -26,4 +26,11 @@ export function getBlogContent(id) {
  export function setBlogContent(params) {
      const {title,content,description,type} = params
     return HttpUtils.post(`/api/grabbag/addContent`,{title,content,description,type})
+  }
+/**
+ * 更新文章
+ */
+ export function putBlogContent(params) {
+     const {id,title,content,description,type} = params
+    return HttpUtils.put(`/api/grabbag/putContent`,{id,title,content,description,type})
   }
