@@ -16,6 +16,17 @@ const Article = (props) => {
         getBlogContent(Obj.id).then(res=>{
             if(res.success){
                 const {title,description,content} = res.data[0]
+
+                marked.setOptions({
+                  gfm: true,
+                  tables: true,
+                  breaks: true,
+                  pedantic: false,
+                  sanitize: true,
+                  smartLists: true,
+                  smartypants: false,
+                  langPrefix: false
+                });
                 setInitialValues({
                     title,
                     description,
@@ -23,7 +34,7 @@ const Article = (props) => {
                 })
             }
         })
-    }, [initialValues, location.search])
+    }, [location.search])
     return (
         <>
             <PageHeader

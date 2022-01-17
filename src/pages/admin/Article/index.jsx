@@ -13,7 +13,7 @@ const Article = () => {
       fuzzy: '',
       page: 1,
       size: 10,
-  }
+    }
     getBlogList(params).then((res) => {
       if (res.success) {
         res.data.forEach((e) => {
@@ -23,9 +23,6 @@ const Article = () => {
       }
     })
   }
-  // onDeleteActive().then(()=>{
-
-  // })
   const onShowCreated = () => {
     setShow('add')
   }
@@ -76,22 +73,23 @@ const Article = () => {
             type="primary"
             style={{ marginBottom: 16 }}
           >
-            添加活动
+            添加文章
           </Button>
           <Table
-          dataSource={dataList}
-          columns={columns}
-          pagination={{
-            current:'1',
-            total:'50'
-          }}
-          size="small"/>
+            dataSource={dataList}
+            columns={columns}
+            pagination={{
+              current: '1',
+              total: '50'
+            }}
+            size="small" />
         </div>
       }
       {show === 'add' && <Editor name='add' goBack={() => {
         setShow('list')
       }} submit={() => {
         setShow('list')
+        getActive()
       }}></Editor>
       }
       {
@@ -99,6 +97,7 @@ const Article = () => {
           setShow('list')
         }} submit={() => {
           setShow('list')
+          getActive()
         }}></Editor>
       }
 
