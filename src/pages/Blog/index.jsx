@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import { Row, Col, Carousel, List } from 'antd'
+import { Button,Row, Col, Carousel, List } from 'antd'
 import moment from 'moment'
 import { carouselList } from '@/api/index.js'
 import { getBlogList } from '@/api/articleApi'
@@ -8,6 +8,8 @@ import Article from './Article/index'
 import './index.css'
 const ItemList = (props) => {
     const [list,setList] = useState([])
+    const [initLoading,setInitLoading] = useState(true)
+    const [loading,setLoading] = useState(false)
     useEffect(() => {
         const params = {
             type: '2',
@@ -28,12 +30,28 @@ const ItemList = (props) => {
     // const data = [
     //     { id: '1', title: 'Racing car sprays burning fuel into crowd.', date: '2022-01-11' }
     // ];
+    const onLoadMore = ()=>{
+
+    }
+    const loadMore = !initLoading && !loading ? (
+      <div
+        style={{
+          textAlign: 'center',
+          marginTop: 12,
+          height: 32,
+          lineHeight: '32px',
+        }}
+      >
+        <Button onClick={onLoadMore}>加载更多</Button>
+      </div>
+    ) : null;
     return (
         <div className='list'>
             <List
                 header={<div><b>最新</b></div>}
                 dataSource={list}
                 split={true}
+                loadMore={loadMore}
                 renderItem={item => <List.Item onClick={() => {
                     props.history.push({ pathname: `/Home/Blog/article`, search: `id=${item.id}` })
                 }
@@ -69,6 +87,7 @@ const Blog = (props) => {
                     </div>
                 ))}
             </Carousel>
+            <div style={{background:'#fff',paddingBottom:'15vh'}}>
             <Row>
                 <Col span={window.screen.width > 500 ? 12 : 24} offset={window.screen.width > 500 ? 6 : 0}>
                     <Router>
@@ -79,6 +98,7 @@ const Blog = (props) => {
                     </Router>
                 </Col>
             </Row>
+            </div>
         </div >
     )
 }
