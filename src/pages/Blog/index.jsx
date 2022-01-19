@@ -1,49 +1,72 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import { Button,Row, Col, Carousel, List } from 'antd'
+import { Button, Row, Col, Carousel, List } from 'antd'
 import moment from 'moment'
 import { carouselList } from '@/api/index.js'
 import { getBlogList } from '@/api/articleApi'
 import Article from './Article/index'
 import './index.css'
 const ItemList = (props) => {
-    const [list,setList] = useState([])
-    const [initLoading,setInitLoading] = useState(true)
-    const [loading,setLoading] = useState(false)
-    useEffect(() => {
-        const params = {
-            type: '2',
-            fuzzy: '',
-            page: 1,
-            size: 10,
-        }
-        getBlogList(params).then(res => {
+    const [list, setList] = useState([])
+    const [query, setQuery] = useState({
+        count: 0,
+        totalPage: 0,
+        type: '2',
+        fuzzy: '',
+        page: 1,
+        status: '1',
+        size: 2,
+    })
+    const [initLoading, setInitLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const getList = () => {
+        const {fuzzy,page,status,size,type} = query
+        getBlogList({fuzzy,page,status,size,type}).then(res => {
             if (res.success) {
-                setList( res.data.map(e=>{
-                    return Object.assign(e,{
-                        date:moment(e.created_date).format('YYYY-MM-DD')
+                setQuery({
+                    ...query,
+                    count: res.data.count,
+                    totalPage: res.data.total
+                })
+                const arr = res.data.list.map(e => {
+                    return Object.assign(e, {
+                        date: moment(e.created_date).format('YYYY-MM-DD')
                     })
-                }))
+                })
+                setLoading(false)
+                console.log(query.page>=res.data.total);
+                if(query.page>=res.data.total){
+                    setInitLoading(true)
+                }else{
+                    setInitLoading(false)
+                }
+                setList([...list, ...arr])
             }
         })
-    },[])
-    // const data = [
-    //     { id: '1', title: 'Racing car sprays burning fuel into crowd.', date: '2022-01-11' }
-    // ];
-    const onLoadMore = ()=>{
+    }
+    useEffect(() => {
+        getList()
+    }, [])
+    const onLoadMore = () => {
+        const currentPage = query.page+1
+        console.log(currentPage);
+        setQuery({...query,page:currentPage})
+        console.log(query);
+        setLoading(true)
+        getList()
 
     }
     const loadMore = !initLoading && !loading ? (
-      <div
-        style={{
-          textAlign: 'center',
-          marginTop: 12,
-          height: 32,
-          lineHeight: '32px',
-        }}
-      >
-        <Button onClick={onLoadMore}>加载更多</Button>
-      </div>
+        <div
+            style={{
+                textAlign: 'center',
+                marginTop: 12,
+                height: 32,
+                lineHeight: '32px',
+            }}
+        >
+            <Button onClick={onLoadMore}>加载更多</Button>
+        </div>
     ) : null;
     return (
         <div className='list'>
@@ -52,12 +75,13 @@ const ItemList = (props) => {
                 dataSource={list}
                 split={true}
                 loadMore={loadMore}
+                loading={initLoading}
                 renderItem={item => <List.Item onClick={() => {
                     props.history.push({ pathname: `/Home/Blog/article`, search: `id=${item.id}` })
                 }
                 }>
                     <List.Item.Meta
-                        title={<span style={{cursor: 'pointer'}}>{item.title}</span>}
+                        title={<span style={{ cursor: 'pointer' }}>{item.title}</span>}
                     />
                     <div>{item.date}</div>
                 </List.Item>
@@ -87,17 +111,17 @@ const Blog = (props) => {
                     </div>
                 ))}
             </Carousel>
-            <div style={{background:'#fff',paddingBottom:'15vh'}}>
-            <Row>
-                <Col span={window.screen.width > 500 ? 12 : 24} offset={window.screen.width > 500 ? 6 : 0}>
-                    <Router>
-                        <Switch>
-                            <Route exact path={`${match.url}`} component={ItemList}></Route>
-                            <Route path={`${match.url}/article`} component={Article}></Route>
-                        </Switch>
-                    </Router>
-                </Col>
-            </Row>
+            <div style={{ background: '#fff', paddingBottom: '15vh' }}>
+                <Row>
+                    <Col span={window.screen.width > 500 ? 12 : 24} offset={window.screen.width > 500 ? 6 : 0}>
+                        <Router>
+                            <Switch>
+                                <Route exact path={`${match.url}`} component={ItemList}></Route>
+                                <Route path={`${match.url}/article`} component={Article}></Route>
+                            </Switch>
+                        </Router>
+                    </Col>
+                </Row>
             </div>
         </div >
     )
