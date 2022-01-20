@@ -8,19 +8,23 @@ import Article from './Article/index'
 import './index.css'
 const ItemList = (props) => {
     const [list, setList] = useState([])
+    const [pageObj, setPageObj] = useState({
+        size: 10,
+        page: 1,
+    })
     const [query, setQuery] = useState({
         count: 0,
         totalPage: 0,
         type: '2',
         fuzzy: '',
-        page: 1,
         status: '1',
-        size: 2,
     })
     const [initLoading, setInitLoading] = useState(true)
     const [loading, setLoading] = useState(false)
     const getList = () => {
-        const {fuzzy,page,status,size,type} = query
+        const {fuzzy,status,type} = query
+        const {page,size} = pageObj
+        
         getBlogList({fuzzy,page,status,size,type}).then(res => {
             if (res.success) {
                 setQuery({
@@ -34,8 +38,8 @@ const ItemList = (props) => {
                     })
                 })
                 setLoading(false)
-                console.log(query.page>=res.data.total);
-                if(query.page>=res.data.total){
+                // console.log(pageObj.page>=res.data.total);
+                if(pageObj.page>=res.data.total){
                     setInitLoading(true)
                 }else{
                     setInitLoading(false)
@@ -47,16 +51,15 @@ const ItemList = (props) => {
     useEffect(() => {
         getList()
     }, [])
-    const onLoadMore = () => {
-        const currentPage = query.page+1
-        console.log(currentPage);
-        setQuery({...query,page:currentPage})
-        console.log(query);
-        setLoading(true)
+    useEffect(() => {
         getList()
-
+    }, [pageObj])
+    const onLoadMore = () => {
+        const currentPage = pageObj.page+1
+        setPageObj({...pageObj,page:currentPage})
+        setLoading(true)
     }
-    const loadMore = !initLoading && !loading ? (
+    const loadMore = !initLoading ? (
         <div
             style={{
                 textAlign: 'center',
@@ -65,7 +68,7 @@ const ItemList = (props) => {
                 lineHeight: '32px',
             }}
         >
-            <Button onClick={onLoadMore}>加载更多</Button>
+            <Button loading={loading} onClick={onLoadMore}>加载更多</Button>
         </div>
     ) : null;
     return (
@@ -75,7 +78,7 @@ const ItemList = (props) => {
                 dataSource={list}
                 split={true}
                 loadMore={loadMore}
-                loading={initLoading}
+                loading={false}
                 renderItem={item => <List.Item onClick={() => {
                     props.history.push({ pathname: `/Home/Blog/article`, search: `id=${item.id}` })
                 }
