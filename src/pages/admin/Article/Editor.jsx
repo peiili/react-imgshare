@@ -23,6 +23,7 @@ const Editor = (props) => {
       title: values.title,
       description: values.description,
       type: 2,
+      status:1,
       content: content,
     }
     if (id) {

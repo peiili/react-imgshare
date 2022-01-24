@@ -24,13 +24,19 @@ export function getBlogContent(id) {
  * 写入文章
  */
  export function setBlogContent(params) {
-     const {title,content,description,type} = params
-    return HttpUtils.post(`/api/grabbag/addContent`,{title,content,description,type})
+     const {title,content,description,type,status} = params
+    return HttpUtils.post(`/api/grabbag/addContent`,{title,content,description,type,status})
   }
 /**
  * 更新文章
  */
  export function putBlogContent(params) {
-     const {id,title,content,description,type} = params
-    return HttpUtils.put(`/api/grabbag/putContent`,{id,title,content,description,type})
-  }
+     const {id,title,content,description,type,status} = params
+    return HttpUtils.put(`/api/grabbag/putContent`,{id,title,content,description,type,status})
+ }
+/**
+ * 删除文章
+ */
+ export function delBlogContent(id) {
+    return HttpUtils.delete(`/api/grabbag/delContent?id=${id}`)
+ }

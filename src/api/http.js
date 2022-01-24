@@ -49,4 +49,23 @@ export default class HttpUtils {
         })
     })
   }
+  static delete = (url, data) => {
+    return new Promise((resolve, reject) => {
+      fetch(url, {
+        method: 'delete',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          resolve(result)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  }
 }

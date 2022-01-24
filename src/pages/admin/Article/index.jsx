@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Button, Space } from 'antd'
+import { Table, Button, Space,Modal } from 'antd'
 import moment from 'moment'
-import { getBlogList } from '@/api/articleApi'
+import { getBlogList,delBlogContent } from '@/api/articleApi'
 import Editor from './Editor'
 const Article = () => {
   const [dataList, setDataList] = useState([])
   const [show, setShow] = useState('list')
   const [currentId, setCurrentId] = useState('')
+  const [delVisible, setDelVisible] = useState('')
+  const [confirmLoading, setConfirmLoading] = useState(false);
   const getActive = () => {
     const params = {
       type: '2',
       fuzzy: '',
       page: 1,
       size: 10,
+      status:1
     }
     getBlogList(params).then((res) => {
       if (res.success) {
-        res.data.forEach((e) => {
+        res.data.list.forEach((e) => {
           e.key = e.id
         })
-        setDataList(res.data)
+        setDataList(res.data.list)
       }
     })
   }
@@ -27,9 +30,25 @@ const Article = () => {
     setShow('add')
   }
   const onEdit = (record) => {
-    console.log(record.id);
     setCurrentId(record.id)
     setShow('edit')
+  }
+  const onDeleteActive = (record) => {
+    setCurrentId(record.id)
+    setDelVisible(true);
+  }
+  const handleOk = (record) => {
+    setConfirmLoading(true)
+    delBlogContent(currentId).then(res=>{
+      if(res.success){
+        setConfirmLoading(false)
+        setDelVisible(false)
+        getActive()
+      }
+    })
+  }
+  const handleCancel = (record) => {
+    setDelVisible(false)
   }
   useEffect(() => {
     getActive()
@@ -56,9 +75,9 @@ const Article = () => {
         <Space>
           {/* <Button onClick={() => Check(record)}>查看</Button> */}
           <Button onClick={() => onEdit(record)}>编辑</Button>
-          {/* <Button type="danger" onClick={() => onDeleteActive(record)}>
+          <Button type="danger" onClick={() => onDeleteActive(record)}>
             删除
-          </Button> */}
+          </Button>
         </Space>
       ),
     },
@@ -100,7 +119,15 @@ const Article = () => {
           getActive()
         }}></Editor>
       }
-
+      <Modal
+        title="Title"
+        visible={delVisible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <p>确认删除</p>
+      </Modal>
     </>
   )
 }
