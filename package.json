@@ -35,6 +35,7 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "file-loader": "4.3.0",
     "fs-extra": "^8.1.0",
+    "highlight.js": "^11.4.0",
     "html-webpack-plugin": "4.0.0-beta.11",
     "http-proxy-middleware": "^2.0.1",
     "identity-obj-proxy": "3.0.0",
@@ -81,7 +82,7 @@
   "proxy": "http://192.168.199.215:5166",
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build&&bash ./sync.sh",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

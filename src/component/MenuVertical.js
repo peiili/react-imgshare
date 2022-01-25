@@ -26,18 +26,18 @@ function MenuCom(props) {
         mode="inline"
         onSelect={selectItem}
       >
-        <Menu.Item key="文件上传">
+        {/* <Menu.Item key="文件上传">
           <Link to="/Admin/Upload">
             <UploadOutlined />
             <span>文件上传</span>
           </Link>
-        </Menu.Item>
-        <Menu.Item key="个人页">
+        </Menu.Item> */}
+        {/* <Menu.Item key="个人页">
           <Link to="/Admin/User">
             <UserOutlined />
             <span>个人页</span>
           </Link>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="Article">
           <Link to="/Admin/Article">
             <UnorderedListOutlined />
@@ -50,18 +50,18 @@ function MenuCom(props) {
             <span>活动列表</span>
           </Link>
         </Menu.Item>
-        <Menu.Item key="全景管理">
+        {/* <Menu.Item key="全景管理">
           <Link to="/Admin/FullViewAdmin">
             <PictureOutlined />
             <span>全景管理</span>
           </Link>
-        </Menu.Item>
-        <Menu.Item key="Canvas">
+        </Menu.Item> */}
+        {/* <Menu.Item key="Canvas">
           <Link to="/Admin/CanvasView">
             <PictureOutlined />
             <span>Canvas</span>
           </Link>
-        </Menu.Item>
+        </Menu.Item> */}
         {/* <Menu.Item key="2">
         <DesktopOutlined />
         <span>Option 2</span>
