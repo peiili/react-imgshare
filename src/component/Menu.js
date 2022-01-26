@@ -3,12 +3,12 @@ import { Menu, Avatar } from 'antd'
 import { Link } from 'react-router-dom'
 // const { SubMenu } = Menu
 function MenuCom(props) {
-
+  const {location} = props
   return (
-    <Menu className="menuStyle" mode="horizontal" theme="dark">
+    <Menu className="menuStyle" mode="horizontal" theme="dark"  defaultSelectedKeys={[location.pathname]}>
       {/* <div style={{ width: '80%', margin: '0 auto' }}>
               </div> */}
-      <Menu.Item key="1">
+      <Menu.Item key="/">
         <Link to="/">首页</Link>
       </Menu.Item>
       {/* <SubMenu title="壁纸">
@@ -16,13 +16,13 @@ function MenuCom(props) {
           <Link to="/Home/Bing">Bing</Link>
         </Menu.Item>
       </SubMenu> */}
-      <Menu.Item key="2">
+      <Menu.Item key="/Home/Blog">
         <Link to="/Home/Blog">博客</Link>
       </Menu.Item>
       {/* <Menu.Item>
         <Link to="/Login">LOGIN</Link>
       </Menu.Item> */}
-      <Menu.Item>
+      <Menu.Item  key="3">
         <Avatar
           style={{
             color: '#f56a00',

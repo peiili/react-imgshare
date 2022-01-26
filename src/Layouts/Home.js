@@ -10,14 +10,19 @@ import './../css/Home.css'
 // import Login from './Login'
 class Home extends Component {
   constructor(props) {
+    const { location, history } = props
     super(props)
+    this.state = {
+      location,
+      history,
+    }
   }
   render() {
     const { match } = this.props
     return (
       <div id="Home">
         {/* nav导航组件 */}
-        <MenuCom></MenuCom>
+        <MenuCom location={this.state.location} history={this.state.history}></MenuCom>
         {/* 内容 */}
         <div>
           <Route exact path="/" component={Imgblock}></Route>
