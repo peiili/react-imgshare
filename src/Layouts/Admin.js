@@ -13,10 +13,13 @@ import Article from '@/pages/admin/Article/index'
 const { Header, Content, Footer, Sider } = Layout
 class Admin extends Component {
   constructor(props) {
+    const { location, history } = props
     super(props)
     this.state = {
       collapsed: false,
       currentPage: '',
+      location,
+      history,
     }
     this.onCollapse = (collapsed) => {
       console.log(collapsed)
@@ -39,7 +42,7 @@ class Admin extends Component {
             onCollapse={this.onCollapse}
           >
             <div className="logo" />
-            <MenuVertical currentSelect={this.changeBread}></MenuVertical>
+            <MenuVertical currentSelect={this.changeBread} location={this.state.location} history={this.state.history}></MenuVertical>
           </Sider>
           <Layout className="site-layout">
             <Header className="site-layout-background" style={{ padding: 0 }} />
