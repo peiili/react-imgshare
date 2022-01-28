@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'next/router'
 import { Row, Col, Carousel, Button, Divider } from 'antd'
 import moment from 'moment'
 import style from './style.module.css'
@@ -9,9 +10,11 @@ import Layout from './../Layouts'
 class ImgBlock extends Component {
   constructor(props) {
     super(props)
+    const {router } =props
     this.state = {
       poolData: [],
       pageList: [],
+      router
     }
     this.getCarouselList()
     this.getCarouselListAll()
@@ -57,7 +60,7 @@ class ImgBlock extends Component {
             {this.state.pageList.map((item) => (
               <Col span={window.screen.width > 500 ? 6 : 12} key={item.id}>
                 <div className={style.imgblock} onClick={() => {
-                  history.push(`/Home/imageDetail?data=${JSON.stringify(item)}`)
+                  this.state.router.push(`/Home/ImageDetail.html?data=${JSON.stringify(item)}`)
                 }}>
                   <img
                     className={style.imgWidth}
@@ -94,4 +97,4 @@ class ImgBlock extends Component {
     )
   }
 }
-export default ImgBlock
+export default withRouter(ImgBlock)

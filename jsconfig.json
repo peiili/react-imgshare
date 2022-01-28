@@ -4,11 +4,11 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"]
     }
   },
   "include": [
-    "src/**/*"
+    "pages/**/*"
   ],
   "exclude": [
     "node_modules"
