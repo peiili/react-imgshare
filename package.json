@@ -69,9 +69,7 @@
   },
   "devDependencies": {
     "next": "^12.0.8",
-    "express": "^4.17.2",
     "less": "^4.1.2",
-    "http-proxy-middleware": "^2.0.2",
     "sass-loader": "8.0.2",
     "style-loader": "0.23.1",
     "webpack": "4.41.5",
@@ -83,7 +81,7 @@
     "moment": "2.24.0"
   },
   "scripts": {
-    "dev": "set NODE_ENV=development&&node server.js",
+    "dev": "next dev --port 80",
     "buildnext": "next build",
     "startnext": "next start",
     "lintnext": "next lint",

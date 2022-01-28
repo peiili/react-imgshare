@@ -11,4 +11,12 @@ module.exports = {
           },
         ]
       },
+    async rewrites() {
+        return [
+          {
+            source: '/api/:path*',
+            destination: 'https://xek.dlsjf.top/api/:path*' // Proxy to Backend
+          }
+        ]
+      }
 }
