@@ -82,7 +82,7 @@ const ItemList = (props) => {
                 loadMore={loadMore}
                 loading={false}
                 renderItem={item => <List.Item onClick={() => {
-                    router.push(`/Home/Blog.html/Article?id=${item.id}`)
+                    router.push(`/Home/Blog/Article?id=${item.id}`)
                 }
                 }>
                     <List.Item.Meta
@@ -96,7 +96,6 @@ const ItemList = (props) => {
         </div>)
 }
 const Blog = (props) => {
-    const { match } = props
     const [poolData, setPoolData] = useState([])
     const [windowWidth,setWindowWidth] = useState(0);
     useEffect(() => {
