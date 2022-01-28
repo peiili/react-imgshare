@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react'
 import { Row, Col } from 'antd'
 import { useRouter } from 'next/router'
 import style from './index.module.css'
-import Layout from './../Layouts'
+import Layout from '../Layouts'
 const ImageDetail = () => {
   const router = useRouter();
   const [item,setItem] = useState({});

@@ -5,7 +5,7 @@ import { marked } from 'marked'
 import { getBlogContent } from '@/api/articleApi'
 import { carouselList } from '@/api/index'
 import style from './index.module.css'
-import Layout from './../../Layouts'
+import Layout from '../../Layouts'
 const { Text } = Typography;
 const Article = () => {
     const router = useRouter()

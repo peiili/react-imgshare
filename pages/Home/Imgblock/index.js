@@ -60,7 +60,7 @@ class ImgBlock extends Component {
             {this.state.pageList.map((item) => (
               <Col span={window.screen.width > 500 ? 6 : 12} key={item.id}>
                 <div className={style.imgblock} onClick={() => {
-                  this.state.router.push(`/Home/ImageDetail.html?data=${JSON.stringify(item)}`)
+                  this.state.router.push(`/Home/ImageDetail?data=${JSON.stringify(item)}`)
                 }}>
                   <img
                     className={style.imgWidth}

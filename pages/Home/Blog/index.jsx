@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { Button, Row, Col, Carousel, List } from 'antd'
 import moment from 'moment'
-import Layout from './../Layouts'
+import Layout from '../Layouts'
 import { carouselList } from '@/api/index'
 import { getBlogList } from '@/api/articleApi'
 import Article from './Article/index'
