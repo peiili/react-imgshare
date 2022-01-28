@@ -9,8 +9,8 @@ function MenuCom(props) {
       <Menu.Item key="/Home/Imgblock">
         <Link href="/Home/Imgblock">首页</Link>
       </Menu.Item>
-      <Menu.Item key="/Home/Blog">
-        <Link href="/Home/Blog">博客</Link>
+      <Menu.Item key="/Home/Blog.html">
+        <Link href="/Home/Blog.html">博客</Link>
       </Menu.Item>
       <Menu.Item  key="3">
         <Avatar

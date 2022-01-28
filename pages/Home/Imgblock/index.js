@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'next/router'
-import { Row, Col, Carousel, Button, Divider } from 'antd'
+import { Row, Col, Carousel, Button } from 'antd'
 import moment from 'moment'
 import style from './style.module.css'
 

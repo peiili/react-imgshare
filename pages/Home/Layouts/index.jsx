@@ -1,5 +1,5 @@
 import React from 'react'
-import HomeLayout  from '../../../component/HomeLayout'
+import HomeLayout  from '@/components/HomeLayout'
 // import PostList from '@/component/PostList'
 // import Blog from '@/pages/Blog'
 // import ImageDetail from '@/pages/ImageDetail'

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 // import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import { useRouter } from 'next/router'
 // import Login from './pages/Login'
 // import Home from './Layouts/Home'
 // import Admin from '@/Layouts/Admin'

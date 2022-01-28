@@ -1,6 +1,6 @@
 import React from 'react'
-import Footer from '@/component/Footer'
-import MenuCom from '@/component/Menu'
+import Footer from '@/components/Footer'
+import MenuCom from '@/components/Menu'
 import style from  './style.module.css'
 const HomeLayout = (props)=>{
       return (

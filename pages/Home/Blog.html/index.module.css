@@ -1,0 +1,11 @@
+.blog-list{
+    /* margin-bottom: 20vh; */
+}
+.imgStyle {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+.list{
+    padding: 0 10px;
+}
