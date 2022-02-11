@@ -5,7 +5,6 @@ import moment from 'moment'
 import Layout from '../Layouts'
 import { carouselList } from '@/api/index'
 import { getBlogList } from '@/api/articleApi'
-import Article from './Article/index'
 import style from './index.module.css'
 const ItemList = (props) => {
     const router = useRouter()

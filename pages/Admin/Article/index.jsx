@@ -3,9 +3,32 @@ import { Table, Button, Space, Modal } from 'antd'
 import moment from 'moment'
 import { getBlogList, delBlogContent } from '@/api/articleApi'
 import AdminLayout from '@/components/AdminLayout'
-import Editor from './Editor'
-const Article = () => {
-  const [dataList, setDataList] = useState([])
+// import Editor from './Editor'
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const params = {
+    type: '2',
+    fuzzy: '',
+    page: 1,
+    size: 10,
+    status:1
+  }
+  const res = await  getBlogList(params)
+  let data = {}
+  if (res.success) {
+    res.data.list.forEach((e) => {
+      e.key = e.id
+    })
+    data = res.data.list
+  }
+  // Pass data to the page via props
+  return { props: { data } }
+}
+const Article = (props) => {
+  const {data} = props
+  const [dataList, setDataList] = useState(data)
+  
   const [show, setShow] = useState('list')
   const [currentId, setCurrentId] = useState('')
   const [delVisible, setDelVisible] = useState('')
@@ -52,7 +75,7 @@ const Article = () => {
     setDelVisible(false)
   }
   useEffect(() => {
-    getActive()
+      // getActive()
   }, [])
   const columns = [
     {
@@ -105,7 +128,7 @@ const Article = () => {
             size="small" />
         </div>
       }
-      {show === 'add' && <Editor name='add' goBack={() => {
+      {/* {show === 'add' && <Editor name='add' goBack={() => {
         setShow('list')
       }} submit={() => {
         setShow('list')
@@ -119,7 +142,7 @@ const Article = () => {
           setShow('list')
           getActive()
         }}></Editor>
-      }
+      } */}
       <Modal
         title="Title"
         visible={delVisible}
