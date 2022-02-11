@@ -6,16 +6,39 @@ import Layout from '../Layouts'
 import { carouselList } from '@/api/index'
 import { getBlogList } from '@/api/articleApi'
 import style from './index.module.css'
+export async function getServerSideProps(context) {
+    let img = []
+    const res1 = await carouselList(1)
+    if (res1.success) {
+        img = res1.data
+    }
+    let contents = []
+    let count=''
+    let totalPage=''
+    const res2 =await getBlogList({ fuzzy:'',page: '1',status: '1', size:'10', type:'2' })
+    if(res2.success){
+        count=res2.data.count
+        totalPage=res2.data.total
+        contents = res2.data.list.map(e => {
+            return Object.assign(e, {
+                date: moment(e.created_date).format('YYYY-MM-DD')
+            })
+        })
+    }
+   
+    return { props: { img, contents,count,totalPage } }
+}
 const ItemList = (props) => {
+    const {contents,count,totalPage} = props
     const router = useRouter()
-    const [list, setList] = useState([])
+    const [list, setList] = useState(contents)
     const [pageObj, setPageObj] = useState({
         size: 10,
         page: 1,
     })
     const [query, setQuery] = useState({
-        count: 0,
-        totalPage: 0,
+        count: count,
+        totalPage: totalPage,
         type: '2',
         fuzzy: '',
         status: '1',
@@ -49,15 +72,16 @@ const ItemList = (props) => {
             }
         })
     }
+    // useEffect(() => {
+    //     getList()
+    // }, [])
     useEffect(() => {
-        getList()
-    }, [])
-    useEffect(() => {
-        getList()
+        // getList()
     }, [pageObj])
     const onLoadMore = () => {
         const currentPage = pageObj.page + 1
         setPageObj({ ...pageObj, page: currentPage })
+        getList()
         setLoading(true)
     }
     const loadMore = !initLoading ? (
@@ -95,19 +119,16 @@ const ItemList = (props) => {
         </div>)
 }
 const Blog = (props) => {
-    const [poolData, setPoolData] = useState([])
+    const {img,contents,count,totalPage} = props
     const [windowWidth, setWindowWidth] = useState(0);
     useEffect(() => {
-        carouselList(1).then((res) => {
-            setPoolData(res.data)
-        })
         setWindowWidth(window.screen.width)
     }, []);
     return (
         <Layout>
             <div className={style['blog-list']}>
                 <Carousel autoplay={true}>
-                    {poolData.map((item) => (
+                    {img.map((item) => (
                         <div key={item.id}>
                             <Image
                                 className={style.imgStyle}
@@ -129,7 +150,7 @@ const Blog = (props) => {
                 <div style={{ background: '#fff', paddingBottom: '15vh' }}>
                     <Row>
                         <Col span={windowWidth > 500 ? 12 : 24} offset={windowWidth > 500 ? 6 : 0}>
-                            <ItemList></ItemList>
+                            <ItemList contents={contents} count={count} totalPage={totalPage}></ItemList>
                             {/* <Link href={}>
                     </Link> */}
                             {/* <Router>
