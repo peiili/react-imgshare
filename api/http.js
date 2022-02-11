@@ -1,7 +1,9 @@
+const dev = process.env.NODE_ENV !== 'production';
+const baseUrl = dev ? 'http://test.top' : 'http://localhost:3000';
 export default class HttpUtils {
   static get = (url) => {
     return new Promise((resolve, reject) => {
-      fetch(url)
+      fetch(baseUrl+url)
         .then((response) => response.json())
         .then((result) => {
           resolve(result)
@@ -13,7 +15,7 @@ export default class HttpUtils {
   }
   static post = (url, data) => {
     return new Promise((resolve, reject) => {
-      fetch(url, {
+      fetch(baseUrl+url, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -32,7 +34,7 @@ export default class HttpUtils {
   }
   static put = (url, data) => {
     return new Promise((resolve, reject) => {
-      fetch(url, {
+      fetch(baseUrl+url, {
         method: 'put',
         headers: {
           Accept: 'application/json',
@@ -51,7 +53,7 @@ export default class HttpUtils {
   }
   static delete = (url, data) => {
     return new Promise((resolve, reject) => {
-      fetch(url, {
+      fetch(baseUrl+url, {
         method: 'delete',
         headers: {
           Accept: 'application/json',
