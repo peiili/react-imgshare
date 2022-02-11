@@ -15,7 +15,7 @@ export async function getServerSideProps() {
     status:1
   }
   const res = await  getBlogList(params)
-  let data = {}
+  let data = []
   if (res.success) {
     res.data.list.forEach((e) => {
       e.key = e.id
