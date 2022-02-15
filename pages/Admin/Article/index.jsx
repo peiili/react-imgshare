@@ -3,7 +3,8 @@ import { Table, Button, Space, Modal } from 'antd'
 import moment from 'moment'
 import { getBlogList, delBlogContent } from '@/api/articleApi'
 import AdminLayout from '@/components/AdminLayout'
-// import Editor from './Editor'
+import Editor from './Editor'
+// const Editor = dynamic(() => import('./Editor'),{ ssr: false })
 // This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from external API
@@ -28,10 +29,9 @@ export async function getServerSideProps() {
 const Article = (props) => {
   const {data} = props
   const [dataList, setDataList] = useState(data)
-  
   const [show, setShow] = useState('list')
   const [currentId, setCurrentId] = useState('')
-  const [delVisible, setDelVisible] = useState('')
+  const [delVisible, setDelVisible] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false);
   const getActive = () => {
     const params = {
@@ -109,6 +109,7 @@ const Article = (props) => {
   return (
     <>
       <AdminLayout>
+        {show}
       {show === 'list' &&
         <div>
           <Button
@@ -128,23 +129,22 @@ const Article = (props) => {
             size="small" />
         </div>
       }
-      {/* {show === 'add' && <Editor name='add' goBack={() => {
+      {show === 'add' && <Editor name='add' goBack={() => {
         setShow('list')
       }} submit={() => {
         setShow('list')
         getActive()
       }}></Editor>
       }
-      {
-        show === 'edit' && <Editor name='edit' id={currentId} goBack={() => {
+      {show === 'edit' && <Editor name='edit' id={currentId} goBack={() => {
           setShow('list')
         }} submit={() => {
           setShow('list')
           getActive()
         }}></Editor>
-      } */}
+      }
       <Modal
-        title="Title"
+        title=""
         visible={delVisible}
         onOk={handleOk}
         confirmLoading={confirmLoading}

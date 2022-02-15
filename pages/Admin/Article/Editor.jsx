@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Form, Input, Button } from 'antd'
-import EasyMDE from 'easymde'
+import dynamic from 'next/dynamic'
+// import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
 import { setBlogContent, getBlogContent, putBlogContent } from '@/api/articleApi'
+// 动态导入模块，正常渲染Browser端api
+// const EasyMDE = dynamic(() => import('easymde'),{ ssr: false })
+const EasyMDE = dynamic(() => import('easymde'),{ ssr: false })
 
 let content = ''
 const Editor = (props) => {
   const { id } = props;
   const formRef = useRef()
   const selfForm = Form.useForm()
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues] = useState({
     title: '',
     description: '',
     content: ''
@@ -69,7 +73,7 @@ const Editor = (props) => {
     }
   }, [id, selfForm])
   return (
-    <>  <div id="ActiveEdit">
+    <div id="ActiveEdit">
       <Form
         {...layout}
         ref={formRef}
@@ -106,7 +110,7 @@ const Editor = (props) => {
           </Form.Item>
         </div>
       </Form>
-    </div></>
+    </div>
   )
 }
 export default Editor;
