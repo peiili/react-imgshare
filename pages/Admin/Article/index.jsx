@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
 import { Table, Button, Space, Modal } from 'antd'
 import moment from 'moment'
 import { getBlogList, delBlogContent } from '@/api/articleApi'
 import AdminLayout from '@/components/AdminLayout'
-import Editor from './Editor'
-// const Editor = dynamic(() => import('./Editor'),{ ssr: false })
+// import Editor from './Editor'
+const Editor = dynamic(() => import('./Editor'), { ssr: false })
 // This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from external API
@@ -13,9 +14,9 @@ export async function getServerSideProps() {
     fuzzy: '',
     page: 1,
     size: 10,
-    status:1
+    status: 1
   }
-  const res = await  getBlogList(params)
+  const res = await getBlogList(params)
   let data = []
   if (res.success) {
     res.data.list.forEach((e) => {
@@ -27,7 +28,7 @@ export async function getServerSideProps() {
   return { props: { data } }
 }
 const Article = (props) => {
-  const {data} = props
+  const { data } = props
   const [dataList, setDataList] = useState(data)
   const [show, setShow] = useState('list')
   const [currentId, setCurrentId] = useState('')
@@ -39,7 +40,7 @@ const Article = (props) => {
       fuzzy: '',
       page: 1,
       size: 10,
-      status:1
+      status: 1
     }
     getBlogList(params).then((res) => {
       if (res.success) {
@@ -47,6 +48,7 @@ const Article = (props) => {
           e.key = e.id
         })
         setDataList(res.data.list)
+        setShow('list')
       }
     })
   }
@@ -60,11 +62,12 @@ const Article = (props) => {
   const onDeleteActive = (record) => {
     setCurrentId(record.id)
     setDelVisible(true);
+    setShow('del')
   }
   const handleOk = (record) => {
     setConfirmLoading(true)
-    delBlogContent(currentId).then(res=>{
-      if(res.success){
+    delBlogContent(currentId).then(res => {
+      if (res.success) {
         setConfirmLoading(false)
         setDelVisible(false)
         getActive()
@@ -75,7 +78,7 @@ const Article = (props) => {
     setDelVisible(false)
   }
   useEffect(() => {
-      // getActive()
+    // getActive()
   }, [])
   const columns = [
     {
@@ -108,51 +111,48 @@ const Article = (props) => {
   ]
   return (
     <>
-      <AdminLayout>
-        {show}
-      {show === 'list' &&
-        <div>
-          <Button
-            onClick={onShowCreated}
-            type="primary"
-            style={{ marginBottom: 16 }}
-          >
-            添加文章
-          </Button>
-          <Table
-            dataSource={dataList}
-            columns={columns}
-            pagination={{
-              current: '1',
-              total: '50'
-            }}
-            size="small" />
-        </div>
-      }
-      {show === 'add' && <Editor name='add' goBack={() => {
-        setShow('list')
-      }} submit={() => {
-        setShow('list')
-        getActive()
-      }}></Editor>
-      }
-      {show === 'edit' && <Editor name='edit' id={currentId} goBack={() => {
+      <AdminLayout key={show}>
+        {(show === 'list'||show === 'del') &&
+          <div>
+            <Button
+              onClick={onShowCreated}
+              type="primary"
+              style={{ marginBottom: 16 }}
+            >
+              添加文章
+            </Button>
+            <Table
+              dataSource={dataList}
+              columns={columns}
+              pagination={{
+                current: '1',
+                total: '50'
+              }}
+              size="small" />
+          </div>
+        }
+        {show === 'add' && <Editor name='add' goBack={() => {
           setShow('list')
         }} submit={() => {
-          setShow('list')
           getActive()
         }}></Editor>
-      }
-      <Modal
-        title=""
-        visible={delVisible}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
-        <p>确认删除</p>
-      </Modal>
+        }
+        {show === 'edit' && <Editor name='edit' id={currentId} goBack={() => {
+          setShow('list')
+        }} submit={() => {
+          getActive()
+        }}></Editor>
+        }
       </AdminLayout>
+        <Modal
+          title=""
+          visible={delVisible}
+          onOk={handleOk}
+          confirmLoading={confirmLoading}
+          onCancel={handleCancel}
+        >
+          <p>确认删除</p>
+        </Modal>
     </>
   )
 }
