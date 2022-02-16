@@ -1,18 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef,useCallback } from 'react';
 import { Form, Input, Button } from 'antd'
 import dynamic from 'next/dynamic'
-import EasyMDE from 'easymde'
 import 'easymde/dist/easymde.min.css'
 import { setBlogContent, getBlogContent, putBlogContent } from '@/api/articleApi'
 // 动态导入模块，正常渲染Browser端api
-// const EasyMDE = dynamic(() => import('easymde'),{ ssr: false })
+const SimpleMdeEditor = dynamic(
+	() => import("react-simplemde-editor"),
+	{ ssr: false }
+);
 
-let content = ''
 const Editor = (props) => {
   const { id } = props;
   const formRef = useRef()
   const selfForm = Form.useForm()
-  const [initialValues] = useState({
+  const [initialValues,setInitialValues] = useState({
     title: '',
     description: '',
     content: ''
@@ -27,7 +28,7 @@ const Editor = (props) => {
       description: values.description,
       type: 2,
       status:1,
-      content: content,
+      content: values.content,
     }
     if (id) {
       putBlogContent({id,...body}).then(res => {
@@ -47,26 +48,15 @@ const Editor = (props) => {
     props.goBack()
   }
   useEffect(() => {
-    let easyMDE = new EasyMDE({ element: document.getElementById('my-text-area') })
-    easyMDE.codemirror.on("change", () => {
-      content = easyMDE.value()
-
-    });
     if (id) {
       getBlogContent(id).then(res => {
         if (res.success) {
           const { title, description, content } = res.data[0]
-          console.log(title);
           formRef.current.setFieldsValue({
             title,
             description,
-            content: content && easyMDE.value(content),
+            content,
           })
-          // setInitialValues({
-          //   title,
-          //   description,
-          //   content: content&&easyMDE.value(content),
-          // })
         }
       })
     }
@@ -97,7 +87,7 @@ const Editor = (props) => {
           name="content"
           label="正文"
         >
-          <textarea id="my-text-area"></textarea>
+          <SimpleMdeEditor></SimpleMdeEditor>
         </Form.Item>
 
         <div style={{ marginTop: '10px' }}>

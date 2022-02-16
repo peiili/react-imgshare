@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
 import { Table, Button, Space, Modal } from 'antd'
 import moment from 'moment'
 import { getBlogList, delBlogContent } from '@/api/articleApi'
 import AdminLayout from '@/components/AdminLayout'
-// import Editor from './Editor'
-const Editor = dynamic(() => import('./Editor'), { ssr: false })
-// This gets called on every request
+import Editor from './Editor'
 export async function getServerSideProps() {
   // Fetch data from external API
   const params = {
