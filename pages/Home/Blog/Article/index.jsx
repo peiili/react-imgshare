@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head'
 import { Typography, Divider, PageHeader, Spin, Carousel, Col, Row, Image } from 'antd'
 import { marked } from 'marked'
 import { getBlogContent } from '@/api/articleApi'
@@ -23,7 +24,7 @@ export async function getServerSideProps(context) {
             tables: true,
             breaks: true,
             pedantic: false,
-            sanitize: true,
+            // sanitize: true,
             smartLists: true,
             smartypants: false,
             langPrefix: false,
@@ -78,6 +79,11 @@ const Article = (props) => {
                     <Col span={windowWidth > 500 ? 12 : 24} offset={windowWidth > 500 ? 6 : 0}>
                         {contents.content ? (
                             <div>
+                                <Head>
+                                    <title>{contents.title}</title>
+                                    <meta name="keywords" content={contents.description} />
+                                    <meta name="description" content={contents.description} />
+                                </Head>
                                 <PageHeader
                                     className={style['site-page-header']}
                                     onBack={() => router.back()}
