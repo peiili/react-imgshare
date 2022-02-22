@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Button, Space, Modal } from 'antd'
 import moment from 'moment'
-import { getBlogList, delBlogContent } from '@/api/articleApi'
+import { getBlogListServerSide,getBlogList, delBlogContent } from '@/api/articleApi'
 import AdminLayout from '@/components/AdminLayout'
 import Editor from './Editor'
 export async function getServerSideProps() {
@@ -13,7 +13,7 @@ export async function getServerSideProps() {
     size: 10,
     status: 1
   }
-  const res = await getBlogList(params)
+  const res = await getBlogListServerSide(params)
   let data = []
   if (res.success) {
     res.data.list.forEach((e) => {

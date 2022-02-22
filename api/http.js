@@ -1,7 +1,10 @@
 const dev = process.env.NODE_ENV !== 'production';
-const baseUrl = dev ? 'http://test.top' : 'http://localhost:3000';
+let baseUrl = dev ? 'http://test.top' : 'http://localhost:3000';
 export default class HttpUtils {
-  static get = (url) => {
+  static get = (url,ServerSide) => {
+    if(!dev){
+      baseUrl = ServerSide?'http://localhost:3000':''
+    }
     return new Promise((resolve, reject) => {
       fetch(baseUrl+url)
         .then((response) => response.json())
@@ -13,7 +16,10 @@ export default class HttpUtils {
         })
     })
   }
-  static post = (url, data) => {
+  static post = (url, data,ServerSide) => {
+    if(!dev){
+      baseUrl = ServerSide?'http://localhost:3000':''
+    }
     return new Promise((resolve, reject) => {
       fetch(baseUrl+url, {
         method: 'POST',
@@ -32,7 +38,10 @@ export default class HttpUtils {
         })
     })
   }
-  static put = (url, data) => {
+  static put = (url, data,ServerSide) => {
+    if(!dev){
+      baseUrl = ServerSide?'http://localhost:3000':''
+    }
     return new Promise((resolve, reject) => {
       fetch(baseUrl+url, {
         method: 'put',
@@ -51,7 +60,10 @@ export default class HttpUtils {
         })
     })
   }
-  static delete = (url, data) => {
+  static delete = (url, data,ServerSide) => {
+    if(!dev){
+      baseUrl = ServerSide?'http://localhost:3000':''
+    }
     return new Promise((resolve, reject) => {
       fetch(baseUrl+url, {
         method: 'delete',

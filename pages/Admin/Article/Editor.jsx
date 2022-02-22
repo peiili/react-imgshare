@@ -13,7 +13,7 @@ const Editor = (props) => {
   const { id } = props;
   const formRef = useRef()
   const selfForm = Form.useForm()
-  const [initialValues,setInitialValues] = useState({
+  const [initialValues] = useState({
     title: '',
     description: '',
     content: ''

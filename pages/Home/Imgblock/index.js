@@ -5,16 +5,16 @@ import moment from 'moment'
 import style from './style.module.css'
 
 import { VerticalAlignBottomOutlined } from '@ant-design/icons'
-import { carouselList } from '@/api/index.js'
+import { carouselList,carouselListServerSide } from '@/api/index.js'
 import Layout from './../Layouts'
 
 export async function getServerSideProps() {
-  const res1 = await carouselList(12)
+  const res1 = await carouselListServerSide(12)
   let pageListData = []
   if (res1.success) {
     pageListData = res1.data
   }
-  const res2 = await carouselList(5)
+  const res2 = await carouselListServerSide(5)
   let CarouselList = []
   if (res2.success) {
     CarouselList = res2.data

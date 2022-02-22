@@ -12,6 +12,9 @@ import HttpUtils from './http.js'
 export function getBlogList(params) {
   return HttpUtils.post(`/api/grabbag/getList`, params)
 }
+export function getBlogListServerSide(params) {
+  return HttpUtils.post(`/api/grabbag/getList`, params,true)
+}
 /**
  * 获取文章详情
  * @method
@@ -20,11 +23,14 @@ export function getBlogList(params) {
 export function getBlogContent(id) {
   return HttpUtils.post(`/api/grabbag/getContent`,{id})
 }
+export function getBlogContentServerSide(id) {
+  return HttpUtils.post(`/api/grabbag/getContent`,{id},true)
+}
 /**
- * 写入文章
+ *   
  */
  export function setBlogContent(params) {
-     const {title,content,description,type,status} = params
+    const {title,content,description,type,status} = params
     return HttpUtils.post(`/api/grabbag/addContent`,{title,content,description,type,status})
   }
 /**

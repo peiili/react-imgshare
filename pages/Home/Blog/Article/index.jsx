@@ -3,19 +3,19 @@ import { useRouter } from 'next/router';
 import Head from 'next/head'
 import { Typography, Divider, PageHeader, Spin, Carousel, Col, Row, Image } from 'antd'
 import { marked } from 'marked'
-import { getBlogContent } from '@/api/articleApi'
-import { carouselList } from '@/api/index'
+import { getBlogContentServerSide } from '@/api/articleApi'
+import { carouselListServerSide } from '@/api/index'
 import style from './index.module.css'
 import Layout from '../../Layouts'
 const { Text } = Typography;
 
 export async function getServerSideProps(context) {
-    const res1 = await carouselList(1)
+    const res1 = await carouselListServerSide(1)
     let img = []
     if (res1.success) {
         img = res1.data
     }
-    const res2 = await getBlogContent(context.query.id)
+    const res2 = await getBlogContentServerSide(context.query.id)
     let contents = {}
     if (res2.success) {
         const { title, description, content } = res2.data[0]

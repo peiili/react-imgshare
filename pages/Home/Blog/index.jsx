@@ -3,12 +3,12 @@ import { useRouter } from 'next/router'
 import { Button, Row, Col, Carousel, List, Image } from 'antd'
 import moment from 'moment'
 import Layout from '../Layouts'
-import { carouselList } from '@/api/index'
+import { carouselListServerSide } from '@/api/index'
 import { getBlogList } from '@/api/articleApi'
 import style from './index.module.css'
 export async function getServerSideProps(context) {
     let img = []
-    const res1 = await carouselList(1)
+    const res1 = await carouselListServerSide(1)
     if (res1.success) {
         img = res1.data
     }
