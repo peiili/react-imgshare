@@ -4,7 +4,7 @@ import { Button, Row, Col, Carousel, List, Image } from 'antd'
 import moment from 'moment'
 import Layout from '../Layouts'
 import { carouselListServerSide } from '@/api/index'
-import { getBlogList } from '@/api/articleApi'
+import { getBlogList,getBlogListServerSide } from '@/api/articleApi'
 import style from './index.module.css'
 export async function getServerSideProps(context) {
     let img = []
@@ -15,7 +15,7 @@ export async function getServerSideProps(context) {
     let contents = []
     let count=''
     let totalPage=''
-    const res2 =await getBlogList({ fuzzy:'',page: '1',status: '1', size:'10', type:'2' })
+    const res2 =await getBlogListServerSide({ fuzzy:'',page: '1',status: '1', size:'10', type:'2' })
     if(res2.success){
         count=res2.data.count
         totalPage=res2.data.total
