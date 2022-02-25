@@ -6,6 +6,31 @@ export function carouselList(data) {
 export function carouselListServerSide(data) {
   return HttpUtils.get(`/api/bing/randomBingList?limit=${data}`,true)
 }
+
+/**
+ * 服务端分页获取图片
+ * @param {object} params 
+ * @param {number} params.size
+ * @param {number} params.page 
+ * @param {boolean} params.desc 
+ * @returns 
+ */
+export function carousePageServerSide(params) {
+  const {size,page,desc} = params
+  return HttpUtils.post(`/api/bing/page`,{size,page,desc},true)
+}
+/**
+ * 分页获取图片
+ * @param {object} params 
+ * @param {number} params.size
+ * @param {number} params.page 
+ * @param {boolean} params.desc 
+ * @returns 
+ */
+export function carousePage(params) {
+  const {size,page,desc} = params
+  return HttpUtils.post(`/api/bing/page`,{size,page,desc})
+}
 // 登录
 export function login(data) {
   return HttpUtils.post(`/api/user/login`, data)

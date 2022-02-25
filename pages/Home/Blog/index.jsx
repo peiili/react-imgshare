@@ -151,14 +151,6 @@ const Blog = (props) => {
                     <Row>
                         <Col span={windowWidth > 500 ? 12 : 24} offset={windowWidth > 500 ? 6 : 0}>
                             <ItemList contents={contents} count={count} totalPage={totalPage}></ItemList>
-                            {/* <Link href={}>
-                    </Link> */}
-                            {/* <Router>
-                            <Switch>
-                                <Route exact path={`${match.url}`} component={ItemList}></Route>
-                                <Route path={`${match.url}/article`} component={Article}></Route>
-                            </Switch>
-                        </Router> */}
                         </Col>
                     </Row>
                 </div>
