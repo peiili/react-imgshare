@@ -15,10 +15,10 @@ echo $time1
 #yarn build
 
 # back last time index.html
-ssh root@47.105.113.47 "mv /home/html/build/index.html /home/html/build/index_${time1}.html"
+#ssh root@47.105.113.47 "mv /home/html/build/index.html /home/html/build/index_${time1}.html"
 
 # sync static files
-scp -r -v /mnt/e/01work/self/bing/build/* root@47.105.113.47:/home/html/build/
-
+scp -r -v ./dist/* root@47.105.113.47:~/git/react-imgshare/dist/
+ssh aliyun "pm2 restart web"
 echo "done.."
 #ssh other
