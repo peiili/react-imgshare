@@ -1,0 +1,15 @@
+.main-active{
+    text-align: center;
+    background-color: #0790de;
+    color: white;
+    width: 100%;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    cursor: pointer;
+}
+.main{
+    text-align: center;
+    background-color: #f2f2f2;
+    width: 100%;
+    cursor: pointer;
+}
