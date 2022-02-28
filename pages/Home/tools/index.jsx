@@ -6,6 +6,7 @@ const Photo = ()=>{
     <Layout>
     <div>证件照排版</div>
     {/* <div>证件照制作</div> */}
+    
     </Layout>
     </>
   )

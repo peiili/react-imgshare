@@ -5,7 +5,7 @@ import Link from 'next/link'
 function MenuCom(props) {
   const router = useRouter()
   return (
-    <Menu className="menuStyle" mode="horizontal" theme="dark"  defaultSelectedKeys={[router.pathname]}>
+    <Menu className="menuStyle" mode="horizontal" theme="dark" defaultSelectedKeys={[router.pathname]}>
       <Menu.Item key="/Home/Imgblock">
         <Link href="/Home/Imgblock">首页</Link>
       </Menu.Item>
@@ -15,7 +15,7 @@ function MenuCom(props) {
       <Menu.Item key="/Home/photo">
         <Link href="/Home/tools">排版</Link>
       </Menu.Item>
-      <Menu.Item  key="3">
+      <Menu.Item key="3">
         <Avatar
           style={{
             color: '#f56a00',
