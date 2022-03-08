@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import Head from 'next/head'
 import { Row, Col, Button, Space } from 'antd'
 import Layout from '@/pages/Home/Layouts'
@@ -8,7 +8,7 @@ const staticData = {
   pageSize: [
     { title: 'A5(常用)', size: '210mmx148mm', width: 210, height: 148 },
     { title: 'A4', size: '210mmx297mm', width: 210, height: 297 },
-    { title: '自定义', size: '任意大小', width: 0, height: 0 }
+    // { title: '自定义', size: '任意大小', width: 0, height: 0 }
   ],
   photoSize: [
     { title: '小一寸', size: '22mmx32mm', width: 22, height: 32 },
@@ -16,12 +16,12 @@ const staticData = {
     { title: '大一寸', size: '23mmx48mm', width: 23, height: 48 },
     { title: '小二寸', size: '35mmx45mm', width: 35, height: 45 },
     { title: '二寸', size: '35mmx49mm', width: 35, height: 49 },
-    { title: '自定义', size: '任意尺寸', width: 0, height: 0 }
+    // { title: '自定义', size: '任意尺寸', width: 0, height: 0 }
   ],
   rowSetup: [
     { title: '8张', size: '2行4列', row: 2, col: 4 },
     { title: '4张', size: '2行2列', row: 2, col: 2 },
-    { title: '自定义', size: '任意行列', row: 0, col: 0 }
+    // { title: '自定义', size: '任意行列', row: 0, col: 0 }
   ],
   lineStyle: [
     { title: '否', style: 'none' },
@@ -48,14 +48,11 @@ const Typeset = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [refresh, setRefresh] = useState(false);
   const [previewUrl, setPreviewUrl] = useState('');
+  const formRef = useRef()
   useEffect(() => {
     // 数据改变刷新子组件
     refresh && setTimeout(() => setRefresh(false))
   }, [refresh]);
-  useEffect(() => {
-    const Dpi = getDpi()
-    console.log(Dpi);
-  }, [])
   const handleClick = function (id, i) {
     setFormData(Object.assign(formData, {
       [id]: {
@@ -85,11 +82,6 @@ const Typeset = () => {
    * @param {Number}} mutliple 转换倍数
    */
   const startTypeset = function (elementID,action) {
-    let mutliple = 1
-    if(action==='save'){
-      // 倍数 = 目标尺寸（宽 mm）/每英寸mm*单位像素/canvas宽度基数
-       mutliple = 210/25.4*300/210
-    }
     const activeSetup = {
       pageSize: {
         width: staticData.pageSize[formData.pageSize.active].width,
@@ -106,6 +98,18 @@ const Typeset = () => {
       lineStyle: {
         style: staticData.lineStyle[formData.lineStyle.active].style,
       },
+    }
+    let mutliple = 1
+    if(action==='save'){
+      // 倍数 = 目标尺寸（宽 mm）/每英寸mm*单位像素/canvas宽度基数
+       mutliple = activeSetup.pageSize.width/25.4*300/activeSetup.pageSize.width
+    }else{
+      // 在设备预览的尺寸
+      if(window.screen.width>600){
+        mutliple= 500/activeSetup.pageSize.width
+      }else{
+        mutliple= formRef.current.offsetWidth/activeSetup.pageSize.width
+      }
     }
     const canvas = document.getElementById(elementID)
     // 纸张尺寸
@@ -186,22 +190,6 @@ const Typeset = () => {
       }
     }
   }
-  const getDpi = () => {
-    //获取DPI
-    var arrDPI = new Array();
-    if (window.screen.deviceXDPI !== undefined) {
-      arrDPI[0] = window.screen.deviceXDPI;
-      arrDPI[1] = window.screen.deviceYDPI;
-    } else {
-      var tmpNode = document.createElement("DIV");
-      tmpNode.style.cssText = "width:1in;height:1in;position:absolute;left:0px;top:0px;z-index:99;visibility:hidden";
-      document.body.appendChild(tmpNode);
-      arrDPI[0] = parseInt(tmpNode.offsetWidth);
-      arrDPI[1] = parseInt(tmpNode.offsetHeight);
-      tmpNode.parentNode.removeChild(tmpNode);
-    }
-    return arrDPI;
-  }
   return (
     <>
       <Head>
@@ -227,8 +215,10 @@ const Typeset = () => {
               <Button size='large' style={{ width: '100%' }} type='primary' onClick={()=>{startTypeset('canvas_save','save')}}>保存</Button>
             </Col>
           </Row>
-          <img style={{ width: '200px' }} src={previewUrl} alt="" />
-          <canvas id='canvas' style={{ border: '1px solid red' }}></canvas>
+          {/* <img style={{ width: '200px' }} src={previewUrl} alt="" /> */}
+          <div ref={formRef} style={{ display:'flex',justifyContent:'center' }}>
+            <canvas id='canvas'></canvas>
+          </div>
           <canvas id='canvas_save' style={{display:'none', border: '1px solid red' }}></canvas>
         </Space>
         <div style={{ height: '20vh' }}></div>
