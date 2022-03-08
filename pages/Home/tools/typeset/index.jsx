@@ -25,7 +25,7 @@ const staticData = {
   ],
   lineStyle: [
     { title: '否', style: 'none' },
-    { title: '虚线', style: 'dotted' },
+    { title: '虚线', style: 'dash' },
     { title: '实线', style: 'solid' }
   ],
 }
@@ -52,6 +52,10 @@ const Typeset = () => {
     // 数据改变刷新子组件
     refresh && setTimeout(() => setRefresh(false))
   }, [refresh]);
+  useEffect(() => {
+    const Dpi = getDpi()
+    console.log(Dpi);
+  }, [])
   const handleClick = function (id, i) {
     setFormData(Object.assign(formData, {
       [id]: {
@@ -76,55 +80,116 @@ const Typeset = () => {
       formdata.append('file', file)
     })
   }
-  const startTypeset = function () {
+  /**
+   * 开始排版
+   * @param {Number}} mutliple 转换倍数
+   */
+  const startTypeset = function (elementID,action) {
+    let mutliple = 1
+    if(action==='save'){
+      // 倍数 = 目标尺寸（宽 mm）/每英寸mm*单位像素/canvas宽度基数
+       mutliple = 210/25.4*300/210
+    }
     const activeSetup = {
       pageSize: {
         width: staticData.pageSize[formData.pageSize.active].width,
-        height:staticData.pageSize[formData.pageSize.active].height
+        height: staticData.pageSize[formData.pageSize.active].height
       },
       photoSize: {
         width: staticData.photoSize[formData.photoSize.active].width,
-        height:staticData.photoSize[formData.photoSize.active].height
+        height: staticData.photoSize[formData.photoSize.active].height
       },
       rowSetup: {
         row: staticData.rowSetup[formData.rowSetup.active].row,
-        col:staticData.rowSetup[formData.rowSetup.active].col
+        col: staticData.rowSetup[formData.rowSetup.active].col
       },
       lineStyle: {
         style: staticData.lineStyle[formData.lineStyle.active].style,
       },
     }
-    const canvas = document.getElementById('canvas')
+    const canvas = document.getElementById(elementID)
     // 纸张尺寸
-    const pageWidth=activeSetup.pageSize.width
-    const pageHeight=activeSetup.pageSize.height
+    const pageWidth = activeSetup.pageSize.width * mutliple
+    const pageHeight = activeSetup.pageSize.height * mutliple
     canvas.width = pageWidth
     canvas.height = pageHeight
-
     const ctx = canvas.getContext('2d')
-    const image = new Image()
-    image.src = previewUrl
     // 照片尺寸
-    const photoWidth = activeSetup.photoSize.width
-    const photoHeight = activeSetup.photoSize.height
-    // 照片位置
-    // 计算边距
-
+    const photoWidth = activeSetup.photoSize.width * mutliple
+    const photoHeight = activeSetup.photoSize.height * mutliple
     const colNum = activeSetup.rowSetup.col // 每行个数
     const rowNum = activeSetup.rowSetup.row // 每列个数
-    // const countNum = colNum*rowNum
-    const borderSizeSpan = (pageWidth-(photoWidth*colNum))/(colNum*2)
-    // console.log(borderSizeSpan);
-    const borderSizeGutter = (pageHeight-(photoHeight*rowNum))/(rowNum*2)
-    // 带上边距以后的尺寸
-    // const countWidth = borderSizeSpan*2+photoWidth
-    // console.log(countWidth);
-    // const countHight = borderSizeGutter*2+photoHeight
-    for (let i = 0; i < colNum; i++) {
+    // 计算边距
+    const borderSizeSpan = (pageWidth - (photoWidth * colNum)) / (colNum * 2)
+    const borderSizeGutter = (pageHeight - (photoHeight * rowNum)) / (rowNum * 2)
+
+    drarwImage(ctx, colNum, rowNum, borderSizeSpan, borderSizeGutter, photoWidth, photoHeight,()=>{
+      // 绘制分割线
+      if (activeSetup.lineStyle.style !== 'none') {
+        drawline(ctx, colNum, rowNum, borderSizeSpan, borderSizeGutter, photoWidth, photoHeight, activeSetup.lineStyle.style)
+      }
+    })
+  }
+  const drarwImage = (ctx,colNum,rowNum,borderSizeSpan, borderSizeGutter, photoWidth, photoHeight,cb) => {
+    const image = new Image()
+    image.src = previewUrl
+    image.onload = () => {
+      // 绘制照片排版
+      for (let i = 0; i < colNum; i++) {
+        for (let j = 0; j < rowNum; j++) {
+          ctx.drawImage(image, (i * 2 + 1) * borderSizeSpan + (i * photoWidth), (j * 2 + 1) * borderSizeGutter + (j * photoHeight), photoWidth, photoHeight)
+        }
+      }
+      cb()
+    }
+  }
+  const drawline = (ctx, colNum, rowNum, borderSizeSpan, borderSizeGutter, photoWidth, photoHeight, style) => {
+    // 绘制纵向线
+    for (let i = 0; i < colNum - 1; i++) {
       for (let j = 0; j < rowNum; j++) {
-        ctx.drawImage(image,(i*2+1)*borderSizeSpan+(i*photoWidth),(j*2+1)*borderSizeGutter+(j*photoHeight),photoWidth,photoHeight)
+        ctx.beginPath()
+        if (style === 'dash') {
+          ctx.setLineDash([5, 5])
+        }
+        const x = (2 * i + 2) * borderSizeSpan + ((i + 1) * photoWidth)
+        const y = (2 * j) * borderSizeGutter + (j * photoHeight)
+        ctx.moveTo(x, y)
+        ctx.lineTo(x, y + 2 * borderSizeGutter + photoHeight)
+        ctx.strokeStyle = '#cecece'
+        ctx.stroke()
       }
     }
+    // 绘制横向线
+    for (let i = 0; i < colNum; i++) {
+      for (let j = 0; j < rowNum - 1; j++) {
+        ctx.beginPath()
+        if (style === 'dash') {
+          ctx.setLineDash([5, 5])
+        }
+        const x = (2 * i) * borderSizeSpan + (i * photoWidth)
+        const y = (2 * j + 2) * borderSizeGutter + ((j + 1) * photoHeight)
+        ctx.moveTo(x, y)
+        ctx.lineTo(x + 2 * borderSizeSpan + photoWidth, y)
+        ctx.strokeStyle = '#cecece'
+        ctx.stroke()
+      }
+    }
+  }
+  const getDpi = () => {
+    //获取DPI
+    var arrDPI = new Array();
+    if (window.screen.deviceXDPI !== undefined) {
+      arrDPI[0] = window.screen.deviceXDPI;
+      arrDPI[1] = window.screen.deviceYDPI;
+    } else {
+      var tmpNode = document.createElement("DIV");
+      tmpNode.style.cssText = "width:1in;height:1in;position:absolute;left:0px;top:0px;z-index:99;visibility:hidden";
+      document.body.appendChild(tmpNode);
+      arrDPI[0] = parseInt(tmpNode.offsetWidth);
+      arrDPI[1] = parseInt(tmpNode.offsetHeight);
+      tmpNode.parentNode.removeChild(tmpNode);
+    }
+    return arrDPI;
   }
   return (
     <>
@@ -145,14 +210,15 @@ const Typeset = () => {
               </label>
             </Col>
             <Col span={8}>
-              <Button size='large' style={{ width: '100%' }} type='primary' onClick={startTypeset}>开始排版</Button>
+              <Button size='large' style={{ width: '100%' }} type='primary' onClick={()=>{startTypeset('canvas')}}>开始排版</Button>
             </Col>
             <Col span={8}>
-              <Button size='large' style={{ width: '100%' }} type='primary'>保存</Button>
+              <Button size='large' style={{ width: '100%' }} type='primary' onClick={()=>{startTypeset('canvas_save','save')}}>保存</Button>
             </Col>
           </Row>
           <img style={{ width: '200px' }} src={previewUrl} alt="" />
           <canvas id='canvas' style={{ border: '1px solid red' }}></canvas>
+          <canvas id='canvas_save' style={{ border: '1px solid red' }}></canvas>
         </Space>
         <div style={{ height: '20vh' }}></div>
       </Layout>
