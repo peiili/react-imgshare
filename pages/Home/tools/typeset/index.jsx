@@ -111,9 +111,13 @@ const Typeset = () => {
     // 纸张尺寸
     const pageWidth = activeSetup.pageSize.width * mutliple
     const pageHeight = activeSetup.pageSize.height * mutliple
+    // 设置画布大小
     canvas.width = pageWidth
     canvas.height = pageHeight
     const ctx = canvas.getContext('2d')
+    // 填充画布背景色
+    ctx.fillStyle="#ffffff";
+    ctx.fillRect(0,0,pageWidth,pageHeight);
     // 照片尺寸
     const photoWidth = activeSetup.photoSize.width * mutliple
     const photoHeight = activeSetup.photoSize.height * mutliple
@@ -127,6 +131,13 @@ const Typeset = () => {
       // 绘制分割线
       if (activeSetup.lineStyle.style !== 'none') {
         drawline(ctx, colNum, rowNum, borderSizeSpan, borderSizeGutter, photoWidth, photoHeight, activeSetup.lineStyle.style)
+      }
+      if(action==='save'){
+        const dataURL =canvas.toDataURL('image/jpeg')
+        const a = document.createElement('a')
+        a.download = staticData.pageSize[formData.pageSize.active].title+'-'+staticData.photoSize[formData.pageSize.active].title
+        a.href = dataURL
+        a.click()
       }
     })
   }
@@ -218,7 +229,7 @@ const Typeset = () => {
           </Row>
           <img style={{ width: '200px' }} src={previewUrl} alt="" />
           <canvas id='canvas' style={{ border: '1px solid red' }}></canvas>
-          <canvas id='canvas_save' style={{ border: '1px solid red' }}></canvas>
+          <canvas id='canvas_save' style={{display:'none', border: '1px solid red' }}></canvas>
         </Space>
         <div style={{ height: '20vh' }}></div>
       </Layout>
