@@ -25,7 +25,7 @@ const ImageDetail = () => {
       </Head>
       <div className={style.imgWidth}>
         <Row>
-          <Col span={windowWidth > 500 ? 12 : 24} offset={windowWidth > 500 ? 6 : 0}>
+          <Col span={windowWidth > 500 ? 12 : 22} offset={windowWidth > 500 ? 6 : 1}>
             <Image
               width={'100%'}
               alt={item.describe}

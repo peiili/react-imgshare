@@ -13,7 +13,8 @@ function MenuCom(props) {
         <Link href="/Home/Blog">博客</Link>
       </Menu.Item>
       <Menu.Item key="/Home/photo">
-        <Link href="/Home/tools">排版</Link>
+        {/* <Link href="/Home/tools">排版</Link> */}
+        <Link href="/Home/tools/typeset">排版</Link>
       </Menu.Item>
       <Menu.Item key="3">
         <Avatar

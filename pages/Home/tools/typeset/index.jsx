@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import { Row, Col, Button, Space } from 'antd'
 import Layout from '@/pages/Home/Layouts'
@@ -49,6 +49,10 @@ const Typeset = () => {
   const [refresh, setRefresh] = useState(false);
   const [previewUrl, setPreviewUrl] = useState('');
   const formRef = useRef()
+  const [windowWidth, setWindowWidth] = useState(0);
+  useEffect(() => {
+    setWindowWidth(window.screen.width)
+  }, []);
   useEffect(() => {
     // 数据改变刷新子组件
     refresh && setTimeout(() => setRefresh(false))
@@ -81,7 +85,7 @@ const Typeset = () => {
    * 开始排版
    * @param {Number}} mutliple 转换倍数
    */
-  const startTypeset = function (elementID,action) {
+  const startTypeset = function (elementID, action) {
     const activeSetup = {
       pageSize: {
         width: staticData.pageSize[formData.pageSize.active].width,
@@ -100,15 +104,15 @@ const Typeset = () => {
       },
     }
     let mutliple = 1
-    if(action==='save'){
+    if (action === 'save') {
       // 倍数 = 目标尺寸（宽 mm）/每英寸mm*单位像素/canvas宽度基数
-       mutliple = activeSetup.pageSize.width/25.4*300/activeSetup.pageSize.width
-    }else{
+      mutliple = activeSetup.pageSize.width / 25.4 * 300 / activeSetup.pageSize.width
+    } else {
       // 在设备预览的尺寸
-      if(window.screen.width>600){
-        mutliple= 500/activeSetup.pageSize.width
-      }else{
-        mutliple= formRef.current.offsetWidth/activeSetup.pageSize.width
+      if (window.screen.width > 600) {
+        mutliple = 500 / activeSetup.pageSize.width
+      } else {
+        mutliple = formRef.current.offsetWidth / activeSetup.pageSize.width
       }
     }
     const canvas = document.getElementById(elementID)
@@ -120,8 +124,8 @@ const Typeset = () => {
     canvas.height = pageHeight
     const ctx = canvas.getContext('2d')
     // 填充画布背景色
-    ctx.fillStyle="#ffffff";
-    ctx.fillRect(0,0,pageWidth,pageHeight);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, pageWidth, pageHeight);
     // 照片尺寸
     const photoWidth = activeSetup.photoSize.width * mutliple
     const photoHeight = activeSetup.photoSize.height * mutliple
@@ -131,21 +135,21 @@ const Typeset = () => {
     const borderSizeSpan = (pageWidth - (photoWidth * colNum)) / (colNum * 2)
     const borderSizeGutter = (pageHeight - (photoHeight * rowNum)) / (rowNum * 2)
 
-    drarwImage(ctx, colNum, rowNum, borderSizeSpan, borderSizeGutter, photoWidth, photoHeight,()=>{
+    drarwImage(ctx, colNum, rowNum, borderSizeSpan, borderSizeGutter, photoWidth, photoHeight, () => {
       // 绘制分割线
       if (activeSetup.lineStyle.style !== 'none') {
         drawline(ctx, colNum, rowNum, borderSizeSpan, borderSizeGutter, photoWidth, photoHeight, activeSetup.lineStyle.style)
       }
-      if(action==='save'){
-        const dataURL =canvas.toDataURL('image/jpeg')
+      if (action === 'save') {
+        const dataURL = canvas.toDataURL('image/jpeg')
         const a = document.createElement('a')
-        a.download = staticData.pageSize[formData.pageSize.active].title+'-'+staticData.photoSize[formData.pageSize.active].title
+        a.download = staticData.pageSize[formData.pageSize.active].title + '-' + staticData.photoSize[formData.pageSize.active].title
         a.href = dataURL
         a.click()
       }
     })
   }
-  const drarwImage = (ctx,colNum,rowNum,borderSizeSpan, borderSizeGutter, photoWidth, photoHeight,cb) => {
+  const drarwImage = (ctx, colNum, rowNum, borderSizeSpan, borderSizeGutter, photoWidth, photoHeight, cb) => {
     const image = new Image()
     image.src = previewUrl
     image.onload = () => {
@@ -197,31 +201,40 @@ const Typeset = () => {
       </Head>
       <Layout>
         <div style={{ height: '10vh' }}></div>
-        <Space direction='vertical' style={{ width: '100%' }} size={20}>
-          <RadioBtnGroup key={'pageSize'} id='pageSize' title='纸张大小：' list={staticData['pageSize']} active={formData['pageSize'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
-          <RadioBtnGroup key={'photoSize'} id='photoSize' title='照片规格：' list={staticData['photoSize']} col={3} active={formData['photoSize'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
-          <RadioBtnGroup key={'rowSetup'} id='rowSetup' title='行列设置：' list={staticData['rowSetup']} active={formData['rowSetup'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
-          <RadioBtnGroup key={'lineStyle'} id='lineStyle' title='裁剪辅助线：' list={staticData['lineStyle']} active={formData['lineStyle'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
-          <Row gutter={16}>
-            <Col span={8}>
-              <label htmlFor='uploadFile'>
-                <Button size='large' style={{ width: '100%' }} type='primary' onClick={uploadImg}>选择照片</Button>
-              </label>
-            </Col>
-            <Col span={8}>
-              <Button size='large' style={{ width: '100%' }} type='primary' onClick={()=>{startTypeset('canvas')}}>开始排版</Button>
-            </Col>
-            <Col span={8}>
-              <Button size='large' style={{ width: '100%' }} type='primary' onClick={()=>{startTypeset('canvas_save','save')}}>保存</Button>
+        <div style={{ background: '#fff', paddingBottom: '15vh' }}>
+          <Row>
+            <Col span={windowWidth > 500 ? 12 : 22} offset={windowWidth > 500 ? 6 : 1}>
+              <Space direction='vertical' style={{ width: '100%' }} size={20}>
+                <RadioBtnGroup key={'pageSize'} id='pageSize' title='纸张大小：' list={staticData['pageSize']} active={formData['pageSize'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
+                <RadioBtnGroup key={'photoSize'} id='photoSize' title='照片规格：' list={staticData['photoSize']} col={3} active={formData['photoSize'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
+                <RadioBtnGroup key={'rowSetup'} id='rowSetup' title='行列设置：' list={staticData['rowSetup']} active={formData['rowSetup'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
+                <RadioBtnGroup key={'lineStyle'} id='lineStyle' title='裁剪辅助线：' list={staticData['lineStyle']} active={formData['lineStyle'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
+                <Row gutter={16}>
+                  <Col span={8}>
+                    <label htmlFor='uploadFile'>
+                      <Button size='large' style={{ width: '100%' }} type='primary' onClick={uploadImg}>选择照片</Button>
+                    </label>
+                  </Col>
+                  <Col span={8}>
+                    <Button size='large' style={{ width: '100%' }} type='primary' onClick={() => { startTypeset('canvas') }}>开始排版</Button>
+                  </Col>
+                  <Col span={8}>
+                    <Button size='large' style={{ width: '100%' }} type='primary' onClick={() => { startTypeset('canvas_save', 'save') }}>保存</Button>
+                  </Col>
+                </Row>
+                {/* <img style={{ width: '200px' }} src={previewUrl} alt="" /> */}
+                <div ref={formRef} style={{ display: 'flex', justifyContent: 'center',boxShadow:'0 0 2 #ccc' }}>
+                  <span style={{ boxShadow: '0 0 20px 2px #ccc',fontSize:0 }}>
+                  <canvas id='canvas'></canvas>
+                  </span>
+                </div>
+                <canvas id='canvas_save' style={{ display: 'none', border: '1px solid red' }}></canvas>
+              </Space>
+              <div style={{ height: '20vh' }}></div>
             </Col>
           </Row>
-          {/* <img style={{ width: '200px' }} src={previewUrl} alt="" /> */}
-          <div ref={formRef} style={{ display:'flex',justifyContent:'center' }}>
-            <canvas id='canvas'></canvas>
-          </div>
-          <canvas id='canvas_save' style={{display:'none', border: '1px solid red' }}></canvas>
-        </Space>
-        <div style={{ height: '20vh' }}></div>
+        </div>
+
       </Layout>
     </>
   )

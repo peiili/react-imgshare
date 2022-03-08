@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
             })
         })
     }
-   
+
     return { props: { img, contents,count,totalPage } }
 }
 const ItemList = (props) => {
@@ -149,7 +149,7 @@ const Blog = (props) => {
                 </Carousel>
                 <div style={{ background: '#fff', paddingBottom: '15vh' }}>
                     <Row>
-                        <Col span={windowWidth > 500 ? 12 : 24} offset={windowWidth > 500 ? 6 : 0}>
+                        <Col span={windowWidth > 500 ? 12 : 22} offset={windowWidth > 500 ? 6 : 1}>
                             <ItemList contents={contents} count={count} totalPage={totalPage}></ItemList>
                         </Col>
                     </Row>
