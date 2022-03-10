@@ -198,6 +198,8 @@ const Typeset = () => {
     <>
       <Head>
         <title>证件照排版</title>
+        <mate name="keywords" content="证件照排版 一键排版 排版 证件照 手机上怎么排版证件照"></mate>
+
       </Head>
       <Layout>
         <div style={{ height: '10vh' }}></div>
