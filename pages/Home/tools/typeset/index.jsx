@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import { Row, Col, Button, Space } from 'antd'
 import Layout from '@/pages/Home/Layouts'
-import RadioBtnGroup from './component/radiobtngroup'
+import RadioBtnGroup from '@/components/radiobtngroup'
 
 const staticData = {
   pageSize: [
     { title: 'A5(常用)', size: '210mmx148mm', width: 210, height: 148 },
-    { title: 'A4', size: '210mmx297mm', width: 210, height: 297 },
+    { title: 'A4', size: '279mmx210mm', width: 279, height: 210 },
     // { title: '自定义', size: '任意大小', width: 0, height: 0 }
   ],
   photoSize: [
@@ -225,9 +225,9 @@ const Typeset = () => {
                   </Col>
                 </Row>
                 {/* <img style={{ width: '200px' }} src={previewUrl} alt="" /> */}
-                <div ref={formRef} style={{ display: 'flex', justifyContent: 'center',boxShadow:'0 0 2 #ccc' }}>
-                  <span style={{ boxShadow: '0 0 20px 2px #ccc',fontSize:0 }}>
-                  <canvas id='canvas'></canvas>
+                <div ref={formRef} style={{ display: 'flex', justifyContent: 'center', boxShadow: '0 0 2 #ccc' }}>
+                  <span style={{ boxShadow: '0 0 20px 2px #ccc', fontSize: 0 }}>
+                    <canvas id='canvas'></canvas>
                   </span>
                 </div>
                 <canvas id='canvas_save' style={{ display: 'none', border: '1px solid red' }}></canvas>

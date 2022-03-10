@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Typography, Row, Col } from 'antd'
-import RadioBtn from '@/pages/Home/tools/typeset/component/radiobtn/radiobtn'
+import RadioBtn from '@/components/radiobtn/radiobtn'
 
 const { Title } = Typography;
 const RadioBtnGroup = (props) => {
