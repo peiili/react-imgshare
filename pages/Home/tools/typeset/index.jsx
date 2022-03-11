@@ -3,10 +3,13 @@ import Head from 'next/head'
 import { Row, Col, Button, Space } from 'antd'
 import Layout from '@/pages/Home/Layouts'
 import RadioBtnGroup from '@/components/radiobtngroup'
+import styles from './style.module.css'
+import { PlusOutlined }  from '@ant-design/icons';
 
 const staticData = {
   pageSize: [
-    { title: 'A5(常用)', size: '210mmx148mm', width: 210, height: 148 },
+    { title: '5寸(常用)', size: '127mmx88.9mm', width: 127, height: 88.9 },
+    { title: 'A5', size: '210mmx148mm', width: 210, height: 148 },
     { title: 'A4', size: '279mmx210mm', width: 279, height: 210 },
     // { title: '自定义', size: '任意大小', width: 0, height: 0 }
   ],
@@ -202,37 +205,34 @@ const Typeset = () => {
 
       </Head>
       <Layout>
-        <div style={{ height: '10vh' }}></div>
+        <div style={{ height: '2vh' }}></div>
         <div style={{ background: '#fff', paddingBottom: '15vh' }}>
           <Row>
             <Col span={windowWidth > 500 ? 12 : 22} offset={windowWidth > 500 ? 6 : 1}>
+              <div className={styles.uploadBlock} onClick={uploadImg}>
+              {previewUrl? <img style={{height:'12rem'}} src={previewUrl} alt="" />: <PlusOutlined />}
+              </div>
               <Space direction='vertical' style={{ width: '100%' }} size={20}>
                 <RadioBtnGroup key={'pageSize'} id='pageSize' title='纸张大小：' list={staticData['pageSize']} active={formData['pageSize'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
                 <RadioBtnGroup key={'photoSize'} id='photoSize' title='照片规格：' list={staticData['photoSize']} col={3} active={formData['photoSize'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
                 <RadioBtnGroup key={'rowSetup'} id='rowSetup' title='行列设置：' list={staticData['rowSetup']} active={formData['rowSetup'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
                 <RadioBtnGroup key={'lineStyle'} id='lineStyle' title='裁剪辅助线：' list={staticData['lineStyle']} active={formData['lineStyle'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
                 <Row gutter={16}>
-                  <Col span={8}>
-                    <label htmlFor='uploadFile'>
-                      <Button size='large' style={{ width: '100%' }} type='primary' onClick={uploadImg}>选择照片</Button>
-                    </label>
-                  </Col>
-                  <Col span={8}>
+                  <Col span={12}>
                     <Button size='large' style={{ width: '100%' }} type='primary' onClick={() => { startTypeset('canvas') }}>开始排版</Button>
                   </Col>
-                  <Col span={8}>
+                  <Col span={12}>
                     <Button size='large' style={{ width: '100%' }} type='primary' onClick={() => { startTypeset('canvas_save', 'save') }}>保存</Button>
                   </Col>
                 </Row>
-                {/* <img style={{ width: '200px' }} src={previewUrl} alt="" /> */}
-                <div ref={formRef} style={{ display: 'flex', justifyContent: 'center', boxShadow: '0 0 2 #ccc' }}>
+                <div ref={formRef} style={{ display: 'flex', justifyContent: 'center',marginTop:'2rem', boxShadow: '0 0 2 #ccc' }}>
                   <span style={{ boxShadow: '0 0 20px 2px #ccc', fontSize: 0 }}>
                     <canvas id='canvas'></canvas>
                   </span>
                 </div>
                 <canvas id='canvas_save' style={{ display: 'none', border: '1px solid red' }}></canvas>
               </Space>
-              <div style={{ height: '20vh' }}></div>
+              <div style={{ height: '10vh' }}></div>
             </Col>
           </Row>
         </div>
