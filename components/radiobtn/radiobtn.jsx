@@ -6,7 +6,7 @@ const Typeset = (props) => {
     <>
       <div className={active ? style['main-active'] : style.main} onClick={onClick}>
         <div><b>{title}</b></div>
-        <div>{size}</div>
+        <div className={style.size}>{size}</div>
       </div>
     </>
   )

@@ -9,20 +9,22 @@ import { PlusOutlined }  from '@ant-design/icons';
 const staticData = {
   pageSize: [
     { title: '5寸(常用)', size: '127mmx88.9mm', width: 127, height: 88.9 },
-    { title: 'A5', size: '210mmx148mm', width: 210, height: 148 },
+    { title: '5寸(竖版)', size: '88.9mmx127mm', width: 88.9, height: 127 },
+    // { title: 'A5', size: '210mmx148mm', width: 210, height: 148 },
     { title: 'A4', size: '279mmx210mm', width: 279, height: 210 },
     // { title: '自定义', size: '任意大小', width: 0, height: 0 }
   ],
   photoSize: [
-    { title: '小一寸', size: '22mmx32mm', width: 22, height: 32 },
     { title: '一寸', size: '25mmx35mm', width: 25, height: 34 },
+    { title: '小一寸', size: '22mmx32mm', width: 22, height: 32 },
     { title: '大一寸', size: '23mmx48mm', width: 23, height: 48 },
-    { title: '小二寸', size: '35mmx45mm', width: 35, height: 45 },
     { title: '二寸', size: '35mmx49mm', width: 35, height: 49 },
+    { title: '小二寸', size: '35mmx45mm', width: 35, height: 45 },
     // { title: '自定义', size: '任意尺寸', width: 0, height: 0 }
   ],
   rowSetup: [
     { title: '8张', size: '2行4列', row: 2, col: 4 },
+    { title: '9张（一寸）', size: '3行3列', row: 3, col: 3 },
     { title: '4张', size: '2行2列', row: 2, col: 2 },
     // { title: '自定义', size: '任意行列', row: 0, col: 0 }
   ],
@@ -72,6 +74,7 @@ const Typeset = () => {
   const uploadImg = function () {
     const input = document.createElement('input')
     input.type = 'file'
+    input.accept = 'image/gif,image/jpeg,image/png'
     input.click()
     var reader = new FileReader()
     input.addEventListener('change', (e) => {
@@ -107,7 +110,7 @@ const Typeset = () => {
       },
     }
     let mutliple = 1
-    if (action === 'save') {
+    if (action === 'save') { //计算实际尺寸
       // 倍数 = 目标尺寸（宽 mm）/每英寸mm*单位像素/canvas宽度基数
       mutliple = activeSetup.pageSize.width / 25.4 * 300 / activeSetup.pageSize.width
     } else {
@@ -201,16 +204,15 @@ const Typeset = () => {
     <>
       <Head>
         <title>证件照排版</title>
-        <mate name="keywords" content="证件照排版 一键排版 排版 证件照 手机上怎么排版证件照"></mate>
-
+        <meta name="keywords" content="证件照排版 一键排版 排版 证件照 手机上怎么排版证件照"></meta>
       </Head>
-      <Layout>
+      <Layout >
         <div style={{ height: '2vh' }}></div>
         <div style={{ background: '#fff', paddingBottom: '15vh' }}>
           <Row>
             <Col span={windowWidth > 500 ? 12 : 22} offset={windowWidth > 500 ? 6 : 1}>
               <div className={styles.uploadBlock} onClick={uploadImg}>
-              {previewUrl? <img style={{height:'12rem'}} src={previewUrl} alt="" />: <PlusOutlined />}
+              {previewUrl? <img style={{height:'12rem'}} src={previewUrl} alt="" />: <>请上传照片<PlusOutlined /></>}
               </div>
               <Space direction='vertical' style={{ width: '100%' }} size={20}>
                 <RadioBtnGroup key={'pageSize'} id='pageSize' title='纸张大小：' list={staticData['pageSize']} active={formData['pageSize'].active} handleClick={(id, i) => { handleClick(id, i) }}></RadioBtnGroup>
@@ -222,17 +224,18 @@ const Typeset = () => {
                     <Button size='large' style={{ width: '100%' }} type='primary' onClick={() => { startTypeset('canvas') }}>开始排版</Button>
                   </Col>
                   <Col span={12}>
-                    <Button size='large' style={{ width: '100%' }} type='primary' onClick={() => { startTypeset('canvas_save', 'save') }}>保存</Button>
+                    <Button size='large' style={{ width: '100%' }} type='primary' onClick={() => { startTypeset('canvas_save', 'save') }}>下载/保存</Button>
                   </Col>
                 </Row>
-                <div ref={formRef} style={{ display: 'flex', justifyContent: 'center',marginTop:'2rem', boxShadow: '0 0 2 #ccc' }}>
+                如果发现板式不合适，请更换纸张大小或行列设置
+                <div ref={formRef} style={{ display: 'flex', justifyContent: 'center',marginTop:'0rem', boxShadow: '0 0 2 #ccc' }}>
                   <span style={{ boxShadow: '0 0 20px 2px #ccc', fontSize: 0 }}>
                     <canvas id='canvas'></canvas>
                   </span>
                 </div>
                 <canvas id='canvas_save' style={{ display: 'none', border: '1px solid red' }}></canvas>
               </Space>
-              <div style={{ height: '10vh' }}></div>
+              <div style={{ height: '10vw' }}></div>
             </Col>
           </Row>
         </div>

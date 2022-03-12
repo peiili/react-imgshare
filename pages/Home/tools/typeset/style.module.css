@@ -1,7 +1,10 @@
 .uploadBlock{
   border: 1px dashed #ccc;
+  border-radius: 10px;
   height:14rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
