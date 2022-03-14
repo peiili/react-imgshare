@@ -17,17 +17,19 @@ export default class HttpUtils {
     })
   }
   static post = (url, data,ServerSide) => {
+    // 判断提交的数据类型
+    const isFormData = Object.prototype.toString.call(data)==='[object FormData]'
     if(!dev){
       baseUrl = ServerSide?'http://localhost:3000':''
     }
     return new Promise((resolve, reject) => {
       fetch(baseUrl+url, {
         method: 'POST',
-        headers: {
+        headers: isFormData?undefined:{
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: isFormData?data:JSON.stringify(data),
       })
         .then((response) => response.json())
         .then((result) => {

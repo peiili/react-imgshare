@@ -5,6 +5,7 @@ import Layout from '@/pages/Home/Layouts'
 import RadioBtnGroup from '@/components/radiobtngroup'
 import styles from './style.module.css'
 import { PlusOutlined }  from '@ant-design/icons';
+import { uploadFile } from '@/api/commonApi'
 
 const staticData = {
   pageSize: [
@@ -85,6 +86,10 @@ const Typeset = () => {
       reader.readAsDataURL(file)
       const formdata = new FormData()
       formdata.append('file', file)
+      formdata.append('source', '1')
+      uploadFile(formdata).then(e=>{
+        console.log(e);
+      })
     })
   }
   /**
