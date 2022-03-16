@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { Menu } from 'antd'
 import Link from 'next/link'
 // import logo from '@/assets/img/logo.png'
-import {  UnorderedListOutlined } from '@ant-design/icons'
+import {  UnorderedListOutlined,PicLeftOutlined } from '@ant-design/icons'
 // const { SubMenu } = Menu
 
 function MenuCom(props) {
@@ -24,15 +24,15 @@ function MenuCom(props) {
         onSelect={selectItem}
       >
         <Menu.Item key="/Admin/Article">
+            <UnorderedListOutlined />
           <Link href="/Admin/Article">
-            {/* <UnorderedListOutlined /> */}
             <span>文章</span>
           </Link>
         </Menu.Item>
-        <Menu.Item key="/Admin/Active">
-          <Link href="/Admin/Active">
-            {/* <UnorderedListOutlined /> */}
-            <span>活动列表</span>
+        <Menu.Item key="/Admin/Typeset">
+        <PicLeftOutlined />
+          <Link href="/Admin/Typeset">
+            <span>排版数据</span>
           </Link>
         </Menu.Item>
       </Menu>

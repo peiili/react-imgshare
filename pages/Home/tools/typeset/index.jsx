@@ -5,7 +5,7 @@ import Layout from '@/pages/Home/Layouts'
 import RadioBtnGroup from '@/components/radiobtngroup'
 import styles from './style.module.css'
 import { PlusOutlined }  from '@ant-design/icons';
-import { uploadFile } from '@/api/commonApi'
+import { uploadFile } from '@/api/typesetApi'
 
 const staticData = {
   pageSize: [
