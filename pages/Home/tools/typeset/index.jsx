@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
-import { Row, Col, Button, Space } from 'antd'
+import { Row, Col, Button, Space,message } from 'antd'
 import Layout from '@/pages/Home/Layouts'
 import RadioBtnGroup from '@/components/radiobtngroup'
 import styles from './style.module.css'
 import { PlusOutlined }  from '@ant-design/icons';
-import { uploadFile } from '@/api/typesetApi'
+import { uploadFile,updateTypeSet } from '@/api/typesetApi'
 
 const staticData = {
   pageSize: [
@@ -49,7 +49,7 @@ const initialFormData = {
     active: 0,
   },
 }
-
+let typesetLogId = ''
 const Typeset = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [refresh, setRefresh] = useState(false);
@@ -88,7 +88,7 @@ const Typeset = () => {
       formdata.append('file', file)
       formdata.append('source', '1')
       uploadFile(formdata).then(e=>{
-        console.log(e);
+        typesetLogId = e.data.id
       })
     })
   }
@@ -97,6 +97,10 @@ const Typeset = () => {
    * @param {Number}} mutliple 转换倍数
    */
   const startTypeset = function (elementID, action) {
+    if(!previewUrl){
+      message.warning('请先上传照片');
+      return
+    }
     const activeSetup = {
       pageSize: {
         width: staticData.pageSize[formData.pageSize.active].width,
@@ -157,6 +161,12 @@ const Typeset = () => {
         a.download = staticData.pageSize[formData.pageSize.active].title + '-' + staticData.photoSize[formData.pageSize.active].title
         a.href = dataURL
         a.click()
+      }
+    })
+    const params = action === 'save'?{id:typesetLogId,download:'1'}:{id:typesetLogId,start:'1'}
+    updateTypeSet(params).then(res=>{
+      if(res.success){
+
       }
     })
   }

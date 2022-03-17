@@ -22,3 +22,14 @@ export function getTypeSetPageServerSide(params) {
 export function getTypeSetPage(params) {
   return HttpUtils.post('/api/typeset/page', params)
 }
+/**
+ * 更新排版记录
+ * @param {Object} params
+ * @param {String} params.id
+ * @param {String} params.start
+ * @param {String} params.download
+ * @returns
+ */
+export function updateTypeSet(params) {
+  return HttpUtils.put('/api/typeset', params)
+}
