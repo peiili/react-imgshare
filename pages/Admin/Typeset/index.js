@@ -29,7 +29,7 @@ const columns = [
     key: 'img',
     render: (text, record) => (
       <Space>
-        <Image width='50px' src={`http://www.dlsjf.top/${record.xa_path}`}></Image>
+        <Image width='50px' src={`http://xek.dlsjf.top/${record.xa_path}`}></Image>
       </Space>
     ),
   }
