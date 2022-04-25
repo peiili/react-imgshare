@@ -28,7 +28,7 @@ const ImageDetail = () => {
           <Col span={windowWidth > 500 ? 12 : 22} offset={windowWidth > 500 ? 6 : 1}>
             <Image
               width={'100%'}
-              alt={JSON.parse(item.describe)}
+              alt={item.describe ? JSON.parse(item.describe) : item.describe}
               placeholder={
                 <Image
                   preview={false}

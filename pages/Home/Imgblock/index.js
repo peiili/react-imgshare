@@ -118,7 +118,7 @@ class ImgBlock extends Component {
                   <Image
                     className={style.imgWidth}
                     width={'100%'}
-                    alt={JSON.parse(item.describe)}
+                    alt={item.describe ? JSON.parse(item.describe) : item.describe}
                     placeholder={true}
                     preview={false}
                     src={'https://xek.dlsjf.top/' + item.name + '-123'}
