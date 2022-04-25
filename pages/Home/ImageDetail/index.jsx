@@ -28,11 +28,11 @@ const ImageDetail = () => {
           <Col span={windowWidth > 500 ? 12 : 22} offset={windowWidth > 500 ? 6 : 1}>
             <Image
               width={'100%'}
-              alt={item.describe}
+              alt={JSON.parse(item.describe)}
               placeholder={
                 <Image
                   preview={false}
-                  src={'https://xek.dlsjf.top/' + item.name+'-123'}
+                  src={'https://xek.dlsjf.top/' + item.name + '-123'}
                   width={'100%'}
                 />
               }
