@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef,useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Form, Input, Button } from 'antd'
 import dynamic from 'next/dynamic'
 import 'easymde/dist/easymde.min.css'
 import { setBlogContent, getBlogContent, putBlogContent } from '@/api/articleApi'
 // 动态导入模块，正常渲染Browser端api
 const SimpleMdeEditor = dynamic(
-	() => import("react-simplemde-editor"),
-	{ ssr: false }
+  () => import("react-simplemde-editor"),
+  { ssr: false }
 );
 
 const Editor = (props) => {
@@ -16,7 +16,8 @@ const Editor = (props) => {
   const [initialValues] = useState({
     title: '',
     description: '',
-    content: ''
+    keywords: '',
+    content: '',
   })
   const layout = {
     labelCol: { span: 2 },
@@ -26,12 +27,13 @@ const Editor = (props) => {
     let body = {
       title: values.title,
       description: values.description,
+      keywords: values.keywords,
       type: 2,
-      status:1,
+      status: 1,
       content: values.content,
     }
     if (id) {
-      putBlogContent({id,...body}).then(res => {
+      putBlogContent({ id, ...body }).then(res => {
         if (res.success) {
           props.submit(body)
         }
@@ -51,10 +53,11 @@ const Editor = (props) => {
     if (id) {
       getBlogContent(id).then(res => {
         if (res.success) {
-          const { title, description, content } = res.data[0]
+          const { title, description, keywords, content } = res.data[0]
           formRef.current.setFieldsValue({
             title,
             description,
+            keywords,
             content,
           })
         }
@@ -80,6 +83,12 @@ const Editor = (props) => {
         <Form.Item
           name="description"
           label="简介"
+        >
+          <Input.TextArea />
+        </Form.Item>
+        <Form.Item
+          name="keywords"
+          label="关键字"
         >
           <Input.TextArea />
         </Form.Item>
