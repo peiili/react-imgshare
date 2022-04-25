@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { Button, Row, Col, Carousel, List, Image } from 'antd'
 import moment from 'moment'
 import Layout from '../Layouts'
 import { carouselListServerSide } from '@/api/index'
-import { getBlogList,getBlogListServerSide } from '@/api/articleApi'
+import { getBlogList, getBlogListServerSide } from '@/api/articleApi'
 import style from './index.module.css'
 export async function getServerSideProps(context) {
     let img = []
@@ -13,12 +13,12 @@ export async function getServerSideProps(context) {
         img = res1.data
     }
     let contents = []
-    let count=''
-    let totalPage=''
-    const res2 =await getBlogListServerSide({ fuzzy:'',page: '1',status: '1', size:'10', type:'2' })
-    if(res2.success){
-        count=res2.data.count
-        totalPage=res2.data.total
+    let count = ''
+    let totalPage = ''
+    const res2 = await getBlogListServerSide({ fuzzy: '', page: '1', status: '1', size: '10', type: '2' })
+    if (res2.success) {
+        count = res2.data.count
+        totalPage = res2.data.total
         contents = res2.data.list.map(e => {
             return Object.assign(e, {
                 date: moment(e.created_date).format('YYYY-MM-DD')
@@ -26,11 +26,10 @@ export async function getServerSideProps(context) {
         })
     }
 
-    return { props: { img, contents,count,totalPage } }
+    return { props: { img, contents, count, totalPage } }
 }
 const ItemList = (props) => {
-    const {contents,count,totalPage} = props
-    const router = useRouter()
+    const { contents, count, totalPage } = props
     const [list, setList] = useState(contents)
     const [pageObj, setPageObj] = useState({
         size: 10,
@@ -72,12 +71,6 @@ const ItemList = (props) => {
             }
         })
     }
-    // useEffect(() => {
-    //     getList()
-    // }, [])
-    useEffect(() => {
-        // getList()
-    }, [pageObj])
     const onLoadMore = () => {
         const currentPage = pageObj.page + 1
         setPageObj({ ...pageObj, page: currentPage })
@@ -104,22 +97,21 @@ const ItemList = (props) => {
                 split={true}
                 loadMore={loadMore}
                 loading={false}
-                renderItem={item => <List.Item onClick={() => {
-                    router.push(`/Home/Blog/Article?id=${item.id}`)
-                }
-                }>
-                    <List.Item.Meta
-                        title={<span style={{ cursor: 'pointer' }}>{item.title}</span>}
-                    />
-                    <div>{item.date}</div>
-                </List.Item>
-                }
+                renderItem={item => (
+                    <List.Item>
+                        <List.Item.Meta
+                            title={<Link href={`/Home/Blog/Article?id=${item.id}`} style={{ cursor: 'pointer' }}>{item.title}</Link>}
+                        />
+                        <div>{item.date}</div>
+                    </List.Item>
+
+                )}
             >
             </List>
         </div>)
 }
 const Blog = (props) => {
-    const {img,contents,count,totalPage} = props
+    const { img, contents, count, totalPage } = props
     const [windowWidth, setWindowWidth] = useState(0);
     useEffect(() => {
         setWindowWidth(window.screen.width)
@@ -137,7 +129,7 @@ const Blog = (props) => {
                                 placeholder={
                                     <Image
                                         preview={false}
-                                        src={'https://xek.dlsjf.top/' + item.name+ '-123'}
+                                        src={'https://xek.dlsjf.top/' + item.name + '-123'}
                                         width={'100%'}
                                     />}
                                 preview={false}

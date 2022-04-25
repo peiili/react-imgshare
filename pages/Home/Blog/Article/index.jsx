@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
     const res2 = await getBlogContentServerSide(context.query.id)
     let contents = {}
     if (res2.success) {
-        const { title, description, content } = res2.data[0]
+        const { title, description, content, keywords } = res2.data[0]
         marked.setOptions({
             gfm: true,
             tables: true,
@@ -37,6 +37,7 @@ export async function getServerSideProps(context) {
         contents = {
             title,
             description,
+            keywords,
             content: marked.parse(content),
         }
     }
@@ -81,7 +82,7 @@ const Article = (props) => {
                             <div>
                                 <Head>
                                     <title>{contents.title}</title>
-                                    <meta name="keywords" content={contents.description} />
+                                    <meta name="keywords" content={contents.keywords} />
                                     <meta name="description" content={contents.description} />
                                 </Head>
                                 <PageHeader
