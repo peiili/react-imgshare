@@ -36,11 +36,9 @@ const columns = [
 ]
 const pageSize = 5
 const current = 1
-export async function getServerSideProps (context) {
-  let list = []
+export async function getServerSideProps(context) {
   let contents = []
   let count = ''
-  let totalPage = ''
 
   const res = await getTypeSetPageServerSide({
     page: current,
@@ -48,7 +46,6 @@ export async function getServerSideProps (context) {
   })
   if (res.success) {
     count = res.data.count
-    totalPage = res.data.totalPage
     contents = res.data.list.map(e => {
       return Object.assign(e, {
         key: e.id,
@@ -57,7 +54,7 @@ export async function getServerSideProps (context) {
     })
   }
 
-  return { props: { list, contents, count, totalPage } }
+  return { props: { contents, count } }
 }
 const Typeset = (props) => {
   const { contents, count } = props
@@ -73,7 +70,7 @@ const Typeset = (props) => {
     getTypeSetPage({
       page: data.current,
       size: data.pageSize
-    }).then(res2=>{
+    }).then(res2 => {
       if (res2.success) {
         const contents = res2.data.list.map(e => {
           return Object.assign(e, {

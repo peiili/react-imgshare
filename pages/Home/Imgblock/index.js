@@ -12,8 +12,8 @@ class ImgBlock extends Component {
     const { router, pageListData, CarouselList } = props
 
     this.state = {
-      poolData: CarouselList,
-      pageList: pageListData,
+      poolData: CarouselList || [],
+      pageList: pageListData || [],
       windowWidth: 0,
       router,
       loadings: false,
@@ -63,7 +63,7 @@ class ImgBlock extends Component {
         <div>
           <Carousel autoplay={true}>
 
-            {this.state.poolData.map((item) => (
+            {this.state.poolData && this.state.poolData.map((item) => (
               <div key={item.id}>
                 <Image
                   className={style.imgStyle}
@@ -92,7 +92,7 @@ class ImgBlock extends Component {
           </div>
           <div style={{ overflow: 'hidden' }} />
           <Row gutter={[16, 20]}>
-            {this.state.pageList.map((item) => (
+            {this.state.pageList && this.state.pageList.map((item) => (
               <Col span={this.state.windowWidth > 500 ? 6 : 12} key={item.id}>
                 <div className={style.imgblock} onClick={() => {
                   this.state.router.push(`/Home/ImageDetail?data=${JSON.stringify(item)}`)

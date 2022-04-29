@@ -1,42 +1,53 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Button, Space, Modal } from 'antd'
 import moment from 'moment'
-import { getBlogListServerSide,getBlogList, delBlogContent } from '@/api/articleApi'
+import { getBlogListServerSide, getBlogList, delBlogContent } from '@/api/articleApi'
 import AdminLayout from '@/components/AdminLayout'
 import Editor from './Editor'
+
+const pageSize = 5
+const current = 1
 export async function getServerSideProps() {
   // Fetch data from external API
+  let count = ''
   const params = {
     type: '2',
     fuzzy: '',
-    page: 1,
-    size: 10,
+    page: current,
+    size: pageSize,
     status: 1
   }
   const res = await getBlogListServerSide(params)
   let data = []
   if (res.success) {
+    count = res.data.count
     res.data.list.forEach((e) => {
       e.key = e.id
     })
     data = res.data.list
   }
   // Pass data to the page via props
-  return { props: { data } }
+  return { props: { data, count } }
 }
 const Article = (props) => {
-  const { data } = props
+  const { data, count } = props
   const [dataList, setDataList] = useState(data)
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState('list')
   const [currentId, setCurrentId] = useState('')
   const [delVisible, setDelVisible] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const getActive = () => {
+  const [pageObj, setPageObj] = useState({
+    currentPage: current,
+    pageSize: pageSize
+  });
+  const getActive = (data) => {
+    setLoading(true)
     const params = {
       type: '2',
       fuzzy: '',
-      page: 1,
-      size: 10,
+      page: data?.current || pageObj.currentPage,
+      size: data?.pageSize || pageObj.pageSize,
       status: 1
     }
     getBlogList(params).then((res) => {
@@ -45,6 +56,11 @@ const Article = (props) => {
           e.key = e.id
         })
         setDataList(res.data.list)
+        setLoading(false)
+        setPageObj({
+          currentPage: data?.current || pageObj.currentPage,
+          pageSize: data?.pageSize || pageObj.pageSize
+        })
         setShow('list')
       }
     })
@@ -108,8 +124,8 @@ const Article = (props) => {
   ]
   return (
     <>
-      <AdminLayout key={show}>
-        {(show === 'list'||show === 'del') &&
+      <AdminLayout key={show + pageObj.currentPage}>
+        {(show === 'list' || show === 'del') &&
           <div>
             <Button
               onClick={onShowCreated}
@@ -122,10 +138,13 @@ const Article = (props) => {
               dataSource={dataList}
               columns={columns}
               pagination={{
-                current: '1',
-                total: '50'
+                current: pageObj.currentPage,
+                pageSize: pageObj.pageSize,
+                total: count
               }}
-              size="small" />
+              loading={loading}
+              onChange={getActive}
+            />
           </div>
         }
         {show === 'add' && <Editor name='add' goBack={() => {
@@ -141,15 +160,15 @@ const Article = (props) => {
         }}></Editor>
         }
       </AdminLayout>
-        <Modal
-          title=""
-          visible={delVisible}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
-          onCancel={handleCancel}
-        >
-          <p>确认删除</p>
-        </Modal>
+      <Modal
+        title=""
+        visible={delVisible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <p>确认删除</p>
+      </Modal>
     </>
   )
 }
