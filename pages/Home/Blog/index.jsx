@@ -49,9 +49,9 @@ const ItemList = (props) => {
     })
     const [initLoading, setInitLoading] = useState(noMore)
     const [loading, setLoading] = useState(false)
-    const getList = () => {
+    const getList = (page) => {
         const { fuzzy, status, type } = query
-        const { page, size } = pageObj
+        const { size } = pageObj
 
         getBlogList({ fuzzy, page, status, size, type }).then(res => {
             if (res.success) {
@@ -78,7 +78,7 @@ const ItemList = (props) => {
     const onLoadMore = () => {
         const currentPage = pageObj.page + 1
         setPageObj({ ...pageObj, page: currentPage })
-        getList()
+        getList(currentPage)
         setLoading(true)
     }
     const loadMore = !initLoading ? (
