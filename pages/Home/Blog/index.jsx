@@ -14,11 +14,16 @@ export async function getServerSideProps(context) {
     }
     let contents = []
     let count = ''
-    let totalPage = ''
+    let totalPage = '',
+        noMore = true
     const res2 = await getBlogListServerSide({ fuzzy: '', page: '1', status: '1', size: '10', type: '2' })
     if (res2.success) {
         count = res2.data.count
         totalPage = res2.data.total
+
+        if (totalPage > 1) {
+            noMore = false
+        }
         contents = res2.data.list.map(e => {
             return Object.assign(e, {
                 date: moment(e.created_date).format('YYYY-MM-DD')
@@ -26,10 +31,10 @@ export async function getServerSideProps(context) {
         })
     }
 
-    return { props: { img, contents, count, totalPage } }
+    return { props: { img, contents, count, totalPage, noMore: noMore } }
 }
 const ItemList = (props) => {
-    const { contents, count, totalPage } = props
+    const { contents, count, totalPage, noMore } = props
     const [list, setList] = useState(contents)
     const [pageObj, setPageObj] = useState({
         size: 10,
@@ -42,7 +47,7 @@ const ItemList = (props) => {
         fuzzy: '',
         status: '1',
     })
-    const [initLoading, setInitLoading] = useState(true)
+    const [initLoading, setInitLoading] = useState(noMore)
     const [loading, setLoading] = useState(false)
     const getList = () => {
         const { fuzzy, status, type } = query
@@ -61,7 +66,6 @@ const ItemList = (props) => {
                     })
                 })
                 setLoading(false)
-                // console.log(pageObj.page>=res.data.total);
                 if (pageObj.page >= res.data.total) {
                     setInitLoading(true)
                 } else {
