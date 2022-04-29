@@ -6,8 +6,8 @@ function MenuCom(props) {
   const router = useRouter()
   return (
     <Menu className="menuStyle" mode="horizontal" theme="dark" defaultSelectedKeys={[router.pathname]}>
-      <Menu.Item key="/Home/Imgblock">
-        <Link href="/Home/Imgblock">首页</Link>
+      <Menu.Item key="/">
+        <Link href="/">首页</Link>
       </Menu.Item>
       <Menu.Item key="/Home/Blog">
         <Link href="/Home/Blog">博客</Link>

@@ -3,33 +3,14 @@ import { withRouter } from 'next/router'
 import { Row, Col, Carousel, Button, Image } from 'antd'
 import moment from 'moment'
 import style from './style.module.css'
-
 import { VerticalAlignBottomOutlined } from '@ant-design/icons'
-import { carousePage, carousePageServerSide, carouselListServerSide } from '@/api/index.js'
+import { carousePage } from '@/api/index.js'
 import Layout from './../Layouts'
-
-export async function getServerSideProps() {
-  const res1 = await carousePageServerSide({
-    size: 12,
-    page: 1,
-    desc: true
-  })
-  let pageListData = []
-  if (res1.success) {
-    pageListData = res1.data
-  }
-  const res2 = await carouselListServerSide(5)
-  let CarouselList = []
-  if (res2.success) {
-    CarouselList = res2.data
-  }
-  // Pass data to the page via props
-  return { props: { pageListData, CarouselList } }
-}
 class ImgBlock extends Component {
   constructor(props) {
     super(props)
     const { router, pageListData, CarouselList } = props
+
     this.state = {
       poolData: CarouselList,
       pageList: pageListData,
@@ -81,6 +62,7 @@ class ImgBlock extends Component {
       <Layout>
         <div>
           <Carousel autoplay={true}>
+
             {this.state.poolData.map((item) => (
               <div key={item.id}>
                 <Image
