@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import style from './style.module.css'
-function Footer() {
+function Footer () {
   const [location, setLocation] = useState(null);
   useEffect(() => {
     setLocation(window.location)

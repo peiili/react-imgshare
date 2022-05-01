@@ -12,13 +12,13 @@ echo $time1
 
 #yarn
 
-#yarn build
+# sudo yarn build
 
 # back last time index.html
 #ssh root@47.105.113.47 "mv /home/html/build/index.html /home/html/build/index_${time1}.html"
 
 # sync static files
-scp -r -v ./dist/* root@47.105.113.47:~/git/react-imgshare/dist/
+rsync -av ./dist/* aliyun:~/git/react-imgshare/dist/
 ssh aliyun "pm2 restart web"
 echo "done.."
 #ssh other

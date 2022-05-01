@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
             </Head>
             <Script
-                src="https://hm.baidu.com/hm.js?e6a4a66be15383cdb75c16f0da432f3b"
+                src="https://hm.baidu.com/hm.js?0aa2bd94ed347777090652e0928e05e3"
             />
             <Component {...pageProps} />
         </>
