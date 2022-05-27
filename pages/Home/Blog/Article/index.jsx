@@ -55,7 +55,7 @@ const Article = (props) => {
         <>
             <Layout>
                 <div className={style['blog-list']}>
-                    <Carousel autoplay={true}>
+                    {/* <Carousel autoplay={true}>
                         {img.map((item) => (
                             <div key={item.id}>
                                 <Image
@@ -74,7 +74,7 @@ const Article = (props) => {
                                 />
                             </div>
                         ))}
-                    </Carousel>
+                    </Carousel> */}
                 </div>
                 <Row>
                     <Col span={windowWidth > 500 ? 12 : 24} offset={windowWidth > 500 ? 6 : 0}>
