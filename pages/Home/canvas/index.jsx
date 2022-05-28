@@ -15,23 +15,23 @@ const Canvas = function () {
     // ctx.closePath()
     ctx.stroke();
   }
-  const clearCanvas = function () {
-    ctx.clearRect(0, 0, screenWidth, screenHeight)
-  }
 
-  const restore = function () {
-    ctx.restore()
-    ctx.beginPath()
-    ctx.fillRect(0, 0, screenWidth, screenHeight);
+  const clearCanvas = function () {
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, screenWidth, screenHeight)
+    historyDataURL = []
   }
   const backStep = function () {
     historyDataURL.pop()
-    const img = new Image()
-    img.src = historyDataURL.at(-1)
-    console.log(img);
-    img.onload = function () {
-
-      ctx.drawImage(img, 0, 0, screenWidth, screenHeight)
+    if (historyDataURL.length > 0) {
+      const img = new Image()
+      img.src = historyDataURL.at(-1)
+      img.onload = function () {
+        clearCanvas()
+        ctx.drawImage(img, 0, 0, screenWidth, screenHeight)
+      }
+    } else {
+      clearCanvas()
     }
   }
   useEffect(() => {
@@ -40,24 +40,24 @@ const Canvas = function () {
     // 设置画布大小
     setScreenWidth(window.innerWidth)
     setScreenHeight(window.innerHeight)
+
     // 检测鼠标的移动位置
     canvas.addEventListener('mousedown', (event) => {
       start = true
       ctx.beginPath()
       ctx.moveTo(event.offsetX, event.offsetY)
     })
-    canvas.addEventListener('mouseup', (event) => {
+    canvas.addEventListener('mouseup', (e) => {
       start = false
-      const imgData = canvas.toDataURL('image/jpg', 1)
+      const imgData = canvas.toDataURL('image/png', 1)
       historyDataURL.push(imgData)
-      console.log(historyDataURL);
     })
     canvas.addEventListener('mousemove', (event) => {
-      // console.log(event);
       if (!start) return;
       startDraw(ctx, { x: event.offsetX, y: event.offsetY })
     })
-  }, [screenHeight, screenWidth]);
+
+  }, []);
   return (
     <>
       <div>
@@ -66,9 +66,9 @@ const Canvas = function () {
           <button onClick={() => {
             clearCanvas()
           }}>清空</button>
-          <button onClick={() => {
+          {/* <button onClick={() => {
             restore()
-          }}>重新绘图</button>
+          }}>重新绘图</button> */}
           <button onClick={() => {
             backStep()
           }}>后退一步</button>
