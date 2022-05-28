@@ -22,6 +22,10 @@ const Canvas = function () {
     init()
     historyDataURL = []
   }
+  const eraser = function () {
+    ctx.strokeStyle = '#fff'
+    ctx.lineWidth = 10
+  }
   const backStep = function () {
     historyDataURL.pop()
     if (historyDataURL.length > 0) {
@@ -84,6 +88,9 @@ const Canvas = function () {
           <button onClick={() => {
             backStep()
           }}>后退一步</button>
+          <button onClick={() => {
+            eraser()
+          }}>橡皮擦</button>
         </div>
       </div>
 
