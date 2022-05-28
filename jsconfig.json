@@ -1,19 +1,19 @@
 {
-  "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "baseUrl": ".",
-    "paths": {
-      // "@/*": ["./*"],
-      "@/components/*": ["./components/*"],
-      "@/api/*": ["./api/*"],
-      "@/pages/*": ["./pages/*"]
-    }
-  },
-  "include": [
-    "pages/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            // "@/*": ["./*"],
+            "@/components": ["./components/"],
+            "@/api/*": ["./api/*"],
+            "@/pages/*": ["./pages/*"]
+        }
+    },
+    "include": [
+        "pages/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
