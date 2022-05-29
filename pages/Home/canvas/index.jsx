@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
-// import './style.css'
+import ColorDisc from "./ColorDisc";
 import styles from './style.module.css'
 // http://test.top/Home/canvas
 let start = false
-let canvas, ctx
-let historyDataURL = []
+let canvas,
+  ctx,
+  lineWidth = 10,
+  strokeStyle = '#000000',
+  lineCap = 'round',
+  historyDataURL = []
 const Canvas = function () {
   const [screenWidth, setScreenWidth] = useState(0);
   const [screenHeight, setScreenHeight] = useState(0);
@@ -14,6 +18,9 @@ const Canvas = function () {
   }
   const startDraw = function (ctx, live) {
     const { x, y } = live
+    ctx.lineCap = lineCap
+    ctx.strokeStyle = strokeStyle
+    ctx.lineWidth = lineWidth
     ctx.lineTo(x, y);
     ctx.stroke();
   }
@@ -24,7 +31,11 @@ const Canvas = function () {
   }
   const eraser = function () {
     ctx.strokeStyle = '#fff'
-    ctx.lineWidth = 10
+    ctx.lineWidth = lineWidth
+  }
+  const brush = function () {
+    ctx.strokeStyle = strokeStyle
+    ctx.lineWidth = lineWidth
   }
   const backStep = function () {
     historyDataURL.pop()
@@ -78,21 +89,27 @@ const Canvas = function () {
     <>
       <div>
         <canvas id="canvas" width={screenWidth} height={screenHeight}></canvas>
-        <div className={styles.contorl}>
-          <button onClick={() => {
+
+        {/* <button onClick={() => {
             clearCanvas()
           }}>清空</button>
-          {/* <button onClick={() => {
-            restore()
-          }}>重新绘图</button> */}
           <button onClick={() => {
             backStep()
           }}>后退一步</button>
           <button onClick={() => {
             eraser()
           }}>橡皮擦</button>
-        </div>
+          <input onClick={() => {
+            brush()
+          }} type='color' value={'#0000ff'}></input> */}
+        <ColorDisc
+          colors={['#000000', '#3fb4ff', '#8a3fff', '#fc5ac4', '#c9e265', '#ffde59', '#ffbd59', '#ff914d']}
+          onClick={(color) => {
+            strokeStyle = color
+            console.log(color)
+          }} />
       </div>
+
 
     </>
   )
