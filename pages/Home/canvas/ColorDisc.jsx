@@ -2,7 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react'
 import styles from './style.module.css'
 
 let start = false,
+    /**
+     * 鼠标相对客户端点击位置
+     */
     startPosition = { x: 0, y: 0 },
+    /**
+     * 当前控制块所在的位置
+     */
     currentPosition = { x: 10, y: 10 }
 const ColorDisc = function (props) {
     const { colors = ['#000000'], onClick } = props
@@ -27,15 +33,12 @@ const ColorDisc = function (props) {
             left: leftLength + currentPosition.x
         })
     }
-    useEffect(() => {
-        // console.log(position.left);
+
+    const onEnd = useCallback(function () {
+        start = false
         currentPosition.x = position.left
         currentPosition.y = position.top
     }, [position])
-
-    const onEnd = function () {
-        start = false
-    }
     useEffect(() => {
         const sideBar = document.getElementById('sideBar')
         sideBar.addEventListener('mousedown', onClickSide)
@@ -46,7 +49,7 @@ const ColorDisc = function (props) {
             document.removeEventListener('mousemove', onMove)
             document.removeEventListener('mouseup', onEnd)
         };
-    }, []);
+    }, [onEnd]);
     return (
         <>
             <div className={styles.control} style={{ top: position.top + 'px', left: position.left + 'px' }}>
