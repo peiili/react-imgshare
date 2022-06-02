@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
+import { Slider } from 'antd';
+import Divider from '@/components/Divider'
 import styles from './style.module.css'
 let start = false,
     /**
@@ -15,18 +17,20 @@ let start = false,
     resultedPosition = { x: 0, y: 0 }
 const ColorDisc = function (props) {
     const control = useRef()
-    const { colors = ['#000000'], onClick } = props
+    const { colors = ['#000000'], onClick, onChangeDiameter, defaultWidth } = props
     const [activeColor, setActiveColor] = useState(colors[0]);
     const [position, setPosition] = useState({
         top: currentPosition.y,
         left: currentPosition.x
     });
+
     const onClickSide = function (event) {
         const { clientX, clientY } = event
         start = true
         startPosition.x = clientX
         startPosition.y = clientY
     }
+
     const onMove = function (event) {
         const { clientX, clientY } = event
         if (!start) return;
@@ -55,8 +59,8 @@ const ColorDisc = function (props) {
         currentPosition.x = position.left
         currentPosition.y = position.top
     }, [position])
+
     useEffect(() => {
-        console.log(control.current.offsetWidth);
         const sideBar = document.getElementById('sideBar')
         sideBar.addEventListener('mousedown', onClickSide)
         document.addEventListener('mousemove', onMove)
@@ -71,6 +75,7 @@ const ColorDisc = function (props) {
         <>
             <div ref={control} className={styles.control} style={{ top: position.top + 'px', left: position.left + 'px' }}>
                 <div id='sideBar' className={styles.sideBar}></div>
+                <span className={styles.title}>颜色</span>
                 <div className={styles.discbox}>
                     {
                         colors.map(e => {
@@ -87,6 +92,13 @@ const ColorDisc = function (props) {
                             )
                         })
                     }
+                </div>
+                <Divider color='#ffffff60' />
+                <span className={styles.title}>半径</span>
+                <div>
+                    <Slider defaultValue={defaultWidth} min={1} max={20} onChange={(e) => {
+                        onChangeDiameter(e)
+                    }} />
                 </div>
             </div>
         </>

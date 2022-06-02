@@ -21,7 +21,6 @@
     display: flex;
     flex-wrap: wrap;
     cursor: pointer;
-    /* margin: 0 -0.2rem; */
 }
 .ColorDisc {
     width: 36px;
@@ -31,4 +30,8 @@
 }
 .ColorDiscActive {
     box-shadow: 0 0 0 2px #c4c4c4, inset 0 0 0 2px #293039;
+}
+.title{
+    color: #ffffff;
+    user-select: none;
 }
