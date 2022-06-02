@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ColorDisc from "./ColorDisc";
-import styles from './style.module.css'
 // http://test.top/Home/canvas
 let start = false
 let canvas,
@@ -75,7 +74,12 @@ const Canvas = function () {
         // 设置画布大小
         setScreenWidth(window.innerWidth)
         setScreenHeight(window.innerHeight)
-
+        const img = new Image()
+        img.src = 'http://statich5.dlsjf.top/pic/1654161431636.jpeg'
+        img.setAttribute("crossOrigin", 'Anonymous');
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0, 360, 540)
+        }
         // 检测鼠标的移动位置
         canvas.addEventListener('mousedown', mousedown)
         canvas.addEventListener('mouseup', mouseup)
