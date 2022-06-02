@@ -5,9 +5,9 @@
         "baseUrl": ".",
         "paths": {
             // "@/*": ["./*"],
-            "@/components": ["./components/"],
-            "@/api/*": ["./api/*"],
-            "@/pages/*": ["./pages/*"]
+            "@/components/*": ["components/*"],
+            "@/api/*": ["api/*"],
+            "@/pages/*": ["pages/*"]
         }
     },
     "include": [
