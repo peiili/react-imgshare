@@ -2,7 +2,7 @@ import React from 'react'
 import { Menu, Avatar } from 'antd'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-function MenuCom(props) {
+function MenuCom (props) {
   const router = useRouter()
   return (
     <Menu className="menuStyle" mode="horizontal" theme="dark" defaultSelectedKeys={[router.pathname]}>
@@ -15,7 +15,7 @@ function MenuCom(props) {
       <Menu.Item key="/Home/photo">
         <Link href="/Home/tools/typeset">排版</Link>
       </Menu.Item>
-      <Menu.Item key="/Home/photo">
+      <Menu.Item key="/Home/canvas">
         <Link href="/Home/canvas">画板</Link>
       </Menu.Item>
       <Menu.Item key="3">
