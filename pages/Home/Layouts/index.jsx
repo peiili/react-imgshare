@@ -1,8 +1,8 @@
 import React from 'react'
 import HomeLayout from '@/components/HomeLayout/index.jsx'
-const Home = ({ children }) => {
+const Home = ({ children, active }) => {
     return (
-        <HomeLayout>
+        <HomeLayout active={active}>
             {children}
         </HomeLayout>
     )
