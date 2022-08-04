@@ -121,7 +121,7 @@ const Blog = (props) => {
         setWindowWidth(window.screen.width)
     }, []);
     return (
-        <Layout>
+        <Layout active='/Home/Blog'>
             <div className={style['blog-list']}>
                 <Carousel autoplay={true}>
                     {img.map((item) => (
