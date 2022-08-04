@@ -10,12 +10,14 @@ import Layout from '../../Layouts'
 const { Text } = Typography;
 
 export async function getServerSideProps(context) {
-    const res1 = await carouselListServerSide(1)
-    let img = []
-    if (res1.success) {
-        img = res1.data
-    }
+    // const res1 = await carouselListServerSide(1)
+    // console.log(res1);
+    // let img = []
+    // if (res1.success) {
+    //     img = res1.data
+    // }
     const res2 = await getBlogContentServerSide(context.query.id)
+    console.log(res2);
     let contents = {}
     if (res2.success) {
         const { title, description, content, keywords } = res2.data[0]
@@ -42,7 +44,7 @@ export async function getServerSideProps(context) {
         }
     }
 
-    return { props: { img, contents } }
+    return { props: { contents } }
 }
 const Article = (props) => {
     const { contents } = props

@@ -9,6 +9,7 @@ import style from './index.module.css'
 export async function getServerSideProps(context) {
     let img = []
     const res1 = await carouselListServerSide(1)
+    console.log(res1);
     if (res1.success) {
         img = res1.data
     }
