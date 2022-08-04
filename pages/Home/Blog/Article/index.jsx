@@ -9,53 +9,55 @@ import style from './index.module.css'
 import Layout from '../../Layouts'
 const { Text } = Typography;
 
-export async function getServerSideProps (context) {
-  const res1 = await carouselListServerSide(1)
-  let img = []
-  if (res1.success) {
-    img = res1.data
-  }
-  const res2 = await getBlogContentServerSide(context.query.id)
-  let contents = {}
-  if (res2.success) {
-    const { title, description, content, keywords } = res2.data[0]
-    marked.setOptions({
-      gfm: true,
-      tables: true,
-      breaks: true,
-      pedantic: false,
-      // sanitize: true,
-      smartLists: true,
-      smartypants: false,
-      langPrefix: false,
-      highlight: function (code, lang) {
-        const hljs = require('highlight.js');
-        const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-        return hljs.highlight(code, { language }).value;
-      }
-    });
-    contents = {
-      title,
-      description,
-      keywords,
-      content: marked.parse(content),
+export async function getServerSideProps(context) {
+    const res1 = await carouselListServerSide(1)
+    let img = []
+    if (res1.success) {
+        img = res1.data
     }
-  }
+    const res2 = await getBlogContentServerSide(context.query.id)
+    let contents = {}
+    if (res2.success) {
+        const { title, description, content, keywords } = res2.data[0]
+        marked.setOptions({
+            gfm: true,
+            tables: true,
+            breaks: true,
+            pedantic: false,
+            // sanitize: true,
+            smartLists: true,
+            smartypants: false,
+            langPrefix: false,
+            highlight: function (code, lang) {
+                const hljs = require('highlight.js');
+                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                return hljs.highlight(code, { language }).value;
+            }
+        });
+        contents = {
+            title,
+            description,
+            keywords,
+            content: marked.parse(content),
+        }
+    }
 
-  return { props: { img, contents } }
+    return { props: { img, contents } }
 }
 const Article = (props) => {
-  const { contents } = props
-  const router = useRouter()
-  const [windowWidth, setWindowWidth] = useState(0);
-  useEffect(() => {
-    setWindowWidth(window.screen.width)
-  }, [router.query.id])
-  return (
-    <>
-      <Layout>
-        <div className={style['blog-list']}>
-          {/* <Carousel autoplay={true}>
+    const { contents } = props
+    const router = useRouter()
+    const [windowWidth, setWindowWidth] = useState(0);
+    const [contentHeight, setContentHeight] = useState(200);
+    useEffect(() => {
+        setWindowWidth(window.screen.width)
+        setContentHeight(window.innerHeight - 145)
+    }, [router.query.id])
+    return (
+        <>
+            <Layout active='/Home/Blog'>
+                <div className={style['blog-list']}>
+                    {/* <Carousel autoplay={true}>
                         {img.map((item) => (
                             <div key={item.id}>
                                 <Image
@@ -75,40 +77,40 @@ const Article = (props) => {
                             </div>
                         ))}
                     </Carousel> */}
-        </div>
-        <Row>
-          <Col span={windowWidth > 1000 ? 16 : 24} offset={windowWidth > 1000 ? 4 : 0}>
-            {contents.content ? (
-              <div>
-                <Head>
-                  <title>{contents.title}</title>
-                  <meta name="keywords" content={contents.keywords} />
-                  <meta name="description" content={contents.description} />
-                </Head>
-                <PageHeader
-                  className={style['site-page-header']}
-                  onBack={() => router.back()}
-                  title={contents.title}
-                />
-                <div style={{ margin: '20px' }}>
-                  {
-                    contents.description &&
-                    <Text type="secondary">{contents.description}</Text>
-                  }
-                  <Divider plain></Divider>
-                  <div dangerouslySetInnerHTML={{ __html: contents.content }}></div>
                 </div>
-              </div>
-            ) : (<div>
-              <div className={style.example}>
-                <Spin />
-              </div>
-            </div>)
-            }
-          </Col>
-        </Row>
-      </Layout>
-    </>
-  )
+                <Row>
+                    <Col span={windowWidth > 1000 ? 16 : 24} offset={windowWidth > 1000 ? 4 : 0}>
+                        {contents.content ? (
+                            <div style={{ minHeight: contentHeight + 'px' }}>
+                                <Head>
+                                    <title>{contents.title}</title>
+                                    <meta name="keywords" content={contents.keywords} />
+                                    <meta name="description" content={contents.description} />
+                                </Head>
+                                <PageHeader
+                                    className={style['site-page-header']}
+                                    onBack={() => router.back()}
+                                    title={contents.title}
+                                />
+                                <div style={{ margin: '20px' }}>
+                                    {
+                                        contents.description &&
+                                        <Text type="secondary">{contents.description}</Text>
+                                    }
+                                    <Divider plain></Divider>
+                                    <div dangerouslySetInnerHTML={{ __html: contents.content }}></div>
+                                </div>
+                            </div>
+                        ) : (<div>
+                            <div className={style.example}>
+                                <Spin />
+                            </div>
+                        </div>)
+                        }
+                    </Col>
+                </Row>
+            </Layout>
+        </>
+    )
 };
 export default Article;
