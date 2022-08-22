@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }) {
     return (
         <>
             <Head>
-                <title>三味书屋</title>
+                <title>大力坊</title>
                 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"></link>
                 <link rel="apple-touch-icon" href="/favicon.ico" />
                 <meta name="keywords" content="壁纸,照片排版,bing壁纸,bing,个人博客" />
