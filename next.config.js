@@ -14,7 +14,8 @@ module.exports = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://dlsjf.top/api/:path*' // Proxy to Backend
+        // destination: 'https://dlsjf.top/api/:path*' // Proxy to Backend
+        destination: 'http://127.0.0.1:5166/api/:path*' // Proxy to Backend
       }
     ]
   }

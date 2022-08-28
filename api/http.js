@@ -1,12 +1,18 @@
 const dev = process.env.NODE_ENV !== 'production';
-let baseUrl = dev ? 'http://test.top' : 'http://localhost:3000';
+let baseUrl = dev ? 'http://test.top' : 'http://0.0.0.0:3000';
 export default class HttpUtils {
-  static get = (url,ServerSide) => {
-    if(!dev){
-      baseUrl = ServerSide?'http://localhost:3000':''
+  /**
+   * get request
+   * @param {string} url
+   * @param {boolean} ServerSide
+   * @returns
+   */
+  static get = (url, ServerSide) => {
+    if (!dev) {
+      baseUrl = ServerSide ? 'http://0.0.0.0:3000' : ''
     }
     return new Promise((resolve, reject) => {
-      fetch(baseUrl+url)
+      fetch(baseUrl + url)
         .then((response) => response.json())
         .then((result) => {
           resolve(result)
@@ -16,20 +22,27 @@ export default class HttpUtils {
         })
     })
   }
-  static post = (url, data,ServerSide) => {
+  /**
+   * post request
+   * @param {string} url
+   * @param {object} data
+   * @param {boolean} ServerSide
+   * @returns
+   */
+  static post = (url, data, ServerSide) => {
     // 判断提交的数据类型
-    const isFormData = Object.prototype.toString.call(data)==='[object FormData]'
-    if(!dev){
-      baseUrl = ServerSide?'http://localhost:3000':''
+    const isFormData = Object.prototype.toString.call(data) === '[object FormData]'
+    if (!dev) {
+      baseUrl = ServerSide ? 'http://0.0.0.0:3000' : ''
     }
     return new Promise((resolve, reject) => {
-      fetch(baseUrl+url, {
+      fetch(baseUrl + url, {
         method: 'POST',
-        headers: isFormData?undefined:{
+        headers: isFormData ? undefined : {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: isFormData?data:JSON.stringify(data),
+        body: isFormData ? data : JSON.stringify(data),
       })
         .then((response) => response.json())
         .then((result) => {
@@ -40,12 +53,12 @@ export default class HttpUtils {
         })
     })
   }
-  static put = (url, data,ServerSide) => {
-    if(!dev){
-      baseUrl = ServerSide?'http://localhost:3000':''
+  static put = (url, data, ServerSide) => {
+    if (!dev) {
+      baseUrl = ServerSide ? 'http://0.0.0.0:3000' : ''
     }
     return new Promise((resolve, reject) => {
-      fetch(baseUrl+url, {
+      fetch(baseUrl + url, {
         method: 'put',
         headers: {
           Accept: 'application/json',
@@ -62,12 +75,12 @@ export default class HttpUtils {
         })
     })
   }
-  static delete = (url, data,ServerSide) => {
-    if(!dev){
-      baseUrl = ServerSide?'http://localhost:3000':''
+  static delete = (url, data, ServerSide) => {
+    if (!dev) {
+      baseUrl = ServerSide ? 'http://0.0.0.0:3000' : ''
     }
     return new Promise((resolve, reject) => {
-      fetch(baseUrl+url, {
+      fetch(baseUrl + url, {
         method: 'delete',
         headers: {
           Accept: 'application/json',
