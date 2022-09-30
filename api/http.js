@@ -13,7 +13,14 @@ export default class HttpUtils {
     }
     return new Promise((resolve, reject) => {
       fetch(baseUrl + url)
-        .then((response) => response.json())
+        .then((response) => {
+          if (response) {
+            return response.json()
+          } else {
+            console.log('==========')
+            console.log(response)
+          }
+        })
         .then((result) => {
           resolve(result)
         })
@@ -44,7 +51,14 @@ export default class HttpUtils {
         },
         body: isFormData ? data : JSON.stringify(data),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response) {
+            return response.json()
+          } else {
+            console.log('==========')
+            console.log(response)
+          }
+        })
         .then((result) => {
           resolve(result)
         })
@@ -66,7 +80,14 @@ export default class HttpUtils {
         },
         body: JSON.stringify(data),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response) {
+            return response.json()
+          } else {
+            console.log('==========')
+            console.log(response)
+          }
+        })
         .then((result) => {
           resolve(result)
         })
@@ -88,7 +109,15 @@ export default class HttpUtils {
         },
         body: JSON.stringify(data),
       })
-        .then((response) => response.json())
+        .then((response) => {
+
+          if (response) {
+            return response.json()
+          } else {
+            console.log('==========')
+            console.log(response)
+          }
+        })
         .then((result) => {
           resolve(result)
         })
