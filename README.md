@@ -1,4 +1,4 @@
-## HOMW SITE [预览](https://dlsjf.top) 
+## HOME SITE [预览](https://dlsjf.top) 
 [![build and rsync](https://github.com/peiili/react-imgshare/actions/workflows/node.js.yml/badge.svg)](https://github.com/peiili/react-imgshare/actions/workflows/node.js.yml)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
