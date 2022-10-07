@@ -100,6 +100,11 @@ const Article = (props) => {
       key: 'title',
     },
     {
+      title: '浏览量',
+      dataIndex: 'view',
+      key: 'view',
+    },
+    {
       title: '创建时间',
       dataIndex: 'created_date',
       key: 'created_date',

@@ -1,5 +1,6 @@
 const dev = process.env.NODE_ENV !== 'production';
-let baseUrl = dev ? 'http://test.top' : 'http://0.0.0.0:3000';
+const host = 'http://127.0.0.1:3000'
+let baseUrl = dev ? 'http://test.top' : host;
 export default class HttpUtils {
   /**
    * get request
@@ -9,7 +10,7 @@ export default class HttpUtils {
    */
   static get = (url, ServerSide) => {
     if (!dev) {
-      baseUrl = ServerSide ? 'http://0.0.0.0:3000' : ''
+      baseUrl = ServerSide ? host : ''
     }
     return new Promise((resolve, reject) => {
       fetch(baseUrl + url)
@@ -33,7 +34,7 @@ export default class HttpUtils {
     // 判断提交的数据类型
     const isFormData = Object.prototype.toString.call(data) === '[object FormData]'
     if (!dev) {
-      baseUrl = ServerSide ? 'http://0.0.0.0:3000' : ''
+      baseUrl = ServerSide ? host : ''
     }
     return new Promise((resolve, reject) => {
       fetch(baseUrl + url, {
@@ -55,7 +56,7 @@ export default class HttpUtils {
   }
   static put = (url, data, ServerSide) => {
     if (!dev) {
-      baseUrl = ServerSide ? 'http://0.0.0.0:3000' : ''
+      baseUrl = ServerSide ? host : ''
     }
     return new Promise((resolve, reject) => {
       fetch(baseUrl + url, {
@@ -77,7 +78,7 @@ export default class HttpUtils {
   }
   static delete = (url, data, ServerSide) => {
     if (!dev) {
-      baseUrl = ServerSide ? 'http://0.0.0.0:3000' : ''
+      baseUrl = ServerSide ? host : ''
     }
     return new Promise((resolve, reject) => {
       fetch(baseUrl + url, {
