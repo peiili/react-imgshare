@@ -3,63 +3,65 @@ import { useRouter } from 'next/router';
 import Head from 'next/head'
 import { Typography, Divider, PageHeader, Spin, Col, Row } from 'antd'
 import { marked } from 'marked'
-import { getBlogContentServerSide } from '@/api/articleApi'
+import { getBlogContentServerSide, putView } from '@/api/articleApi'
 import { carouselListServerSide } from '@/api/index'
 import style from './index.module.css'
 import Layout from '../../Layouts'
 const { Text } = Typography;
 
 export async function getServerSideProps(context) {
-    // const res1 = await carouselListServerSide(1)
-    // console.log(res1);
-    // let img = []
-    // if (res1.success) {
-    //     img = res1.data
-    // }
-    const res2 = await getBlogContentServerSide(context.query.id)
-    console.log(res2);
-    let contents = {}
-    if (res2.success) {
-        const { title, description, content, keywords } = res2.data[0]
-        marked.setOptions({
-            gfm: true,
-            tables: true,
-            breaks: true,
-            pedantic: false,
-            // sanitize: true,
-            smartLists: true,
-            smartypants: false,
-            langPrefix: false,
-            highlight: function (code, lang) {
-                const hljs = require('highlight.js');
-                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-                return hljs.highlight(code, { language }).value;
-            }
-        });
-        contents = {
-            title,
-            description,
-            keywords,
-            content: marked.parse(content),
-        }
+  // const res1 = await carouselListServerSide(1)
+  // console.log(res1);
+  // let img = []
+  // if (res1.success) {
+  //     img = res1.data
+  // }
+  const res2 = await getBlogContentServerSide(context.query.id)
+  console.log(res2);
+  let contents = {}
+  if (res2.success) {
+    const { title, description, content, keywords } = res2.data[0]
+    marked.setOptions({
+      gfm: true,
+      tables: true,
+      breaks: true,
+      pedantic: false,
+      // sanitize: true,
+      smartLists: true,
+      smartypants: false,
+      langPrefix: false,
+      highlight: function (code, lang) {
+        const hljs = require('highlight.js');
+        const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+        return hljs.highlight(code, { language }).value;
+      }
+    });
+    contents = {
+      title,
+      description,
+      keywords,
+      content: marked.parse(content),
     }
+  }
+  putView(context.query.id)
+  // 更新浏览量
 
-    return { props: { contents } }
+  return { props: { contents } }
 }
 const Article = (props) => {
-    const { contents } = props
-    const router = useRouter()
-    const [windowWidth, setWindowWidth] = useState(0);
-    const [contentHeight, setContentHeight] = useState(200);
-    useEffect(() => {
-        setWindowWidth(window.screen.width)
-        setContentHeight(window.innerHeight - 145)
-    }, [router.query.id])
-    return (
-        <>
-            <Layout active='/Home/Blog'>
-                <div className={style['blog-list']}>
-                    {/* <Carousel autoplay={true}>
+  const { contents } = props
+  const router = useRouter()
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [contentHeight, setContentHeight] = useState(200);
+  useEffect(() => {
+    setWindowWidth(window.screen.width)
+    setContentHeight(window.innerHeight - 145)
+  }, [router.query.id])
+  return (
+    <>
+      <Layout active='/Home/Blog'>
+        <div className={style['blog-list']}>
+          {/* <Carousel autoplay={true}>
                         {img.map((item) => (
                             <div key={item.id}>
                                 <Image
@@ -79,40 +81,40 @@ const Article = (props) => {
                             </div>
                         ))}
                     </Carousel> */}
+        </div>
+        <Row>
+          <Col span={windowWidth > 1000 ? 16 : 24} offset={windowWidth > 1000 ? 4 : 0}>
+            {contents.content ? (
+              <div style={{ minHeight: contentHeight + 'px' }}>
+                <Head>
+                  <title>{contents.title}</title>
+                  <meta name="keywords" content={contents.keywords} />
+                  <meta name="description" content={contents.description} />
+                </Head>
+                <PageHeader
+                  className={style['site-page-header']}
+                  onBack={() => router.back()}
+                  title={contents.title}
+                />
+                <div style={{ margin: '20px' }}>
+                  {
+                    contents.description &&
+                    <Text type="secondary">{contents.description}</Text>
+                  }
+                  <Divider plain></Divider>
+                  <div dangerouslySetInnerHTML={{ __html: contents.content }}></div>
                 </div>
-                <Row>
-                    <Col span={windowWidth > 1000 ? 16 : 24} offset={windowWidth > 1000 ? 4 : 0}>
-                        {contents.content ? (
-                            <div style={{ minHeight: contentHeight + 'px' }}>
-                                <Head>
-                                    <title>{contents.title}</title>
-                                    <meta name="keywords" content={contents.keywords} />
-                                    <meta name="description" content={contents.description} />
-                                </Head>
-                                <PageHeader
-                                    className={style['site-page-header']}
-                                    onBack={() => router.back()}
-                                    title={contents.title}
-                                />
-                                <div style={{ margin: '20px' }}>
-                                    {
-                                        contents.description &&
-                                        <Text type="secondary">{contents.description}</Text>
-                                    }
-                                    <Divider plain></Divider>
-                                    <div dangerouslySetInnerHTML={{ __html: contents.content }}></div>
-                                </div>
-                            </div>
-                        ) : (<div>
-                            <div className={style.example}>
-                                <Spin />
-                            </div>
-                        </div>)
-                        }
-                    </Col>
-                </Row>
-            </Layout>
-        </>
-    )
+              </div>
+            ) : (<div>
+              <div className={style.example}>
+                <Spin />
+              </div>
+            </div>)
+            }
+          </Col>
+        </Row>
+      </Layout>
+    </>
+  )
 };
 export default Article;

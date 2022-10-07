@@ -27,7 +27,7 @@ export function getBlogContentServerSide(id) {
   return HttpUtils.post(`/api/grabbag/getContent`, { id }, true)
 }
 /**
- *   
+ *
  */
 export function setBlogContent(params) {
   const { title, content, description, type, status, keywords } = params
@@ -39,6 +39,12 @@ export function setBlogContent(params) {
 export function putBlogContent(params) {
   const { id, title, content, description, keywords, type, status } = params
   return HttpUtils.put(`/api/grabbag/putContent`, { id, title, content, description, type, status, keywords })
+}
+/**
+ * 更新文章
+ */
+export function putView(id) {
+  return HttpUtils.get(`/api/grabbag/view/${id}`, true)
 }
 /**
  * 删除文章
