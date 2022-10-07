@@ -9,12 +9,12 @@ export async function getServerSideProps() {
     desc: true
   })
   let pageListData = []
-  if (res1.success) {
+  if (res1 && res1.success) {
     pageListData = res1.data
   }
   const res2 = await carouselListServerSide(5)
   let CarouselList = []
-  if (res2.success) {
+  if (res2 && res2.success) {
     CarouselList = res2.data
   }
   // Pass data to the page via props

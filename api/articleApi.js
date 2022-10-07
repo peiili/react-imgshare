@@ -43,7 +43,7 @@ export function putBlogContent(params) {
 /**
  * 更新文章
  */
-export function putView(id) {
+export function putViewServerSide(id) {
   return HttpUtils.get(`/api/grabbag/view/${id}`, true)
 }
 /**

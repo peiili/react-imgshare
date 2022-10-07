@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head'
 import { Typography, Divider, PageHeader, Spin, Col, Row } from 'antd'
 import { marked } from 'marked'
-import { getBlogContentServerSide, putView } from '@/api/articleApi'
+import { getBlogContentServerSide, putViewServerSide } from '@/api/articleApi'
 import { carouselListServerSide } from '@/api/index'
 import style from './index.module.css'
 import Layout from '../../Layouts'
@@ -43,9 +43,8 @@ export async function getServerSideProps(context) {
       content: marked.parse(content),
     }
   }
-  putView(context.query.id)
   // 更新浏览量
-
+  putViewServerSide(context.query.id)
   return { props: { contents } }
 }
 const Article = (props) => {

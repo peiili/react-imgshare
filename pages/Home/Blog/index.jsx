@@ -105,7 +105,7 @@ const ItemList = (props) => {
         renderItem={item => (
           <List.Item>
             <List.Item.Meta
-              title={<Link href={`/Home/Blog/Article?id=${item.id}`} style={{ cursor: 'pointer' }}>{item.title}</Link>}
+              title={<Link href={`/Home/Blog/Article/${item.id}`} style={{ cursor: 'pointer' }}>{item.title}</Link>}
             />
             <div>{item.date}</div>
           </List.Item>
