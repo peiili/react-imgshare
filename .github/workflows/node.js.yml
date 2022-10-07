@@ -14,8 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.16.0]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: ['16.x']
 
     steps:
     - uses: actions/checkout@v3
@@ -24,5 +23,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: npm install
     - run: npm run build
