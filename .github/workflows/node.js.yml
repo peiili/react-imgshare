@@ -26,6 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@release
     - name: Use rsync
+      uses: actions/setup-node@v3
       with:
         node-version: '16.16.0'
     - run: ls
