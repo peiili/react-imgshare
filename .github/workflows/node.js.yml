@@ -20,7 +20,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://registry.npmmirror.com'
-    - run: npm install --force
-    - run: npm run build
-    - run: ls
-    - run: rsync -avzr --delete -e 'ssh -i ${{ secrets.DEPLOY_GIT }} -o StrictHostKeyChecking=no' $GITHUB_WORKSPACE/ root@47.105.113.47:~/git/react-imgshare
+    
+    - run: SSH_PATH="$HOME/.ssh"
+    - run: mkdir "$SSH_PATH"
+    - run: echo ${{ secrets.DEPLOY_GIT  }} > "$SSH_PATH/deploy_key"
+    - run: chmod 600 "$SSH_PATH/deploy_key"
+    - run: rsync -avzr --delete -e 'ssh -i ${{ $SSH_PATH/deploy_key  }} -o StrictHostKeyChecking=no' $GITHUB_WORKSPACE/ root@47.105.113.47:~/git/react-imgshare
