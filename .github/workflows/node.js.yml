@@ -26,8 +26,8 @@ jobs:
     
   rsync:
     runs-on: ubuntu-18.04
-   
     steps:
     - uses: actions/checkout@v3
     - name: Use rsync
+      uses: up9cloud/action-rsync@v1.3
     - run: ls
