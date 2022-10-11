@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://registry.npmmirror.com'
-    
+    - run: echo "$HOME"
     - run: SSH_PATH="$HOME/.ssh"
     - run: mkdir "$SSH_PATH"
     - run: echo ${{ secrets.DEPLOY_GIT  }} > "$SSH_PATH/deploy_key"
