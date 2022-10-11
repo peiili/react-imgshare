@@ -22,6 +22,7 @@ jobs:
         registry-url: 'https://registry.npmmirror.com'
     - run: echo "$HOME"
     - run: SSH_PATH="$HOME/.ssh"
+    - run: echo "$SSH_PATH"
     - run: mkdir "$SSH_PATH"
     - run: echo ${{ secrets.DEPLOY_GIT  }} > "$SSH_PATH/deploy_key"
     - run: chmod 600 "$SSH_PATH/deploy_key"
