@@ -14,7 +14,7 @@ jobs:
       matrix:
         node-version: [16.16.0]
     steps:
-    - uses: actions/checkout@release
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }} build
       uses: actions/setup-node@v3
       with:
@@ -26,6 +26,8 @@ jobs:
     
   rsync:
     runs-on: ubuntu-18.04
+   
     steps:
+    - uses: actions/checkout@v3
     - name: Use rsync
     - run: ls
