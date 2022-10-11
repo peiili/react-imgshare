@@ -10,23 +10,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-18.04
-    
+    strategy:
+      matrix:
+        node-version: [16.16.0]
     steps:
     - uses: actions/checkout@release
     - name: Use Node.js ${{ matrix.node-version }} build
       uses: actions/setup-node@v3
       with:
-        node-version: '16.16.0'
+        node-version: ${{ matrix.node-version }}
+        registry-url: 'https://registry.npmmirror.com'
+        cache: 'npm'
     - run: npm install --force
     - run: npm run build
     
   rsync:
     runs-on: ubuntu-18.04
-    
     steps:
-    - uses: actions/checkout@release
     - name: Use rsync
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16.16.0'
     - run: ls
