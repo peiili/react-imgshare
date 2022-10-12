@@ -5,7 +5,7 @@ name: build and rsync
 
 on:
   push:
-    branches: [ "peiili-patch-1" ]
+    branches: [ "release" ]
 
 jobs:
   build:
