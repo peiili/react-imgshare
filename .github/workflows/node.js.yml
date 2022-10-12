@@ -5,7 +5,7 @@ name: build and rsync
 
 on:
   push:
-    branches: [ "release" ]
+    branches: [ "peiili-patch-1" ]
 
 jobs:
   build:
@@ -20,10 +20,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://registry.npmmirror.com'
-    - run: echo "$HOME"
-    - run: SSH_PATH="${HOME}/.ssh"
-    - run: echo $SSH_PATH
-    - run: mkdir $SSH_PATH
-    - run: echo ${{ secrets.DEPLOY_GIT  }} > "${SSH_PATH}/deploy_key"
-    - run: chmod 600 "${SSH_PATH}/deploy_key"
-    - run: cd $SSH_PATH
+    - run: npm install --force
+    - run: npm run build
+    - uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_GIT }}
+        ARGS: "-rltgoDzvO --delete"
+        SOURCE: "./"
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        TARGET: ${{ secrets.REMOTE_TARGET }}
+       
+    
+   
