@@ -15,8 +15,8 @@ module.exports = {
       {
         source: '/api/:path*',
         // destination: 'https://dlsjf.top/api/:path*' // Proxy to Backend
-        // destination: 'http://43.142.105.164/api/:path*' // Proxy to Backend
-        destination: 'http://127.0.0.1:5166/api/:path*' // Proxy to Backend
+        destination: 'http://43.142.105.164/api/:path*' // Proxy to Backend
+        // destination: 'http://127.0.0.1:5166/api/:path*' // Proxy to Backend
       }
     ]
   }
