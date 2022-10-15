@@ -1,9 +1,16 @@
 import React from 'react'
 import Head from 'next/head'
+import { useState } from 'react'
 import Script from 'next/script'
+import { Spin } from 'antd'
 import "antd/dist/antd.css";
 import './style.css'
+import Observe from '../tools/Observe'
 export default function App({ Component, pageProps }) {
+  const [loadStatus, setLoadStatus] = useState(false)
+  Observe.subscribe('loading', (status) => {
+    setLoadStatus(status.args)
+  })
   return (
     <>
       <Head>
@@ -17,6 +24,11 @@ export default function App({ Component, pageProps }) {
       <Script
         src="https://hm.baidu.com/hm.js?0aa2bd94ed347777090652e0928e05e3"
       />
+      {loadStatus &&
+        <div class='loading-modal'>
+          <Spin size="large" />
+        </div>
+      }
       <Component {...pageProps} />
     </>
   )

@@ -7,6 +7,7 @@ import Layout from '../Layouts'
 import { carouselListServerSide } from '@/api/index'
 import { getBlogList, getBlogListServerSide } from '@/api/articleApi'
 import style from './index.module.css'
+import Observe from '../../../tools/Observe'
 export async function getServerSideProps(context) {
   let img = []
   const res1 = await carouselListServerSide(1)
@@ -75,6 +76,7 @@ const ItemList = (props) => {
     getList(currentPage)
   }
   useEffect(() => {
+    Observe.fire('loading', false)
     if (list.length < count) {
       onLoadMore()
     }

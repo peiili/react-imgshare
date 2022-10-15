@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ColorDisc from "./ColorDisc";
+import Observe from '../../../tools/Observe'
 // http://test.top/Home/canvas
 let start = false
 let canvas,
@@ -69,6 +70,7 @@ const Canvas = function () {
 
   // }
   useEffect(() => {
+    Observe.fire('loading', false)
     canvas = document.getElementById('canvas')
     ctx = canvas.getContext('2d')
     // 设置画布大小
