@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
-import { Button, Row, Col, Carousel, List, Image } from 'antd'
+import { Row, Col, Carousel, List, Image, Skeleton, Divider } from 'antd'
+import InfiniteScroll from 'react-infinite-scroll-component';
 import moment from 'moment'
 import Layout from '../Layouts'
 import { carouselListServerSide } from '@/api/index'
@@ -48,8 +49,6 @@ const ItemList = (props) => {
     fuzzy: '',
     status: '1',
   })
-  const [initLoading, setInitLoading] = useState(noMore)
-  const [loading, setLoading] = useState(false)
   const getList = (page) => {
     const { fuzzy, status, type } = query
     const { size } = pageObj
@@ -66,12 +65,6 @@ const ItemList = (props) => {
             date: moment(e.created_date).format('YYYY-MM-DD')
           })
         })
-        setLoading(false)
-        if (pageObj.page >= res.data.total) {
-          setInitLoading(true)
-        } else {
-          setInitLoading(false)
-        }
         setList([...list, ...arr])
       }
     })
@@ -80,46 +73,44 @@ const ItemList = (props) => {
     const currentPage = pageObj.page + 1
     setPageObj({ ...pageObj, page: currentPage })
     getList(currentPage)
-    setLoading(true)
   }
-  const loadMore = !initLoading ? (
-    <div
-      style={{
-        textAlign: 'center',
-        marginTop: 12,
-        height: 32,
-        lineHeight: '32px',
-      }}
-    >
-      <Button loading={loading} onClick={onLoadMore}>加载更多</Button>
-    </div>
-  ) : null;
+  useEffect(() => {
+    if (list.length < count) {
+      onLoadMore()
+    }
+  }, [])
   return (
     <div className={style.list}>
-      <List
-        header={<div><b>最新</b></div>}
-        dataSource={list}
-        split={true}
-        loadMore={loadMore}
-        loading={false}
-        renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              title={<Link href={`/Home/Blog/Article/${item.id}`} style={{ cursor: 'pointer' }}>{item.title}</Link>}
-            />
-            <div>{item.date}</div>
-          </List.Item>
-
-        )}
+      <InfiniteScroll
+        dataLength={list.length}
+        next={onLoadMore}
+        hasMore={list.length < count}
+        loader={<Skeleton paragraph={{ rows: 1 }} active />}
+        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+        scrollableTarget="scrollableDiv"
       >
-      </List>
+        <List
+          header={<div><b>最新</b></div>}
+          dataSource={list}
+          split={true}
+          renderItem={item => (
+            <List.Item key={item.id}>
+              <List.Item.Meta
+                title={<Link href={`/Home/Blog/Article/${item.id}`} style={{ cursor: 'pointer' }}>{item.title}</Link>}
+              />
+              <div>{item.date}</div>
+            </List.Item>
+          )}
+        >
+        </List>
+      </InfiniteScroll>
     </div>)
 }
 const Blog = (props) => {
   const { img, contents, count, totalPage } = props
   const [windowWidth, setWindowWidth] = useState(0);
   useEffect(() => {
-    setWindowWidth(window.screen.width)
+    setWindowWidth(window.innerWidth)
   }, []);
   return (
     <Layout active='/Home/Blog'>
@@ -146,7 +137,7 @@ const Blog = (props) => {
         </Carousel>
         <div style={{ background: '#fff', paddingBottom: '15vh' }}>
           <Row>
-            <Col span={windowWidth > 500 ? 12 : 22} offset={windowWidth > 500 ? 6 : 1}>
+            <Col span={windowWidth > 1920 ? 12 : 22} offset={windowWidth > 1920 ? 6 : 1}>
               <ItemList contents={contents} count={count} totalPage={totalPage}></ItemList>
             </Col>
           </Row>

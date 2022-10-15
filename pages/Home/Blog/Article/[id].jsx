@@ -53,7 +53,7 @@ const Article = (props) => {
   const [windowWidth, setWindowWidth] = useState(0);
   const [contentHeight, setContentHeight] = useState(200);
   useEffect(() => {
-    setWindowWidth(window.screen.width)
+    setWindowWidth(window.innerWidth)
     setContentHeight(window.innerHeight - 145)
   }, [router.query.id])
   return (
@@ -82,7 +82,7 @@ const Article = (props) => {
                     </Carousel> */}
         </div>
         <Row>
-          <Col span={windowWidth > 1000 ? 16 : 24} offset={windowWidth > 1000 ? 4 : 0}>
+          <Col span={windowWidth > 1920 ? 12 : 22} offset={windowWidth > 1920 ? 6 : 1}>
             {contents.content ? (
               <div style={{ minHeight: contentHeight + 'px' }}>
                 <Head>
