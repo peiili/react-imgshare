@@ -1,7 +1,7 @@
 import React from 'react'
 import { Menu, Avatar } from 'antd'
 import Link from 'next/link'
-import Observe from '../tools/Observe'
+import Observe from '@/tools/Observe'
 function MenuCom(props) {
   const onSwitch = function ({ item, key, keyPath, domEvent }) {
     Observe.fire('loading', true)

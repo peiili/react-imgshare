@@ -5,7 +5,7 @@ import Script from 'next/script'
 import { Spin } from 'antd'
 import "antd/dist/antd.css";
 import './style.css'
-import Observe from '../tools/Observe'
+import Observe from '@/tools/Observe'
 export default function App({ Component, pageProps }) {
   const [loadStatus, setLoadStatus] = useState(false)
   Observe.subscribe('loading', (status) => {

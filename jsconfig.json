@@ -7,7 +7,8 @@
             // "@/*": ["./*"],
             "@/components/*": ["components/*"],
             "@/api/*": ["api/*"],
-            "@/pages/*": ["pages/*"]
+            "@/pages/*": ["pages/*"],
+            "@/tools/*": ["tools/*"]
         }
     },
     "include": [

@@ -6,7 +6,7 @@ import style from './style.module.css'
 import { VerticalAlignBottomOutlined } from '@ant-design/icons'
 import { carousePage } from '@/api/index.js'
 import Layout from './../Layouts'
-import Observe from '../../../tools/Observe'
+import Observe from '@/tools/Observe'
 class ImgBlock extends Component {
   constructor(props) {
     super(props)

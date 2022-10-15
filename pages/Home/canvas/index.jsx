@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ColorDisc from "./ColorDisc";
-import Observe from '../../../tools/Observe'
+import Observe from '@/tools/Observe'
 // http://test.top/Home/canvas
 let start = false
 let canvas,

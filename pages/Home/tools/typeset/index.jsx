@@ -6,7 +6,7 @@ import RadioBtnGroup from '@/components/radiobtngroup'
 import styles from './style.module.css'
 import { PlusOutlined } from '@ant-design/icons';
 import { uploadFile, updateTypeSet } from '@/api/typesetApi'
-import Observe from '../../../../tools/Observe'
+import Observe from '@/tools/Observe'
 const staticData = {
   pageSize: [
     { title: '5寸(常用)', size: '127mmx88.9mm', width: 127, height: 88.9 },
