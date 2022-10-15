@@ -57,6 +57,7 @@
     "react-app-rewired": "^2.1.5",
     "react-dev-utils": "^10.2.0",
     "react-dom": "^16.13.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "2.0.3",
     "react-simplemde-editor": "^5.0.2",
