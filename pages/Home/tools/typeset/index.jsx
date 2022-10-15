@@ -57,7 +57,7 @@ const Typeset = () => {
     const formRef = useRef()
     const [windowWidth, setWindowWidth] = useState(0);
     useEffect(() => {
-        setWindowWidth(window.screen.width)
+        setWindowWidth(window.innerWidth)
     }, []);
     useEffect(() => {
         // 数据改变刷新子组件
