@@ -2,14 +2,15 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { Menu } from 'antd'
 import Link from 'next/link'
-// import logo from '@/assets/img/logo.png'
+import Observe from '@/tools/Observe'
 import { UnorderedListOutlined, PicLeftOutlined, GlobalOutlined } from '@ant-design/icons'
 // const { SubMenu } = Menu
 
 function MenuCom(props) {
   const router = useRouter()
-  function selectItem(arr) {
-    props.currentSelect(arr.key)
+  function onCheck(arr) {
+    Observe.fire('loading', true)
+    router.push(arr.key)
   }
 
   return (
@@ -21,25 +22,19 @@ function MenuCom(props) {
         theme="dark"
         defaultSelectedKeys={[router.pathname]}
         mode="inline"
-        onSelect={selectItem}
+        onClick={onCheck}
       >
         <Menu.Item key="/Admin/Article">
           <UnorderedListOutlined />
-          <Link href="/Admin/Article">
-            <span>文章</span>
-          </Link>
+          <span>文章</span>
         </Menu.Item>
         <Menu.Item key="/Admin/Typeset">
           <PicLeftOutlined />
-          <Link href="/Admin/Typeset">
-            <span>排版数据</span>
-          </Link>
+          <span>排版数据</span>
         </Menu.Item>
         <Menu.Item key="/Admin/Website">
           <GlobalOutlined />
-          <Link href="/Admin/Website">
-            <span>网站设置</span>
-          </Link>
+          <span>网站设置</span>
         </Menu.Item>
       </Menu>
     </div>

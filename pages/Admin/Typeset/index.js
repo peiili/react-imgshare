@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AdminLayout from '@/components/AdminLayout'
 import { Table, Space, Image } from 'antd'
 import { getTypeSetPage, getTypeSetPageServerSide } from '@/api/typesetApi'
 import moment from 'moment'
+import Observe from '@/tools/Observe'
 const columns = [
   {
     title: '创建时间',
@@ -64,7 +65,9 @@ const Typeset = (props) => {
     currentPage: current,
     pageSize: pageSize
   });
-
+  useEffect(() => {
+    Observe.fire('loading', false)
+  }, []);
   const getData = function (data) {
     setLoading(true)
     getTypeSetPage({

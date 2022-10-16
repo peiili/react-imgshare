@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Form, Input, notification } from 'antd'
 import AdminLayout from '@/components/AdminLayout'
 import { putSiteBase, getSiteBaseServerSide } from '@/api/websiteApi'
-
+import Observe from '@/tools/Observe'
 export async function getServerSideProps() {
   const res = await getSiteBaseServerSide()
   let data = {}
@@ -11,9 +11,11 @@ export async function getServerSideProps() {
   }
   return { props: data }
 }
-
 const Website = function (props) {
   const { title, description, keywords, host, copyright } = props
+  useEffect(() => {
+    Observe.fire('loading', false)
+  }, [])
   const onFinish = (values) => {
     const data = values
     putSiteBase(data).then(res => {

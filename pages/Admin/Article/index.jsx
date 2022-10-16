@@ -3,6 +3,7 @@ import { Table, Button, Space, Modal } from 'antd'
 import moment from 'moment'
 import { getBlogListServerSide, getBlogList, delBlogContent } from '@/api/articleApi'
 import AdminLayout from '@/components/AdminLayout'
+import Observe from '@/tools/Observe'
 import Editor from './Editor'
 
 const pageSize = 5
@@ -92,6 +93,7 @@ const Article = (props) => {
   }
   useEffect(() => {
     // getActive()
+    Observe.fire('loading', false)
   }, [])
   const columns = [
     {
