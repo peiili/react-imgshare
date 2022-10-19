@@ -1,5 +1,8 @@
 {
     "editor.formatOnSave": true,
     "editor.tabSize": 2,
-    "html.format.wrapAttributesIndentSize": 2
+    "html.format.wrapAttributesIndentSize": 2,
+    "cSpell.words": [
+        "editormd"
+    ]
 }

@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Form, Input, Button } from 'antd'
-import dynamic from 'next/dynamic'
-import 'easymde/dist/easymde.min.css'
+// import 'easymde/dist/easymde.min.css'
+import Editormd from '@/components/Editormd'
 import { setBlogContent, getBlogContent, putBlogContent } from '@/api/articleApi'
 // 动态导入模块，正常渲染Browser端api
-const SimpleMdeEditor = dynamic(
-  () => import("react-simplemde-editor"),
-  { ssr: false }
-);
+import dynamic from 'next/dynamic'
+// const Editormd = dynamic(
+//   () => import('@/components/Editormd'),
+//   { ssr: false }
+// );
 
 const Editor = (props) => {
   const { id } = props;
@@ -96,7 +97,10 @@ const Editor = (props) => {
           name="content"
           label="正文"
         >
-          <SimpleMdeEditor></SimpleMdeEditor>
+          <Editormd marked="###科学公式 TeX(KaTeX)" submit={(contents) => {
+            console.log(contents)
+          }} />
+          {/* <SimpleMdeEditor></SimpleMdeEditor> */}
         </Form.Item>
 
         <div style={{ marginTop: '10px' }}>
