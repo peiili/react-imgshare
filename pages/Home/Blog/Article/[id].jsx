@@ -41,8 +41,7 @@ const Article = (props) => {
         <div className={style['blog-list']}>
         </div>
         <Row>
-          {windowWidth}
-          <Col span={windowWidth > 1920 ? 12 : 22} offset={windowWidth > 1922 ? 6 : 1}>
+          <Col span={windowWidth > 1920 ? 12 : 22} offset={windowWidth > 1920 ? 6 : 1}>
             {contents.content ? (
               <div style={{ minHeight: contentHeight + 'px' }}>
                 <Head>
