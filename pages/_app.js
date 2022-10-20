@@ -22,6 +22,7 @@ export default function App({ Component, pageProps }) {
         <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8"></meta>
       </Head>
       <Script
+        strategy="lazyOnload"
         src="https://hm.baidu.com/hm.js?0aa2bd94ed347777090652e0928e05e3"
       />
       {loadStatus &&

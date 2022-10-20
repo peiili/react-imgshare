@@ -37,8 +37,8 @@ export function setBlogContent(params) {
  * 更新文章
  */
 export function putBlogContent(params) {
-  const { id, title, content, description, keywords, type, status } = params
-  return HttpUtils.put(`/api/grabbag/putContent`, { id, title, content, description, type, status, keywords })
+  const { id, title, content, description, keywords, type, status, marked } = params
+  return HttpUtils.put(`/api/grabbag/putContent`, { id, title, content, description, type, status, keywords, marked })
 }
 /**
  * 更新文章

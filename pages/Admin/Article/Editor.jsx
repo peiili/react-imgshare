@@ -1,14 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Form, Input, Button } from 'antd'
-// import 'easymde/dist/easymde.min.css'
 import Editormd from '@/components/Editormd'
 import { setBlogContent, getBlogContent, putBlogContent } from '@/api/articleApi'
-// 动态导入模块，正常渲染Browser端api
-import dynamic from 'next/dynamic'
-// const Editormd = dynamic(
-//   () => import('@/components/Editormd'),
-//   { ssr: false }
-// );
 
 const Editor = (props) => {
   const { id } = props;
@@ -18,8 +11,16 @@ const Editor = (props) => {
     title: '',
     description: '',
     keywords: '',
-    content: '',
+    marked: '',
   })
+  const marked_content = {
+    marked: '',
+    content: ''
+  }
+  // const [marked_content, setMarked_content] = useState({
+  //   marked: '',
+  //   content: ''
+  // })
   const layout = {
     labelCol: { span: 2 },
     wrapperCol: { span: 22 },
@@ -31,7 +32,8 @@ const Editor = (props) => {
       keywords: values.keywords,
       type: 2,
       status: 1,
-      content: values.content,
+      content: marked_content.content,
+      marked: marked_content.marked,
     }
     if (id) {
       putBlogContent({ id, ...body }).then(res => {
@@ -54,13 +56,15 @@ const Editor = (props) => {
     if (id) {
       getBlogContent(id).then(res => {
         if (res.success) {
-          const { title, description, keywords, content } = res.data[0]
+          const { title, description, keywords, marked, content } = res.data[0]
           formRef.current.setFieldsValue({
             title,
             description,
             keywords,
-            content,
+            marked,
           })
+          marked_content.marked = marked
+          marked_content.content = content
         }
       })
     }
@@ -94,13 +98,15 @@ const Editor = (props) => {
           <Input.TextArea />
         </Form.Item>
         <Form.Item
-          name="content"
+          name="marked"
           label="正文"
         >
-          <Editormd marked="###科学公式 TeX(KaTeX)" submit={(contents) => {
+          <Editormd submit={(contents) => {
             console.log(contents)
+            marked_content.marked = contents._marked
+            marked_content.content = contents._html
+            console.log(marked_content)
           }} />
-          {/* <SimpleMdeEditor></SimpleMdeEditor> */}
         </Form.Item>
 
         <div style={{ marginTop: '10px' }}>
