@@ -9,7 +9,8 @@ class Editormd extends Component {
     this.state = {
       EditormdView: null,
       marked: '',
-      submit: props.submit
+      submit: props.submit,
+      viewonly: props.viewonly
     }
     this.getHTML = this.getHTML.bind(this)
   }
@@ -24,10 +25,19 @@ class Editormd extends Component {
       if (window.editormd) {
         clearInterval(num)
         this.setState({
-          EditormdView: window.editormd("editormd-view", {
+          EditormdView: this.state.viewonly ? window.editormd.markdownToHTML("editormd-view", {
+            htmlDecode: "style,script,iframe",  // you can filter tags decode
+            emoji: true,
+            taskList: true,
+            fontSize: "16px",
+            tex: true,  // 默认不解析
+            flowChart: true,  // 默认不解析
+            sequenceDiagram: true,  // 默认不解析
+          }) : window.editormd("editormd-view", {
             width: "100%",
             height: 720,
             toc: true,
+
             markdown: this.state.marked,
             imageUpload: true,      // Enable/disable upload
             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
@@ -78,10 +88,10 @@ class Editormd extends Component {
           <script src="/static/js/editormd.min.js" />
         </Head>
         <div>
-          <div id="editormd-view" >
+          <div id="editormd-view" style={{ fontSize: '16px' }} >
             <textarea
               id="append-test2"
-              style={{ display: 'none' }}
+              style={{ display: 'none', fontSize: '16px' }}
               defaultValue={this.state.marked}
             />
 
@@ -92,6 +102,7 @@ class Editormd extends Component {
   }
 }
 Editormd.propTypes = {
-  marked: PropTypes.string
+  marked: PropTypes.string,
+  onlyView: PropTypes.bool
 };
 export default Editormd;

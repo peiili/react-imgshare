@@ -26,7 +26,7 @@ export default function App({ Component, pageProps }) {
         src="https://hm.baidu.com/hm.js?0aa2bd94ed347777090652e0928e05e3"
       />
       {loadStatus &&
-        <div class='loading-modal'>
+        <div className='loading-modal'>
           <Spin size="large" />
         </div>
       }
