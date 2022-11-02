@@ -11,7 +11,7 @@ const ImageDetail = () => {
   useEffect(() => {
     const search = router.query.data
     if (router.query.data) {
-      setItem(JSON.parse(decodeURIComponent(search)))
+      setItem(JSON.parse(search))
     }
     setWindowWidth(window.innerWidth)
 

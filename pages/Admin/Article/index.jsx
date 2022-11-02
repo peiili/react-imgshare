@@ -92,7 +92,6 @@ const Article = (props) => {
     setDelVisible(false)
   }
   useEffect(() => {
-    // getActive()
     Observe.fire('loading', false)
   }, [])
   const columns = [

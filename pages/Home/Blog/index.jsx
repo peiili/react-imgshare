@@ -8,12 +8,17 @@ import { carouselListServerSide } from '@/api/index'
 import { getBlogList, getBlogListServerSide } from '@/api/articleApi'
 import style from './index.module.css'
 import Observe from '@/tools/Observe'
+import { hashDecode } from '@/tools/BlurHashToBase64.ts'
 export async function getServerSideProps(context) {
   let img = []
   const res1 = await carouselListServerSide(1)
-  console.log(res1);
   if (res1.success) {
-    img = res1.data
+    img = res1.data.map(e => {
+      return {
+        ...e,
+        short: hashDecode(e.short_blurhash, e.short_blurhash_w, e.short_blurhash_h)
+      }
+    })
   }
   let contents = []
   let count = ''
@@ -127,7 +132,8 @@ const Blog = (props) => {
                 placeholder={
                   <Image
                     preview={false}
-                    src={'https://xek.dlsjf.top/' + item.name + '-123'}
+                    className={style.imgStyle}
+                    src={item.short}
                     width={'100%'}
                   />}
                 preview={false}
