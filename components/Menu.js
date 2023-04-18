@@ -23,6 +23,9 @@ function MenuCom(props) {
       <Menu.Item key="/Home/canvas">
         <Link href="/Home/canvas">画板</Link>
       </Menu.Item>
+      <Menu.Item key="/Home/application">
+        <Link href="/Home/application">应用</Link>
+      </Menu.Item>
       <Menu.Item key="3">
         <Link href="https://github.com/peiili/react-imgshare" target="_blank">
           <Avatar
