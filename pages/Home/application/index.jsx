@@ -3,8 +3,8 @@ import Observe from '@/tools/Observe'
 import Head from 'next/head'
 
 import style from './index.module.css'
-import { onFull, onExitFull } from './fullscreen'
-import renderTime from './compute'
+import { onFull, onExitFull } from '../../../tools/fullscreen'
+import renderTime from '../../../tools/compute'
 import { Button, Drawer, DatePicker, Upload } from 'antd';
 import { SettingOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 let setTime = -1;
