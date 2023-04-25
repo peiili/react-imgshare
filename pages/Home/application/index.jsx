@@ -23,6 +23,8 @@ const Applications = function () {
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [target, setTarget] = useState(new Date().getFullYear() + '-12-31 00:00:00');
   const [open, setOpen] = useState(false);
+  const [left, setLeft] = useState(0);
+  const [top, setTop] = useState(0);
 
   useEffect(() => {
     Observe.fire('loading', false)
@@ -31,6 +33,50 @@ const Applications = function () {
       document.querySelector('html').style.fontSize = window.innerWidth / 100 + 'px'
     }
     window.addEventListener('resize', resetSize)
+
+    const $timer = document.getElementById('timer')
+    let moveOffsetX = 0
+    let moveOffsetY = 0
+    let targetWidth = 0
+    let targetHeight = 0
+    function onMousedown(event) {
+      moveOffsetX = event.offsetX
+      moveOffsetY = event.offsetY
+      targetWidth = event.target.getBoundingClientRect().width
+      targetHeight = event.target.getBoundingClientRect().height
+      document.addEventListener('mousemove', onMousemove)
+
+    }
+    function onMousemove(event) {
+      let y = event.y - moveOffsetY
+      let x = event.x - moveOffsetX
+      if (y <= 0) {
+        y = 0
+      }
+      if (x <= 0) {
+        x = 0
+      }
+      if (y + targetHeight > window.innerHeight) {
+        y = window.innerHeight - targetHeight
+
+      }
+      if (x + targetWidth > window.innerWidth) {
+        x = window.innerWidth - targetWidth
+
+      }
+      localStorage.setItem('x', x)
+      localStorage.setItem('y', y)
+      setTop(y)
+      setLeft(x)
+
+    }
+    function onMouseup() {
+      document.removeEventListener('mousemove', onMousemove)
+    }
+    $timer.addEventListener('mousedown', onMousedown)
+    document.addEventListener('mouseup', onMouseup)
+    setLeft(localStorage.getItem('x') || 0)
+    setTop(localStorage.getItem('y') || 0)
     const url = localStorage.getItem('background') || ''
     setImageUrl(url);
     start()
@@ -151,11 +197,11 @@ const Applications = function () {
             </div>
           </div>
         </Drawer>
-        <div className={style.box} style={{ color: activeColor }}>
-          <div className={style.childerBox}>{dayLeft}&nbsp;天</div>
-          <div className={style.childerBox}>{hoursLeft}&nbsp;时</div>
-          <div className={style.childerBox}>{minutesLeft}&nbsp;分</div>
-          <div className={style.childerBox}>{secondsLeft}&nbsp;秒</div>
+        <div id="timer" className={style.box} style={{ color: activeColor, left: left + 'px', top: top + 'px' }}>
+          <div className={style.childerBox}>{dayLeft}天</div>
+          <div className={style.childerBox}>{hoursLeft}时</div>
+          <div className={style.childerBox}>{minutesLeft}分</div>
+          <div className={style.childerBox}>{secondsLeft}秒</div>
         </div>
       </div>
     </>
