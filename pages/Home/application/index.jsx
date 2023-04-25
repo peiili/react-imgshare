@@ -77,8 +77,8 @@ const Applications = function () {
     document.addEventListener('mouseup', onMouseup)
     setLeft(localStorage.getItem('x') || 0)
     setTop(localStorage.getItem('y') || 0)
-    const url = localStorage.getItem('background') || ''
-    setImageUrl(url);
+    const url = localStorage.getItem('background') || 'https://xek.dlsjf.top/20230419.jpeg'
+    setImageUrl(url)
     start()
     return () => {
       clearInterval(setTime);
@@ -198,10 +198,13 @@ const Applications = function () {
           </div>
         </Drawer>
         <div id="timer" className={style.box} style={{ color: activeColor, left: left + 'px', top: top + 'px' }}>
-          <div className={style.childerBox}>{dayLeft}天</div>
-          <div className={style.childerBox}>{hoursLeft}时</div>
-          <div className={style.childerBox}>{minutesLeft}分</div>
-          <div className={style.childerBox}>{secondsLeft}秒</div>
+          <div className={style.childerBox}>{dayLeft}<span className={style.space}></span>天</div>
+          <span className={style.space}></span>
+          <div className={style.childerBox}>{hoursLeft}<span className={style.space}></span>时</div>
+          <span className={style.space}></span>
+          <div className={style.childerBox}>{minutesLeft}<span className={style.space}></span>分</div>
+          <span className={style.space}></span>
+          <div className={style.childerBox}>{secondsLeft}<span className={style.space}></span>秒</div>
         </div>
       </div>
     </>

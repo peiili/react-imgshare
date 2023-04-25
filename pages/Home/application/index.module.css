@@ -35,14 +35,18 @@
   text-align: center;
   justify-content: space-around;
   display: flex;
-  width: 70rem;
+  /* width: 70rem; */
   cursor: pointer;
 }
 
 .childerBox {
-  width: 4em;
+  /* width: 4.5em; */
   user-select: none;
   pointer-events: none;
+}
+.space {
+  display: inline-block;
+  width: 0.5em;
 }
 
 .setup {
