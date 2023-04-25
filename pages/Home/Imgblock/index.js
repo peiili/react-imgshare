@@ -11,7 +11,7 @@ import { hashDecode } from '@/tools/BlurHashToBase64.ts'
 class ImgBlock extends Component {
   constructor(props) {
     super(props)
-    const { router, pageListData, CarouselList } = props
+    const { router, pageListData = [], CarouselList = [] } = props
 
     this.state = {
       poolData: [
